@@ -9,12 +9,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-// =============================================
-// STATE — semua kondisi UI Register
-// =============================================
 data class RegisterUiState(
     val namaLengkap              : String  = "",
     val nim                      : String  = "",
+    val nomorWhatsapp            : String  = "",
     val email                    : String  = "",
     val password                 : String  = "",
     val konfirmasiPassword       : String  = "",
@@ -42,6 +40,10 @@ class RegisterViewModel(
         _uiState.update { it.copy(nim = value, errorMessage = null) }
     }
 
+    fun onNomorWhatsappChange(value: String) {
+        _uiState.update { it.copy(nomorWhatsapp = value, errorMessage = null) }
+    }
+
     fun onEmailChange(value: String) {
         _uiState.update { it.copy(email = value, errorMessage = null) }
     }
@@ -51,7 +53,6 @@ class RegisterViewModel(
             it.copy(
                 password          = value,
                 errorMessage      = null,
-                // Realtime cek kesamaan password
                 passwordTidakSama = value != it.konfirmasiPassword &&
                         it.konfirmasiPassword.isNotEmpty()
             )
@@ -63,7 +64,6 @@ class RegisterViewModel(
             it.copy(
                 konfirmasiPassword = value,
                 errorMessage       = null,
-                // Tampilkan peringatan merah jika tidak sama
                 passwordTidakSama  = value != it.password && value.isNotEmpty()
             )
         }
@@ -77,13 +77,13 @@ class RegisterViewModel(
         _uiState.update { it.copy(konfirmasiPasswordVisible = !it.konfirmasiPasswordVisible) }
     }
 
-    // Daftar dengan email & password
     fun register() {
         val state = _uiState.value
 
         // Validasi semua field tidak kosong
         if (state.namaLengkap.isBlank() || state.nim.isBlank() ||
-            state.email.isBlank() || state.password.isBlank()) {
+            state.nomorWhatsapp.isBlank() || state.email.isBlank() ||
+            state.password.isBlank()) {
             _uiState.update { it.copy(errorMessage = "Semua field harus diisi") }
             return
         }
@@ -107,10 +107,11 @@ class RegisterViewModel(
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
             val result = authRepository.registerWithEmail(
-                namaLengkap = state.namaLengkap.trim(),
-                nim         = state.nim.trim(),
-                email       = state.email.trim(),
-                password    = state.password
+                namaLengkap   = state.namaLengkap.trim(),
+                nim           = state.nim.trim(),
+                email         = state.email.trim(),
+                password      = state.password,
+                nomorWhatsapp = state.nomorWhatsapp.trim()
             )
 
             result.fold(
@@ -119,33 +120,24 @@ class RegisterViewModel(
                 },
                 onFailure = { error ->
                     _uiState.update {
-                        it.copy(
-                            isLoading    = false,
-                            errorMessage = pesanErrorFirebase(error.message)
-                        )
+                        it.copy(isLoading = false, errorMessage = pesanErrorFirebase(error.message))
                     }
                 }
             )
         }
     }
 
-    // Login dengan Google — menuju Lengkapi Profil
     fun loginWithGoogle(idToken: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
-
             val result = authRepository.loginWithGoogle(idToken)
-
             result.fold(
                 onSuccess = {
                     _uiState.update { it.copy(isLoading = false, googleSuccess = true) }
                 },
                 onFailure = { error ->
                     _uiState.update {
-                        it.copy(
-                            isLoading    = false,
-                            errorMessage = pesanErrorFirebase(error.message)
-                        )
+                        it.copy(isLoading = false, errorMessage = pesanErrorFirebase(error.message))
                     }
                 }
             )
@@ -158,12 +150,12 @@ class RegisterViewModel(
 
     private fun pesanErrorFirebase(message: String?): String {
         return when {
-            message == null                        -> "Terjadi kesalahan, coba lagi"
-            message.contains("email address")      -> "Email sudah terdaftar"
-            message.contains("badly formatted")    -> "Format email tidak valid"
-            message.contains("network")            -> "Tidak ada koneksi internet"
-            message.contains("weak-password")      -> "Password terlalu lemah"
-            else                                   -> "Pendaftaran gagal, coba lagi"
+            message == null                     -> "Terjadi kesalahan, coba lagi"
+            message.contains("email address")   -> "Email sudah terdaftar"
+            message.contains("badly formatted") -> "Format email tidak valid"
+            message.contains("network")         -> "Tidak ada koneksi internet"
+            message.contains("weak-password")   -> "Password terlalu lemah"
+            else                                -> "Pendaftaran gagal, coba lagi"
         }
     }
 }
