@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "525863674514",
+    "project_id": "cari-in-61640",
+    "storage_bucket": "cari-in-61640.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525863674514:android:c6eaa17f41c9200f2e7c4b",
+        "android_client_info": {
+          "package_name": "com.uas.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWoO2QC4pvfZM-upigPxzQwYzAaTxAavE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
