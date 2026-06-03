@@ -95,12 +95,17 @@ fun CariInNavGraph(
         }
 
         composable(Screen.LengkapiProfil.route) {
-            // TODO: Ganti dengan LengkapiProfilScreen() di Langkah 6
+            // TODO: hubungkan ke AppContainer setelah DI selesai
             // LengkapiProfilScreen(
+            //     viewModel       = LengkapiProfilViewModel(
+            //         authRepository = AppContainer.authRepository,
+            //         userRepository = AppContainer.userRepository
+            //     ),
             //     onSimpanSuccess = { navController.navigate(Screen.Dashboard.route) {
             //         popUpTo(Screen.LengkapiProfil.route) { inclusive = true }
             //     }}
             // )
+            Box(Modifier.fillMaxSize(), Alignment.Center) { Text("Lengkapi Profil") }
         }
 
         // =============================================
