@@ -69,6 +69,8 @@ dependencies {
 
     implementation("com.squareup.okhttp3:okhttp:5.3.2")
 
+    implementation("androidx.datastore:datastore-preferences:1.2.1")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
