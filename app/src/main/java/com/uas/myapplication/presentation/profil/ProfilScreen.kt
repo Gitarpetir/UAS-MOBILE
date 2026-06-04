@@ -142,6 +142,14 @@ fun ProfilScreen(
                     value = uiState.user?.nim ?: "..."
                 )
 
+                Spacer(modifier = Modifier.height(8.dp))
+
+                DataCard(
+                    icon = Icons.Default.Phone,
+                    label = "Nomor WhatsApp",
+                    value = uiState.user?.nomorWhatsapp ?: "-"
+                )
+
                 Spacer(modifier = Modifier.height(24.dp))
 
                 // =============================================
@@ -366,15 +374,13 @@ fun BahasaDialog(
         },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                // Pilihan Bahasa Indonesia
                 BahasaItem(
-                    label    = "🇮🇩  Indonesia",
+                    label    = "Indonesia",
                     isAktif  = bahasaAktif == "id",
                     onClick  = { onPilih("id") }
                 )
-                // Pilihan Bahasa Inggris
                 BahasaItem(
-                    label    = "🇬🇧  English",
+                    label    = "English",
                     isAktif  = bahasaAktif == "en",
                     onClick  = { onPilih("en") }
                 )
@@ -430,9 +436,6 @@ fun BahasaItem(
     }
 }
 
-// =============================================
-// PREVIEW
-// =============================================
 @Preview(showBackground = true, name = "Profil Screen - Light", heightDp = 800)
 @Composable
 fun PreviewProfilScreen() {
@@ -450,25 +453,45 @@ fun PreviewProfilScreen() {
             ) {
                 Icon(Icons.Default.Person, null, tint = Blue700, modifier = Modifier.size(48.dp))
             }
+
             Spacer(modifier = Modifier.height(12.dp))
+
             Text("Azriel Gunawan", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.Bold, fontSize = 20.sp, color = TextMain)
+
             Spacer(modifier = Modifier.height(24.dp))
+
             HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), color = SlateGray100)
+
             Spacer(modifier = Modifier.height(24.dp))
+
             Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
                 Text("Data Pengguna", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 16.sp, color = TextMain)
+
                 Spacer(modifier = Modifier.height(12.dp))
+
                 DataCard(icon = Icons.Default.Email, label = "Email", value = "azrielgunawan@gmail.com")
+
                 Spacer(modifier = Modifier.height(8.dp))
+
                 DataCard(icon = Icons.Default.Badge, label = "NIM", value = "2410817110009")
+                Spacer(modifier = Modifier.height(8.dp))
+
+                DataCard(
+                    icon = Icons.Default.Phone,
+                    label = "Nomor WhatsApp",
+                    value = "081251080786"
+                )
                 Spacer(modifier = Modifier.height(24.dp))
+
                 Text("Preferensi", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 16.sp, color = TextMain)
+
                 Spacer(modifier = Modifier.height(12.dp))
-                // Mode Gelap card (preview statis)
                 Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = Color.White), elevation = CardDefaults.cardElevation(1.dp)) {
                     Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 14.dp), verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Default.DarkMode, null, tint = Blue700, modifier = Modifier.size(20.dp))
+
                         Spacer(modifier = Modifier.width(12.dp))
+
                         Text("Mode Gelap", fontFamily = InterFontFamily, fontWeight = FontWeight.Medium, fontSize = 14.sp, color = TextMain, modifier = Modifier.weight(1f))
                         Switch(checked = false, onCheckedChange = {}, colors = SwitchDefaults.colors(uncheckedTrackColor = SlateGray200))
                     }

@@ -15,10 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.uas.myapplication.presentation.ui.theme.DangerRed
 import com.uas.myapplication.presentation.ui.theme.InterFontFamily
+import com.uas.myapplication.presentation.ui.theme.MyApplicationTheme
 import com.uas.myapplication.presentation.ui.theme.PoppinsFontFamily
 import com.uas.myapplication.presentation.ui.theme.SlateGray200
 import com.uas.myapplication.presentation.ui.theme.TextSub
@@ -76,4 +78,16 @@ fun HapusDialog(
         containerColor = MaterialTheme.colorScheme.surface,
         shape          = RoundedCornerShape(16.dp)
     )
+}
+
+@Preview(showBackground = true, name = "Dialog Hapus")
+@Composable
+fun PreviewHapusDialog() {
+    MyApplicationTheme {
+        HapusDialog(
+            namaBarang   = "Jam Tangan Casio",
+            onKonfirmasi = {},
+            onBatal      = {}
+        )
+    }
 }
