@@ -23,12 +23,6 @@ import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.presentation.ui.theme.*
 
-/**
- * Komponen card barang yang dipakai ulang di:
- * - DashboardScreen
- * - KatalogScreen
- * - LaporankuScreen
- */
 @Composable
 fun BarangCard(
     laporan: Laporan,
@@ -124,9 +118,6 @@ fun BarangCard(
     }
 }
 
-// =============================================
-// PREVIEW
-// =============================================
 @Preview(showBackground = true, name = "Barang Card - Hilang")
 @Composable
 fun PreviewBarangCardHilang() {
