@@ -26,6 +26,7 @@ import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.domain.model.User
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.components.StatusBadge
+import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*
 
 // =============================================
@@ -68,7 +69,12 @@ fun DetailBarangScreen(
     }
 
     Scaffold(
-        bottomBar = { CariInBottomNavBar(navController) }
+        bottomBar = {
+            CariInBottomNavBar(
+                navController = navController,
+                items = mahasiswaBottomNavItems
+            )
+        }
     ) { paddingValues ->
         Column(
             modifier = Modifier

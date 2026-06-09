@@ -28,9 +28,10 @@ import androidx.navigation.compose.rememberNavController
 import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.presentation.navigation.Screen
-// Import komponen dari ui/components — bukan didefinisikan ulang di sini
 import com.uas.myapplication.presentation.ui.components.BarangCard
+import com.uas.myapplication.presentation.ui.components.StatistikCard
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
+import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*
 
 @Composable
@@ -41,7 +42,12 @@ fun DashboardScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
-        bottomBar = { CariInBottomNavBar(navController) }
+        bottomBar = {
+            CariInBottomNavBar(
+                navController = navController,
+                items = mahasiswaBottomNavItems
+            )
+        }
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
@@ -168,50 +174,6 @@ fun HeaderDashboard(uiState: DashboardUiState) {
                     warna    = SuccessGreen
                 )
             }
-        }
-    }
-}
-
-// =============================================
-// CARD STATISTIK
-// =============================================
-@Composable
-fun StatistikCard(
-    modifier: Modifier = Modifier,
-    jumlah  : Int,
-    label   : String,
-    warna   : Color
-) {
-    Card(
-        modifier = modifier,
-        shape    = RoundedCornerShape(12.dp),
-        colors   = CardDefaults.cardColors(
-            containerColor = Color.White.copy(alpha = 0.15f)
-        )
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Box(
-                modifier         = Modifier
-                    .size(32.dp)
-                    .background(warna.copy(alpha = 0.2f), CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                Box(modifier = Modifier.size(14.dp).background(warna, CircleShape))
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text       = jumlah.toString(),
-                fontFamily = PoppinsFontFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize   = 28.sp,
-                color      = Color.White
-            )
-            Text(
-                text       = label,
-                fontFamily = InterFontFamily,
-                fontSize   = 12.sp,
-                color      = Color.White.copy(alpha = 0.85f)
-            )
         }
     }
 }

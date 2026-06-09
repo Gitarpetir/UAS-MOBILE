@@ -32,7 +32,6 @@ fun BadgeDeskriptif(
     tabAktif: TabLaporanku
 ) {
     val (label, bgColor, textColor) = when {
-        // Tab Barangmu
         tabAktif == TabLaporanku.BARANGMU &&
                 laporan.statusBarang == StatusBarang.HILANG ->
             Triple("Barangmu Sedang Dicari", DangerRedLight, DangerRed)
@@ -41,6 +40,13 @@ fun BadgeDeskriptif(
                 laporan.statusBarang == StatusBarang.DITEMUKAN ->
             Triple("Barangmu Ditemukan", SuccessGreenLight, SuccessGreen)
 
+        tabAktif == TabLaporanku.BARANGMU &&
+                laporan.statusBarang == StatusBarang.SELESAI ->
+            Triple(
+                "Laporan Selesai",
+                NeutralGrayLight,
+                NeutralGray
+            )
         // Tab Temuanmu
         tabAktif == TabLaporanku.TEMUANMU &&
                 laporan.statusBarang == StatusBarang.DITEMUKAN ->
@@ -49,6 +55,8 @@ fun BadgeDeskriptif(
         tabAktif == TabLaporanku.TEMUANMU &&
                 laporan.statusBarang == StatusBarang.SELESAI ->
             Triple("Selesai", NeutralGrayLight, NeutralGray)
+
+
 
         // Fallback
         else -> Triple("Tidak Diketahui", NeutralGrayLight, NeutralGray)
@@ -78,13 +86,11 @@ fun PreviewBadgeDeskriptif() {
             modifier              = Modifier.padding(16.dp),
             verticalArrangement   = Arrangement.spacedBy(8.dp)
         ) {
-            BadgeDeskriptif(
-                laporan = Laporan(statusBarang = StatusBarang.HILANG),
-                tabAktif = TabLaporanku.BARANGMU
-            )
+            BadgeDeskriptif(laporan = Laporan(statusBarang = StatusBarang.HILANG),tabAktif = TabLaporanku.BARANGMU)
             BadgeDeskriptif(laporan = Laporan(statusBarang = StatusBarang.DITEMUKAN), tabAktif = TabLaporanku.BARANGMU)
             BadgeDeskriptif(laporan = Laporan(statusBarang = StatusBarang.DITEMUKAN), tabAktif = TabLaporanku.TEMUANMU)
             BadgeDeskriptif(laporan = Laporan(statusBarang = StatusBarang.SELESAI),   tabAktif = TabLaporanku.TEMUANMU)
+            BadgeDeskriptif(laporan = Laporan(statusBarang = StatusBarang.SELESAI),tabAktif = TabLaporanku.BARANGMU)
         }
     }
 }

@@ -28,7 +28,7 @@ data class BottomNavItem(
 )
 
 // Daftar 5 item bottom navigation
-val bottomNavItems = listOf(
+val mahasiswaBottomNavItems = listOf(
     BottomNavItem(
         label       = "Beranda",
         route       = Screen.Dashboard.route,
@@ -61,11 +61,37 @@ val bottomNavItems = listOf(
     )
 )
 
-// =============================================
+val adminBottomNavItems = listOf(
+
+    BottomNavItem(
+        label = "Beranda",
+        route = Screen.DashboardAdmin.route,
+        iconAktif = Icons.Filled.Home,
+        iconNonAktif = Icons.Outlined.Home
+    ),
+
+    BottomNavItem(
+        label = "Laporan",
+        route = Screen.LaporanAdmin.route,
+        iconAktif = Icons.Filled.Article,
+        iconNonAktif = Icons.Outlined.Article
+    ),
+
+    BottomNavItem(
+        label = "Profil",
+        route = Screen.Profil.route,
+        iconAktif = Icons.Filled.Person,
+        iconNonAktif = Icons.Outlined.Person
+    )
+)
+
+// ================ =============================
 // KOMPONEN BOTTOM NAVIGATION BAR
 // =============================================
 @Composable
-fun CariInBottomNavBar(navController: NavController) {
+fun CariInBottomNavBar(
+    navController: NavController,
+    items: List<BottomNavItem>) {
     // Ambil route yang sedang aktif
     val backStackEntry = navController.currentBackStackEntryAsState()
     val currentRoute   = backStackEntry.value?.destination?.route
@@ -74,7 +100,7 @@ fun CariInBottomNavBar(navController: NavController) {
         containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 8.dp
     ) {
-        bottomNavItems.forEach { item ->
+        items.forEach { item ->
             val isSelected = currentRoute == item.route
 
             NavigationBarItem(
@@ -121,10 +147,13 @@ fun CariInBottomNavBar(navController: NavController) {
 // =============================================
 // PREVIEW
 // =============================================
-@Preview(showBackground = true, name = "Bottom Nav Bar")
+@Preview(showBackground = true)
 @Composable
 fun PreviewBottomNavBar() {
     MyApplicationTheme {
-        CariInBottomNavBar(navController = rememberNavController())
+        CariInBottomNavBar(
+            navController = rememberNavController(),
+            items = mahasiswaBottomNavItems
+        )
     }
 }

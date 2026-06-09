@@ -27,6 +27,8 @@ import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.components.BarangCard
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.components.CariInFilterChip
+import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
 
 @Composable
 fun KatalogScreen(
@@ -36,7 +38,12 @@ fun KatalogScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
-        bottomBar = { CariInBottomNavBar(navController) }
+        bottomBar = {
+            CariInBottomNavBar(
+                navController = navController,
+                items = mahasiswaBottomNavItems
+            )
+        }
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
@@ -131,40 +138,6 @@ fun FilterChipRow(
         CariInFilterChip(label = "Hilang",   isSelected = filterAktif == FilterKatalog.HILANG,    onClick = { onFilterChange(FilterKatalog.HILANG) })
         CariInFilterChip(label = "Ditemukan",isSelected = filterAktif == FilterKatalog.DITEMUKAN, onClick = { onFilterChange(FilterKatalog.DITEMUKAN) })
     }
-}
-
-@Composable
-fun CariInFilterChip(
-    label     : String,
-    isSelected: Boolean,
-    onClick   : () -> Unit
-) {
-    FilterChip(
-        selected = isSelected,
-        onClick  = onClick,
-        label    = {
-            Text(
-                text       = label,
-                fontFamily = InterFontFamily,
-                fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
-                fontSize   = 13.sp
-            )
-        },
-        colors = FilterChipDefaults.filterChipColors(
-            selectedContainerColor = Blue700,
-            selectedLabelColor     = Color.White,
-            containerColor         = MaterialTheme.colorScheme.surface,
-            labelColor             = TextSub
-        ),
-        border = FilterChipDefaults.filterChipBorder(
-            enabled             = true,
-            selected            = isSelected,
-            selectedBorderColor = Blue700,
-            selectedBorderWidth = 0.dp,
-            borderColor         = SlateGray200,
-            borderWidth         = 1.dp
-        )
-    )
 }
 
 // =============================================

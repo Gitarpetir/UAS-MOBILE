@@ -33,6 +33,7 @@ import coil.compose.AsyncImage
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.presentation.auth.login.CariInTextField
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
+import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*
 import java.util.Calendar
 
@@ -100,7 +101,12 @@ fun BuatLaporanScreen(
         }
     }
 
-    Scaffold(bottomBar = { CariInBottomNavBar(navController) }) { paddingValues ->
+    Scaffold(bottomBar = {
+        CariInBottomNavBar(
+            navController = navController,
+            items = mahasiswaBottomNavItems
+        )
+    }) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
