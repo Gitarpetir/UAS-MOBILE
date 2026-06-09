@@ -30,6 +30,7 @@ import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
+import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*
 
 
@@ -50,7 +51,12 @@ fun LaporankuScreen(
     }
 
     Scaffold(
-        bottomBar = { CariInBottomNavBar(navController) }
+        bottomBar = {
+            CariInBottomNavBar(
+                navController = navController,
+                items = mahasiswaBottomNavItems
+            )
+        }
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier

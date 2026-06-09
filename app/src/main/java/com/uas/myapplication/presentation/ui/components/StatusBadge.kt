@@ -14,12 +14,6 @@ import androidx.compose.ui.unit.sp
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.presentation.ui.theme.*
 
-/**
- * Komponen badge status barang yang dipakai ulang di:
- * - BarangCard
- * - DetailBarangScreen
- * - LaporankuScreen
- */
 @Composable
 fun StatusBadge(status: StatusBarang) {
     val (label, bgColor, textColor) = when (status) {
