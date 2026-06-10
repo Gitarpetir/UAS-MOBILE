@@ -2,6 +2,7 @@ package com.uas.myapplication.presentation.laporanku
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.uas.myapplication.domain.model.JenisLaporan
 import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.domain.repository.AuthRepository
@@ -13,11 +14,15 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 // Tab yang aktif
-enum class TabLaporanku { BARANGMU, TEMUANMU }
+enum class TabLaporanku {
+    BARANGKU,
+    TEMUANKU,
+    KONTRIBUSI
+}
 
 data class LaporankuUiState(
     val semuaLaporan  : List<Laporan>  = emptyList(),
-    val tabAktif      : TabLaporanku   = TabLaporanku.BARANGMU,
+    val tabAktif      : TabLaporanku   = TabLaporanku.BARANGKU,
     val isLoading     : Boolean        = true,
     val errorMessage  : String?        = null,
     val showHapusDialog: Boolean       = false,
@@ -67,17 +72,39 @@ class LaporankuViewModel(
 
         return when (state.tabAktif) {
 
-            TabLaporanku.BARANGMU ->
+            TabLaporanku.BARANGKU -> {
 
                 state.semuaLaporan.filter {
-                    it.idPelapor == currentUid
+                    it.idPelapor == currentUid &&
+                            it.jenisLaporan == JenisLaporan.HILANG
                 }
+            }
 
-            TabLaporanku.TEMUANMU ->
+            TabLaporanku.TEMUANKU -> {
 
                 state.semuaLaporan.filter {
-                    it.idPenemu == currentUid
+                    it.idPelapor == currentUid &&
+                            it.jenisLaporan == JenisLaporan.TEMUAN
                 }
+            }
+
+            TabLaporanku.KONTRIBUSI -> {
+
+                state.semuaLaporan.filter {
+
+                    (
+                            it.idPelapor == currentUid &&
+                                    it.jenisLaporan == JenisLaporan.TEMUAN
+                            )
+
+                            ||
+
+                            (
+                                    it.idPenemu == currentUid &&
+                                            it.idPelapor != currentUid
+                                    )
+                }
+            }
         }
     }
 

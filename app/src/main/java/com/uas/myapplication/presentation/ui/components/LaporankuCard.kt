@@ -2,6 +2,7 @@ package com.uas.myapplication.presentation.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.uas.myapplication.domain.model.Laporan
+import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.presentation.laporanku.TabLaporanku
 import com.uas.myapplication.presentation.ui.theme.DangerRed
 import com.uas.myapplication.presentation.ui.theme.DangerRedLight
@@ -44,7 +46,8 @@ import com.uas.myapplication.presentation.ui.theme.SlateGray100
 import com.uas.myapplication.presentation.ui.theme.SlateGray200
 import com.uas.myapplication.presentation.ui.theme.TextSub
 import kotlin.text.ifEmpty
-
+import com.uas.myapplication.presentation.ui.theme.SuccessGreen
+import com.uas.myapplication.presentation.ui.theme.SuccessGreenLight
 // =============================================
 // CARD LAPORANKU — dengan badge deskriptif
 // =============================================
@@ -93,12 +96,37 @@ fun LaporankuCard(
                     )
 
                     Spacer(modifier = Modifier.height(4.dp))
+                    if (
+                        tabAktif == TabLaporanku.BARANGKU &&
+                        laporan.statusBarang == StatusBarang.DITEMUKAN
+                    ) {
 
-                    // Badge deskriptif sesuai tab
-                    BadgeDeskriptif(
-                        laporan  = laporan,
-                        tabAktif = tabAktif
-                    )
+                        Box(
+                            modifier = Modifier
+                                .background(
+                                    SuccessGreenLight,
+                                    RoundedCornerShape(20.dp)
+                                )
+                                .padding(horizontal = 10.dp, vertical = 4.dp)
+                        ) {
+                            Text(
+                                text = "Barangmu Ditemukan",
+                                fontFamily = InterFontFamily,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 11.sp,
+                                color = SuccessGreen
+                            )
+                        }
+
+                    } else {
+
+                        StatusBadge(
+                            status = laporan.statusBarang
+                        )
+
+                    }
+
+                    Spacer(modifier = Modifier.height(6.dp))
 
                     Spacer(modifier = Modifier.height(6.dp))
 
