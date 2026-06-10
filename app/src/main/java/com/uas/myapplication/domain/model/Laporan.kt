@@ -23,8 +23,8 @@ data class Laporan(
     val fotoUrl: String = "",
     val idPenemu: String = "",
     // Metadata
-    val waktuDibuat: Long = 0L
-
+    val waktuDibuat: Long = 0L,
+    val jenisLaporan: JenisLaporan = JenisLaporan.HILANG
 
 )
 

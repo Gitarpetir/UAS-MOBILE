@@ -1,5 +1,6 @@
 package com.uas.myapplication.data.remote.dto
 
+import com.uas.myapplication.domain.model.JenisLaporan
 import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
 
@@ -19,6 +20,7 @@ data class LaporanDto(
     val lokasi: String = "",
     val tanggal: String = "",
     val status_barang: String = "HILANG",
+    val jenis_laporan: String = "HILANG",
     val foto_url: String = "",
     val id_penemu: String = "",
     val waktu_dibuat: Long = 0L
@@ -43,6 +45,10 @@ data class LaporanDto(
             "SELESAI"   -> StatusBarang.SELESAI
             else        -> StatusBarang.HILANG
         },
+        jenisLaporan = when (jenis_laporan) {
+            "TEMUAN" -> JenisLaporan.TEMUAN
+            else -> JenisLaporan.HILANG
+        },
         fotoUrl         = foto_url,
         idPenemu = id_penemu,
         waktuDibuat     = waktu_dibuat
@@ -65,7 +71,8 @@ fun Laporan.toMap(): Map<String, Any> = mapOf(
     "lokasi"           to lokasi,
     "tanggal"          to tanggal,
     "status_barang"    to statusBarang.name,
+    "jenis_laporan"    to jenisLaporan.name,
     "foto_url"         to fotoUrl,
-    "id_penemu" to idPenemu,
+    "id_penemu"        to idPenemu,
     "waktu_dibuat"     to waktuDibuat
 )

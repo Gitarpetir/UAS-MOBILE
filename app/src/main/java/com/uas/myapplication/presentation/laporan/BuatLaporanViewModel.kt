@@ -2,6 +2,7 @@ package com.uas.myapplication.presentation.laporan
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.uas.myapplication.domain.model.JenisLaporan
 import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.domain.repository.AuthRepository
@@ -138,6 +139,11 @@ class BuatLaporanViewModel(
                 lokasi          = state.lokasi.trim(),
                 tanggal         = state.tanggal,
                 statusBarang    = state.statusBarang,
+                jenisLaporan =
+                    if (state.statusBarang == StatusBarang.DITEMUKAN)
+                        JenisLaporan.TEMUAN
+                    else
+                        JenisLaporan.HILANG,
                 fotoUrl         = state.fotoUrl
             )
 
