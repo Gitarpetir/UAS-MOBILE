@@ -37,16 +37,18 @@ class LaporankuViewModel(
     }
 
     private fun ambilLaporanku() {
-        val uid = authRepository.getCurrentUserId() ?: return
         viewModelScope.launch {
-            laporanRepository.getLaporanByUser(uid).collect { daftarLaporan ->
-                _uiState.update {
-                    it.copy(
-                        semuaLaporan = daftarLaporan,
-                        isLoading    = false
-                    )
+
+            laporanRepository.getAllLaporan()
+                .collect { daftarLaporan ->
+
+                    _uiState.update {
+                        it.copy(
+                            semuaLaporan = daftarLaporan,
+                            isLoading = false
+                        )
+                    }
                 }
-            }
         }
     }
 
@@ -56,18 +58,26 @@ class LaporankuViewModel(
 
     // Filter laporan berdasarkan tab aktif
     fun getLaporanByTab(): List<Laporan> {
+
         val state = _uiState.value
+
+        val currentUid =
+            authRepository.getCurrentUserId()
+                ?: return emptyList()
+
         return when (state.tabAktif) {
-            // Tab Barangmu — laporan yang statusnya HILANG (milik sendiri)
-            TabLaporanku.BARANGMU  -> state.semuaLaporan.filter {
-                it.statusBarang == StatusBarang.HILANG ||
-                        it.statusBarang == StatusBarang.DITEMUKAN
-            }
-            // Tab Temuanmu — laporan barang temuan yang sudah DITEMUKAN/SELESAI
-            TabLaporanku.TEMUANMU -> state.semuaLaporan.filter {
-                it.statusBarang == StatusBarang.DITEMUKAN ||
-                        it.statusBarang == StatusBarang.SELESAI
-            }
+
+            TabLaporanku.BARANGMU ->
+
+                state.semuaLaporan.filter {
+                    it.idPelapor == currentUid
+                }
+
+            TabLaporanku.TEMUANMU ->
+
+                state.semuaLaporan.filter {
+                    it.idPenemu == currentUid
+                }
         }
     }
 
@@ -92,4 +102,8 @@ class LaporankuViewModel(
 
     // Jumlah laporan sesuai tab aktif
     fun getJumlahLaporan(): Int = getLaporanByTab().size
+
+    fun getCurrentUserId(): String? {
+        return authRepository.getCurrentUserId()
+    }
 }

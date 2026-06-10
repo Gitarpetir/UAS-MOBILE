@@ -156,10 +156,25 @@ class LaporanRepositoryImpl(
     /**
      * Mengubah status barang (HILANG → DITEMUKAN, dll).
      */
-    override suspend fun ubahStatus(id: String, status: StatusBarang): Result<Unit> {
+    override suspend fun ubahStatus(
+        id: String,
+        status: StatusBarang,
+        idPenemu: String
+    ): Result<Unit> {
+
         return try {
-            laporanCollection.document(id).update("status_barang", status.name).await()
+
+            laporanCollection.document(id)
+                .update(
+                    mapOf(
+                        "status_barang" to status.name,
+                        "id_penemu" to idPenemu
+                    )
+                )
+                .await()
+
             Result.success(Unit)
+
         } catch (e: Exception) {
             Result.failure(e)
         }
