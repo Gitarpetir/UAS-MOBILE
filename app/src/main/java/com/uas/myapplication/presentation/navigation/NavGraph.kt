@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -14,9 +15,29 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.firebase.auth.FirebaseAuth
+import com.uas.myapplication.di.AppContainer
+import com.uas.myapplication.di.ViewModelFactory
+import com.uas.myapplication.presentation.admin.DashboardAdminScreen
+import com.uas.myapplication.presentation.admin.DashboardAdminViewModel
+import com.uas.myapplication.presentation.auth.lengkapi_profil.LengkapiProfilScreen
+import com.uas.myapplication.presentation.auth.lengkapi_profil.LengkapiProfilViewModel
 import com.uas.myapplication.presentation.auth.login.LoginScreen
 import com.uas.myapplication.presentation.auth.login.LoginViewModel
+import com.uas.myapplication.presentation.auth.register.RegisterScreen
+import com.uas.myapplication.presentation.auth.register.RegisterViewModel
+import com.uas.myapplication.presentation.dashboard.DashboardScreen
+import com.uas.myapplication.presentation.dashboard.DashboardViewModel
+import com.uas.myapplication.presentation.detail.DetailBarangScreen
+import com.uas.myapplication.presentation.detail.DetailBarangViewModel
+import com.uas.myapplication.presentation.katalog.KatalogScreen
+import com.uas.myapplication.presentation.katalog.KatalogViewModel
+import com.uas.myapplication.presentation.laporan.BuatLaporanScreen
+import com.uas.myapplication.presentation.laporan.BuatLaporanViewModel
+import com.uas.myapplication.presentation.laporanku.LaporankuScreen
+import com.uas.myapplication.presentation.laporanku.LaporankuViewModel
 import com.uas.myapplication.presentation.onboarding.OnboardingScreen
+import com.uas.myapplication.presentation.profil.ProfilScreen
+import com.uas.myapplication.presentation.profil.ProfilViewModel
 
 /**
  * NavGraph utama aplikasi Cari.in.
@@ -60,52 +81,95 @@ fun CariInNavGraph(
         }
 
         composable(Screen.Login.route) {
-        //    val viewModel = remember {
-        //        LoginViewModel(authRepository = AppContainer.authRepository)
-        //    }
-        //    LoginScreen(
-        //        viewModel      = viewModel,
-        //        onLoginSuccess = { isAdmin ->
-        //            val target = if (isAdmin) Screen.DashboardAdmin.route
-        //            else Screen.Dashboard.route
-        //            navController.navigate(target) {
-        //                popUpTo(Screen.Login.route) { inclusive = true }
-        //            }
-        //        },
-        //        onDaftarClick = {
-        //            navController.navigate(Screen.Register.route)
-        //        }
-        //    )
-            Box(Modifier.fillMaxSize(), Alignment.Center) {
-                Text("Login")
-            }
+
+            val viewModel: LoginViewModel = viewModel(
+                factory = ViewModelFactory {
+                    LoginViewModel(
+                        AppContainer.authRepository
+                    )
+                }
+            )
+
+            LoginScreen(
+                viewModel = viewModel,
+
+                onLoginSuccess = { isAdmin ->
+
+                    val target =
+                        if (isAdmin)
+                            Screen.DashboardAdmin.route
+                        else
+                            Screen.Dashboard.route
+
+                    navController.navigate(target) {
+                        popUpTo(Screen.Login.route) {
+                            inclusive = true
+                        }
+                    }
+                },
+
+                onDaftarClick = {
+                    navController.navigate(Screen.Register.route)
+                },
+
+                onLengkapiProfil = {
+                    navController.navigate(Screen.LengkapiProfil.route)
+                },
+            )
         }
 
         composable(Screen.Register.route) {
-            // TODO: hubungkan ke AppContainer setelah DI selesai
-            // RegisterScreen(
-            //     viewModel         = RegisterViewModel(AppContainer.authRepository),
-            //     onRegisterSuccess = { navController.navigate(Screen.Dashboard.route) {
-            //         popUpTo(Screen.Register.route) { inclusive = true }
-            //     }},
-            //     onGoogleSuccess   = { navController.navigate(Screen.LengkapiProfil.route) },
-            //     onSudahPunyaAkun  = { navController.popBackStack() }
-            // )
-            Box(Modifier.fillMaxSize(), Alignment.Center) { Text("Register") }
+
+            val viewModel: RegisterViewModel = viewModel(
+                factory = ViewModelFactory {
+                    RegisterViewModel(
+                        AppContainer.authRepository
+                    )
+                }
+            )
+
+            RegisterScreen(
+                viewModel = viewModel,
+
+                onRegisterSuccess = {
+                    navController.navigate(Screen.Dashboard.route) {
+                        popUpTo(Screen.Register.route) {
+                            inclusive = true
+                        }
+                    }
+                },
+
+                onGoogleSuccess = {
+                    navController.navigate(Screen.LengkapiProfil.route)
+                },
+
+                onSudahPunyaAkun = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(Screen.LengkapiProfil.route) {
-            // TODO: hubungkan ke AppContainer setelah DI selesai
-            // LengkapiProfilScreen(
-            //     viewModel       = LengkapiProfilViewModel(
-            //         authRepository = AppContainer.authRepository,
-            //         userRepository = AppContainer.userRepository
-            //     ),
-            //     onSimpanSuccess = { navController.navigate(Screen.Dashboard.route) {
-            //         popUpTo(Screen.LengkapiProfil.route) { inclusive = true }
-            //     }}
-            // )
-            Box(Modifier.fillMaxSize(), Alignment.Center) { Text("Lengkapi Profil") }
+
+            val viewModel: LengkapiProfilViewModel = viewModel(
+                factory = ViewModelFactory {
+                    LengkapiProfilViewModel(
+                        authRepository = AppContainer.authRepository,
+                        userRepository = AppContainer.userRepository
+                    )
+                }
+            )
+
+            LengkapiProfilScreen(
+                viewModel = viewModel,
+                onSimpanSuccess = {
+                    navController.navigate(Screen.Dashboard.route) {
+                        popUpTo(Screen.LengkapiProfil.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
 
         // =============================================
@@ -113,81 +177,148 @@ fun CariInNavGraph(
         // =============================================
 
         composable(Screen.Dashboard.route) {
-            // TODO: Ganti dengan DashboardScreen() di Langkah 7
-            // DashboardScreen(
-            //     onLihatSemuaClick      = { navController.navigate(Screen.Katalog.route) },
-            //     onLaporKehilanganClick = { navController.navigate(Screen.BuatLaporan.route) },
-            //     onLaporTemuanClick     = { navController.navigate(Screen.BuatLaporan.route) },
-            //     onBarangClick          = { id -> navController.navigate(Screen.DetailBarang.createRoute(id)) },
-            //     onProfilClick          = { navController.navigate(Screen.Profil.route) },
-            //     onLaporankuClick       = { navController.navigate(Screen.Laporanku.route) }
-            // )
+
+            val viewModel: DashboardViewModel = viewModel(
+                factory = ViewModelFactory {
+                    DashboardViewModel(
+                        AppContainer.laporanRepository
+                    )
+                }
+            )
+
+            DashboardScreen(
+                viewModel = viewModel,
+                navController = navController
+            )
         }
 
         composable(Screen.Katalog.route) {
-            // TODO: Ganti dengan KatalogScreen() di Langkah 8
-            // KatalogScreen(
-            //     onBarangClick = { id -> navController.navigate(Screen.DetailBarang.createRoute(id)) },
-            //     onBackClick   = { navController.popBackStack() }
-            // )
+
+            val viewModel: KatalogViewModel = viewModel(
+                factory = ViewModelFactory {
+                    KatalogViewModel(
+                        AppContainer.laporanRepository
+                    )
+                }
+            )
+
+            KatalogScreen(
+                viewModel = viewModel,
+                navController = navController
+            )
         }
 
         // Detail Barang — menerima argumen laporanId
         composable(
             route = Screen.DetailBarang.route,
             arguments = listOf(
-                navArgument("laporanId") { type = NavType.StringType }
+                navArgument("laporanId") {
+                    type = NavType.StringType
+                }
             )
         ) { backStackEntry ->
-            val laporanId = backStackEntry.arguments?.getString("laporanId") ?: ""
-            // TODO: Ganti dengan DetailBarangScreen() di Langkah 8
-            // DetailBarangScreen(
-            //     laporanId   = laporanId,
-            //     onBackClick = { navController.popBackStack() }
-            // )
+
+            val laporanId =
+                backStackEntry.arguments?.getString("laporanId") ?: ""
+
+            val viewModel: DetailBarangViewModel = viewModel(
+                factory = ViewModelFactory {
+                    DetailBarangViewModel(
+                        laporanRepository = AppContainer.laporanRepository,
+                        userRepository = AppContainer.userRepository,
+                        authRepository = AppContainer.authRepository
+                    )
+                }
+            )
+
+            DetailBarangScreen(
+                viewModel = viewModel,
+                laporanId = laporanId,
+                navController = navController
+            )
         }
 
         composable(Screen.BuatLaporan.route) {
-            // TODO: Ganti dengan BuatLaporanScreen() di Langkah 9
-            // BuatLaporanScreen(
-            //     onKirimSuccess = { navController.popBackStack() },
-            //     onBackClick    = { navController.popBackStack() }
-            // )
+
+            val viewModel: BuatLaporanViewModel = viewModel(
+                factory = ViewModelFactory {
+                    BuatLaporanViewModel(
+                        laporanRepository = AppContainer.laporanRepository,
+                        authRepository = AppContainer.authRepository,
+                        userRepository = AppContainer.userRepository
+                    )
+                }
+            )
+
+            BuatLaporanScreen(
+                viewModel = viewModel,
+                navController = navController
+            )
         }
 
         // Edit Laporan — menerima argumen laporanId
         composable(
             route = Screen.EditLaporan.route,
             arguments = listOf(
-                navArgument("laporanId") { type = NavType.StringType }
+                navArgument("laporanId") {
+                    type = NavType.StringType
+                }
             )
         ) { backStackEntry ->
-            val laporanId = backStackEntry.arguments?.getString("laporanId") ?: ""
-            // TODO: Ganti dengan BuatLaporanScreen() mode edit di Langkah 9
-            // BuatLaporanScreen(
-            //     laporanId      = laporanId,    // mode edit jika tidak null
-            //     onKirimSuccess = { navController.popBackStack() },
-            //     onBackClick    = { navController.popBackStack() }
-            // )
+
+            val laporanId =
+                backStackEntry.arguments?.getString("laporanId") ?: ""
+
+            val viewModel: BuatLaporanViewModel = viewModel(
+                factory = ViewModelFactory {
+                    BuatLaporanViewModel(
+                        laporanRepository = AppContainer.laporanRepository,
+                        authRepository = AppContainer.authRepository,
+                        userRepository = AppContainer.userRepository
+                    )
+                }
+            )
+
+            BuatLaporanScreen(
+                viewModel = viewModel,
+                laporanId = laporanId,
+                navController = navController
+            )
         }
 
         composable(Screen.Laporanku.route) {
-            // TODO: Ganti dengan LaporankuScreen() di Langkah 9
-            // LaporankuScreen(
-            //     onTambahClick  = { navController.navigate(Screen.BuatLaporan.route) },
-            //     onEditClick    = { id -> navController.navigate(Screen.EditLaporan.createRoute(id)) },
-            //     onBarangClick  = { id -> navController.navigate(Screen.DetailBarang.createRoute(id)) },
-            //     onBackClick    = { navController.popBackStack() }
-            // )
+
+            val viewModel: LaporankuViewModel = viewModel(
+                factory = ViewModelFactory {
+                    LaporankuViewModel(
+                        laporanRepository = AppContainer.laporanRepository,
+                        authRepository = AppContainer.authRepository
+                    )
+                }
+            )
+
+            LaporankuScreen(
+                viewModel = viewModel,
+                navController = navController
+            )
         }
 
         composable(Screen.Profil.route) {
-            // TODO: Ganti dengan ProfilScreen() di Langkah 10
-            // ProfilScreen(
-            //     onLogoutSuccess = { navController.navigate(Screen.Login.route) {
-            //         popUpTo(0) { inclusive = true }
-            //     }}
-            // )
+
+            val viewModel: ProfilViewModel = viewModel(
+                factory = ViewModelFactory {
+                    ProfilViewModel(
+                        authRepository = AppContainer.authRepository,
+                        userRepository = AppContainer.userRepository,
+                        preferensiManager = AppContainer.preferensiManager
+                    )
+                }
+            )
+
+            ProfilScreen(
+                viewModel = viewModel,
+                navController = navController
+            )
         }
 
         // =============================================
@@ -195,13 +326,19 @@ fun CariInNavGraph(
         // =============================================
 
         composable(Screen.DashboardAdmin.route) {
-            // TODO: Ganti dengan DashboardAdminScreen() di Langkah 10
-            // DashboardAdminScreen(
-            //     onBarangClick   = { id -> navController.navigate(Screen.DetailBarang.createRoute(id)) },
-            //     onLogoutSuccess = { navController.navigate(Screen.Login.route) {
-            //         popUpTo(0) { inclusive = true }
-            //     }}
-            // )
+
+            val viewModel: DashboardAdminViewModel = viewModel(
+                factory = ViewModelFactory {
+                    DashboardAdminViewModel(
+                        AppContainer.laporanRepository
+                    )
+                }
+            )
+
+            DashboardAdminScreen(
+                viewModel = viewModel,
+                navController = navController
+            )
         }
     }
 }

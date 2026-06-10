@@ -13,13 +13,14 @@ import kotlinx.coroutines.launch
 // STATE — semua kondisi UI Login
 // =============================================
 data class LoginUiState(
-    val email           : String  = "",
-    val password        : String  = "",
-    val passwordVisible : Boolean = false,
-    val isLoading       : Boolean = false,
-    val errorMessage    : String? = null,
-    val loginSuccess    : Boolean = false,
-    val isAdmin         : Boolean = false
+    val email               : String  = "",
+    val password            : String  = "",
+    val passwordVisible     : Boolean = false,
+    val isLoading           : Boolean = false,
+    val errorMessage        : String? = null,
+    val loginSuccess        : Boolean = false,
+    val needsCompleteProfile: Boolean = false,
+    val isAdmin             : Boolean = false
 )
 
 class LoginViewModel(
@@ -66,8 +67,28 @@ class LoginViewModel(
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
             val result = authRepository.loginWithGoogle(idToken)
             result.fold(
-                onSuccess = { user ->
-                    _uiState.update { it.copy(isLoading = false, loginSuccess = true, isAdmin = user.isAdmin()) }
+                onSuccess = { result ->
+
+                    if (result.isNewUser) {
+
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                needsCompleteProfile = true
+                            )
+                        }
+
+                    } else {
+
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                loginSuccess = true,
+                                isAdmin = result.user.isAdmin()
+                            )
+                        }
+
+                    }
                 },
                 onFailure = { error ->
                     _uiState.update { it.copy(isLoading = false, errorMessage = pesanErrorFirebase(error.message)) }
@@ -78,6 +99,12 @@ class LoginViewModel(
 
     fun resetLoginSuccess() {
         _uiState.update { it.copy(loginSuccess = false) }
+    }
+
+    fun resetNeedsCompleteProfile() {
+        _uiState.update {
+            it.copy(needsCompleteProfile = false)
+        }
     }
 
     private fun pesanErrorFirebase(message: String?): String {

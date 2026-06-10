@@ -8,10 +8,17 @@ import com.uas.myapplication.data.remote.dto.toMap
 import com.uas.myapplication.domain.model.User
 import com.uas.myapplication.domain.repository.AuthRepository
 import kotlinx.coroutines.tasks.await
+import android.content.Context
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.uas.myapplication.domain.model.GoogleAuthResult
+
+
 
 class AuthRepositoryImpl(
     private val auth     : FirebaseAuth,
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val context  : Context
 ) : AuthRepository {
 
     private val usersCollection = firestore.collection("users")
@@ -29,28 +36,56 @@ class AuthRepositoryImpl(
         }
     }
 
-    override suspend fun loginWithGoogle(idToken: String): Result<User> {
+    override suspend fun loginWithGoogle(
+        idToken: String
+    ): Result<GoogleAuthResult> {
+
         return try {
-            val credential = GoogleAuthProvider.getCredential(idToken, null)
-            val authResult = auth.signInWithCredential(credential).await()
-            val firebaseUser = authResult.user ?: throw Exception("Login Google gagal")
-            val snapshot = usersCollection.document(firebaseUser.uid).get().await()
+
+            val credential =
+                GoogleAuthProvider.getCredential(idToken, null)
+
+            val authResult =
+                auth.signInWithCredential(credential).await()
+
+            val firebaseUser =
+                authResult.user ?: throw Exception("Login Google gagal")
+
+            val snapshot =
+                usersCollection.document(firebaseUser.uid)
+                    .get()
+                    .await()
 
             if (snapshot.exists()) {
-                val userDto = snapshot.toObject(UserDto::class.java)
-                    ?: throw Exception("Data pengguna tidak ditemukan")
-                Result.success(userDto.toDomain())
-            } else {
-                // Pengguna baru via Google — NIM & WhatsApp diisi di Lengkapi Profil
-                val newUser = User(
-                    uid         = firebaseUser.uid,
-                    namaLengkap = firebaseUser.displayName ?: "",
-                    email       = firebaseUser.email ?: "",
-                    peran       = "mahasiswa"
+
+                val userDto =
+                    snapshot.toObject(UserDto::class.java)
+                        ?: throw Exception("Data pengguna tidak ditemukan")
+
+                Result.success(
+                    GoogleAuthResult(
+                        user = userDto.toDomain(),
+                        isNewUser = false
+                    )
                 )
-                usersCollection.document(newUser.uid).set(newUser.toMap()).await()
-                Result.success(newUser)
+
+            } else {
+
+                val newUser = User(
+                    uid = firebaseUser.uid,
+                    namaLengkap = firebaseUser.displayName ?: "",
+                    email = firebaseUser.email ?: "",
+                    peran = "mahasiswa"
+                )
+
+                Result.success(
+                    GoogleAuthResult(
+                        user = newUser,
+                        isNewUser = true
+                    )
+                )
             }
+
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -84,7 +119,17 @@ class AuthRepositoryImpl(
     }
 
     override suspend fun logout() {
+
         auth.signOut()
+
+        val gso = GoogleSignInOptions.Builder(
+            GoogleSignInOptions.DEFAULT_SIGN_IN
+        )
+            .requestEmail()
+            .build()
+
+        GoogleSignIn.getClient(context, gso)
+            .signOut()
     }
 
     override fun getCurrentUserId(): String? {
