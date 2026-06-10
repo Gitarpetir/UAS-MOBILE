@@ -52,6 +52,7 @@ import kotlin.text.ifEmpty
 fun LaporankuCard(
     laporan     : Laporan,
     tabAktif    : TabLaporanku,
+    bolehEditHapus : Boolean,
     onEditClick : () -> Unit,
     onHapusClick: () -> Unit
 ) {
@@ -127,48 +128,60 @@ fun LaporankuCard(
             Spacer(modifier = Modifier.height(10.dp))
 
             // Baris bawah — tombol Edit & Hapus
-            Row(
-                modifier              = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                // Tombol Edit
-                OutlinedButton(
-                    onClick  = onEditClick,
-                    modifier = Modifier.weight(1f).height(38.dp),
-                    shape    = RoundedCornerShape(8.dp),
-                    border   = androidx.compose.foundation.BorderStroke(1.dp, SlateGray200)
+            if (bolehEditHapus) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Icon(Icons.Default.Edit, null, tint = TextSub, modifier = Modifier.size(14.dp))
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text       = "Edit",
-                        fontFamily = InterFontFamily,
-                        fontWeight = FontWeight.Medium,
-                        fontSize   = 13.sp,
-                        color      = TextSub
-                    )
-                }
+                    // Tombol Edit
+                    OutlinedButton(
+                        onClick = onEditClick,
+                        modifier = Modifier.weight(1f).height(38.dp),
+                        shape = RoundedCornerShape(8.dp),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, SlateGray200)
+                    ) {
+                        Icon(
+                            Icons.Default.Edit,
+                            null,
+                            tint = TextSub,
+                            modifier = Modifier.size(14.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = "Edit",
+                            fontFamily = InterFontFamily,
+                            fontWeight = FontWeight.Medium,
+                            fontSize = 13.sp,
+                            color = TextSub
+                        )
+                    }
 
-                // Tombol Hapus
-                Button(
-                    onClick  = onHapusClick,
-                    modifier = Modifier.weight(1f).height(38.dp),
-                    shape    = RoundedCornerShape(8.dp),
-                    colors   = ButtonDefaults.buttonColors(
-                        containerColor = DangerRedLight,
-                        contentColor   = DangerRed
-                    ),
-                    elevation = ButtonDefaults.buttonElevation(0.dp)
-                ) {
-                    Icon(Icons.Default.Delete, null, tint = DangerRed, modifier = Modifier.size(14.dp))
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text       = "Hapus",
-                        fontFamily = InterFontFamily,
-                        fontWeight = FontWeight.Medium,
-                        fontSize   = 13.sp,
-                        color      = DangerRed
-                    )
+                    // Tombol Hapus
+                    Button(
+                        onClick = onHapusClick,
+                        modifier = Modifier.weight(1f).height(38.dp),
+                        shape = RoundedCornerShape(8.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = DangerRedLight,
+                            contentColor = DangerRed
+                        ),
+                        elevation = ButtonDefaults.buttonElevation(0.dp)
+                    ) {
+                        Icon(
+                            Icons.Default.Delete,
+                            null,
+                            tint = DangerRed,
+                            modifier = Modifier.size(14.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = "Hapus",
+                            fontFamily = InterFontFamily,
+                            fontWeight = FontWeight.Medium,
+                            fontSize = 13.sp,
+                            color = DangerRed
+                        )
+                    }
                 }
             }
         }

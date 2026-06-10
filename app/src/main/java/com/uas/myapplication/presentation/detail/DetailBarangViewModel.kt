@@ -94,11 +94,34 @@ class DetailBarangViewModel(
 
     // Konfirmasi "Aku Menemukan Barang Ini" — ubah status HILANG → DITEMUKAN
     fun onKonfirmasiTemukan() {
-        val laporanId = _uiState.value.laporan?.id ?: return
+
+        val laporanId =
+            _uiState.value.laporan?.id ?: return
+
+        val currentUid =
+            authRepository.getCurrentUserId() ?: return
+
         viewModelScope.launch {
-            _uiState.update { it.copy(showDialogTemukan = false, isLoading = true) }
-            laporanRepository.ubahStatus(laporanId, StatusBarang.DITEMUKAN)
-            _uiState.update { it.copy(isLoading = false, aksiSuccess = true) }
+
+            _uiState.update {
+                it.copy(
+                    showDialogTemukan = false,
+                    isLoading = true
+                )
+            }
+
+            laporanRepository.ubahStatus(
+                id = laporanId,
+                status = StatusBarang.DITEMUKAN,
+                idPenemu = currentUid
+            )
+
+            _uiState.update {
+                it.copy(
+                    isLoading = false,
+                    aksiSuccess = true
+                )
+            }
         }
     }
 

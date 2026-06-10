@@ -133,12 +133,22 @@ fun LaporankuScreen(
             // List laporan
             items(laporanByTab) { laporan ->
                 LaporankuCard(
-                    laporan      = laporan,
-                    tabAktif     = uiState.tabAktif,
-                    onEditClick  = {
-                        navController.navigate(Screen.EditLaporan.createRoute(laporan.id))
+                    laporan = laporan,
+                    tabAktif = uiState.tabAktif,
+
+                    bolehEditHapus =
+                        laporan.idPelapor ==
+                                viewModel.getCurrentUserId(),
+
+                    onEditClick = {
+                        navController.navigate(
+                            Screen.EditLaporan.createRoute(laporan.id)
+                        )
                     },
-                    onHapusClick = { viewModel.onHapusClick(laporan) }
+
+                    onHapusClick = {
+                        viewModel.onHapusClick(laporan)
+                    }
                 )
             }
 
@@ -272,7 +282,8 @@ fun PreviewLaporankuBarangmu() {
                     laporan      = laporan,
                     tabAktif     = TabLaporanku.BARANGMU,
                     onEditClick  = {},
-                    onHapusClick = {}
+                    onHapusClick = {},
+                    bolehEditHapus = true
                 )
             }
         }
@@ -309,7 +320,8 @@ fun PreviewLaporankuTemuanmu() {
                     laporan      = laporan,
                     tabAktif     = TabLaporanku.TEMUANMU,
                     onEditClick  = {},
-                    onHapusClick = {}
+                    onHapusClick = {},
+                    bolehEditHapus = false
                 )
             }
         }

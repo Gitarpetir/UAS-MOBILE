@@ -21,9 +21,11 @@ data class Laporan(
     val tanggal: String = "",
     val statusBarang: StatusBarang = StatusBarang.HILANG,
     val fotoUrl: String = "",
-
+    val idPenemu: String = "",
     // Metadata
     val waktuDibuat: Long = 0L
+
+
 )
 
 /**

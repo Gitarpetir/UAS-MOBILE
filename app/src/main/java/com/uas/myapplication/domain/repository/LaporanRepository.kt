@@ -47,5 +47,9 @@ interface LaporanRepository {
      * Mengubah status barang.
      * Digunakan saat tombol "Aku menemukan barang ini" ditekan.
      */
-    suspend fun ubahStatus(id: String, status: StatusBarang): Result<Unit>
+    suspend fun ubahStatus(
+        id: String,
+        status: StatusBarang,
+        idPenemu: String = ""
+    ): Result<Unit>
 }

@@ -20,7 +20,9 @@ data class LaporanDto(
     val tanggal: String = "",
     val status_barang: String = "HILANG",
     val foto_url: String = "",
+    val id_penemu: String = "",
     val waktu_dibuat: Long = 0L
+
 ) {
     /**
      * Mengubah DTO menjadi Domain Model (Laporan).
@@ -42,6 +44,7 @@ data class LaporanDto(
             else        -> StatusBarang.HILANG
         },
         fotoUrl         = foto_url,
+        idPenemu = id_penemu,
         waktuDibuat     = waktu_dibuat
     )
 }
@@ -63,5 +66,6 @@ fun Laporan.toMap(): Map<String, Any> = mapOf(
     "tanggal"          to tanggal,
     "status_barang"    to statusBarang.name,
     "foto_url"         to fotoUrl,
+    "id_penemu" to idPenemu,
     "waktu_dibuat"     to waktuDibuat
 )
