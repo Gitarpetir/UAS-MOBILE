@@ -217,19 +217,52 @@ fun BuatLaporanScreen(
             // Tanggal — DatePicker
             LabelWajib("Tanggal")
             Spacer(modifier = Modifier.height(6.dp))
-            OutlinedTextField(
-                value         = uiState.tanggal,
-                onValueChange = {},
-                placeholder   = { Text("Pilih tanggal", fontFamily = InterFontFamily, fontSize = 14.sp, color = TextHint) },
-                leadingIcon   = { Icon(Icons.Default.CalendarToday, null, tint = TextHint) },
-                readOnly      = true,
-                isError       = uiState.tanggalError,
-                singleLine    = true,
-                modifier      = Modifier.fillMaxWidth().clickable { showDatePicker = true },
-                shape         = RoundedCornerShape(12.dp),
-                colors        = OutlinedTextFieldDefaults.colors(focusedBorderColor = Blue700, unfocusedBorderColor = SlateGray200, cursorColor = Blue700, errorBorderColor = DangerRed)
-            )
-            if (uiState.tanggalError) TeksError("Tanggal wajib dipilih")
+
+            Box(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                OutlinedTextField(
+                    value = uiState.tanggal,
+                    onValueChange = {},
+                    placeholder = {
+                        Text(
+                            "Pilih tanggal",
+                            fontFamily = InterFontFamily,
+                            fontSize = 14.sp,
+                            color = TextHint
+                        )
+                    },
+                    leadingIcon = {
+                        Icon(
+                            Icons.Default.CalendarToday,
+                            contentDescription = null,
+                            tint = TextHint
+                        )
+                    },
+                    readOnly = true,
+                    isError = uiState.tanggalError,
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Blue700,
+                        unfocusedBorderColor = SlateGray200,
+                        errorBorderColor = DangerRed
+                    )
+                )
+
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .clickable {
+                            showDatePicker = true
+                        }
+                )
+            }
+
+            if (uiState.tanggalError) {
+                TeksError("Tanggal wajib dipilih")
+            }
 
             AnimatedVisibility(visible = uiState.errorMessage != null, enter = fadeIn(), exit = fadeOut()) {
                 Text(text = uiState.errorMessage ?: "", color = DangerRed, fontFamily = InterFontFamily, fontSize = 12.sp, modifier = Modifier.fillMaxWidth().padding(top = 8.dp))

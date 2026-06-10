@@ -12,7 +12,20 @@
           "package_name": "com.uas.myapplication"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "525863674514-0pd025fub38caecu298q0c1q1k84s2d6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uas.myapplication",
+            "certificate_hash": "937b14d8a177dd55d4d26c565cfd96c7d1310ef2"
+          }
+        },
+        {
+          "client_id": "525863674514-9vq28havbg8gm9d4aj3m1flujhe82ie1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAWoO2QC4pvfZM-upigPxzQwYzAaTxAavE"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "525863674514-9vq28havbg8gm9d4aj3m1flujhe82ie1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

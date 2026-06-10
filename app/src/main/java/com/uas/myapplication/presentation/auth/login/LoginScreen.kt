@@ -51,8 +51,9 @@ import com.uas.myapplication.presentation.ui.theme.*
 fun LoginScreen(
     viewModel     : LoginViewModel,
     onLoginSuccess: (isAdmin: Boolean) -> Unit,
+    onLengkapiProfil: () -> Unit,
     onDaftarClick : () -> Unit
-) {
+) { 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context  = LocalContext.current
 
@@ -74,6 +75,13 @@ fun LoginScreen(
         if (uiState.loginSuccess) {
             onLoginSuccess(uiState.isAdmin)
             viewModel.resetLoginSuccess()
+        }
+    }
+
+    LaunchedEffect(uiState.needsCompleteProfile) {
+        if (uiState.needsCompleteProfile) {
+            onLengkapiProfil()
+            viewModel.resetNeedsCompleteProfile()
         }
     }
 

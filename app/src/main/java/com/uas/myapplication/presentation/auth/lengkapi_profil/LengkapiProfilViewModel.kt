@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import com.google.firebase.auth.FirebaseAuth
+import com.uas.myapplication.domain.model.User
 
 // =============================================
 // STATE
@@ -65,12 +67,18 @@ class LengkapiProfilViewModel(
 
         viewModelScope.launch {_uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
-            val result = userRepository.updateUser(
-                uid           = uid,
-                namaLengkap   = state.namaLengkap.trim(),
-                nim           = state.nim.trim(),
-                nomorWhatsapp = state.nomorWhatsapp.trim()
+            val firebaseUser = FirebaseAuth.getInstance().currentUser
+
+            val user = User(
+                uid = uid,
+                namaLengkap = state.namaLengkap.trim(),
+                nim = state.nim.trim(),
+                email = firebaseUser?.email ?: "",
+                nomorWhatsapp = state.nomorWhatsapp.trim(),
+                peran = "mahasiswa"
             )
+
+            val result = userRepository.saveUser(user)
 
             result.fold(
                 onSuccess = {

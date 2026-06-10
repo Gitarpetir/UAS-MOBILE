@@ -2,6 +2,7 @@ package com.uas.myapplication.data.repository
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.uas.myapplication.data.remote.dto.LaporanDto
@@ -19,6 +20,10 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
+import com.uas.myapplication.BuildConfig
+import androidx.core.net.toUri
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * Implementasi LaporanRepository.
@@ -28,8 +33,8 @@ class LaporanRepositoryImpl(
     private val firestore: FirebaseFirestore,
     private val context: Context,
     // Isi dengan data dari dashboard Cloudinary kamu
-    private val cloudinaryCloudName: String = "dmpnnrzlf",
-    private val cloudinaryUploadPreset: String = "cariin_preset"
+    private val cloudinaryCloudName: String = BuildConfig.CLOUDINARY_CLOUD_NAME,
+    private val cloudinaryUploadPreset: String = BuildConfig.CLOUDINARY_UPLOAD_PRESET
 ) : LaporanRepository {
 
     private val laporanCollection = firestore.collection("laporan")
@@ -167,9 +172,17 @@ class LaporanRepositoryImpl(
      * @param uriString URI lokal foto dari galeri/kamera pengguna
      * @return URL foto yang sudah diupload ke Cloudinary
      */
-    private suspend fun uploadFotoKeCloudinary(uriString: String): String {
-        return try {
-            val uri = Uri.parse(uriString)
+    private suspend fun uploadFotoKeCloudinary(uriString: String): String =
+        withContext(Dispatchers.IO){
+            Log.d(
+                "CLOUDINARY_TEST",
+                "cloud=$cloudinaryCloudName preset=$cloudinaryUploadPreset"
+            )
+            val uri = uriString.toUri()
+            Log.d(
+                "CLOUDINARY_URI",
+                uri.toString()
+            )
 
             // Baca byte dari URI lokal
             val inputStream = context.contentResolver.openInputStream(uri)
@@ -197,14 +210,12 @@ class LaporanRepositoryImpl(
             val response = httpClient.newCall(request).execute()
             val responseBody = response.body?.string()
                 ?: throw Exception("Response Cloudinary kosong")
+            Log.d("CLOUDINARY_RESPONSE", responseBody)
 
             if (!response.isSuccessful) throw Exception("Upload gagal: $responseBody")
 
             // Ambil URL dari response JSON Cloudinary
             val json = JSONObject(responseBody)
             json.getString("secure_url")
-        } catch (e: Exception) {
-            throw Exception("Gagal upload foto: ${e.message}")
         }
     }
-}

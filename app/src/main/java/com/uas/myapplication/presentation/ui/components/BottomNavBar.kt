@@ -1,5 +1,6 @@
 package com.uas.myapplication.presentation.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -105,18 +106,8 @@ fun CariInBottomNavBar(
 
             NavigationBarItem(
                 selected = isSelected,
-                onClick  = {
-                    if (currentRoute != item.route) {
-                        navController.navigate(item.route) {
-                            // Kembali ke Dashboard saat pindah tab
-                            // agar back stack tidak menumpuk
-                            popUpTo(Screen.Dashboard.route) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState    = true
-                        }
-                    }
+                onClick = {
+                    navController.navigate(item.route)
                 },
                 icon = {
                     Icon(

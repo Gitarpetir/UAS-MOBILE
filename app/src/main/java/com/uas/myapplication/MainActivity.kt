@@ -8,13 +8,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.uas.myapplication.di.AppContainer
 import com.uas.myapplication.presentation.navigation.CariInNavGraph
 import com.uas.myapplication.presentation.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        AppContainer.init(applicationContext)
+
         enableEdgeToEdge()
+
         setContent {
             MyApplicationTheme {
                 Surface(
