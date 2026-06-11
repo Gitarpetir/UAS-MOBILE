@@ -1,5 +1,6 @@
-package com.uas.myapplication.presentation.ui.components
+package com.uas.myapplication.presentation.detail.components
 
+import com.uas.myapplication.presentation.ui.components.common.InfoItem
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -16,11 +17,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.uas.myapplication.presentation.detail.InfoItem
 import com.uas.myapplication.presentation.ui.theme.PoppinsFontFamily
 import androidx.compose.material3.Text
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.uas.myapplication.presentation.ui.theme.MyApplicationTheme
 
 @Composable
 fun InformasiPenggunaCard(
@@ -65,5 +67,41 @@ fun InformasiPenggunaCard(
             )
 
         }
+    }
+}
+
+@Preview(
+    showBackground = true,
+    name = "Informasi Pelapor"
+)
+@Composable
+private fun PreviewInformasiPelaporCard() {
+
+    MyApplicationTheme {
+
+        InformasiPenggunaCard(
+            title = "Informasi Pelapor",
+            nama = "Muhammad Alfi Gunawan",
+            nim = "2410817110009"
+        )
+
+    }
+}
+
+@Preview(
+    showBackground = true,
+    name = "Informasi Penemu"
+)
+@Composable
+private fun PreviewInformasiPenemuCard() {
+
+    MyApplicationTheme {
+
+        InformasiPenggunaCard(
+            title = "Informasi Penemu",
+            nama = "Budi Santoso",
+            nim = "2410817110010"
+        )
+
     }
 }
