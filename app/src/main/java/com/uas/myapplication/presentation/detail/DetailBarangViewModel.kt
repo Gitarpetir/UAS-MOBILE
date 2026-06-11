@@ -110,10 +110,17 @@ class DetailBarangViewModel(
                 )
             }
 
+            val user =
+                userRepository.getUserById(currentUid)
+                    .getOrNull()
+
             laporanRepository.ubahStatus(
                 id = laporanId,
                 status = StatusBarang.DITEMUKAN,
-                idPenemu = currentUid
+                idPenemu = currentUid,
+                namaPenemu = user?.namaLengkap ?: "",
+                nimPenemu = user?.nim ?: "",
+                whatsappPenemu = user?.nomorWhatsapp ?: ""
             )
 
             _uiState.update {

@@ -36,15 +36,30 @@ import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*
 import java.util.Calendar
+import androidx.core.net.toUri
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BuatLaporanScreen(
-    viewModel    : BuatLaporanViewModel,
-    laporanId    : String? = null,
+    viewModel: BuatLaporanViewModel,
+    statusAwal: String = "hilang",
+    laporanId: String? = null,
     navController: NavController
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(statusAwal) {
+
+        if (laporanId == null) {
+
+            viewModel.onStatusBarangChange(
+                if (statusAwal == "ditemukan")
+                    StatusBarang.DITEMUKAN
+                else
+                    StatusBarang.HILANG
+            )
+        }
+    }
 
     LaunchedEffect(laporanId) {
         if (!laporanId.isNullOrEmpty()) {
@@ -161,7 +176,7 @@ fun BuatLaporanScreen(
             Spacer(modifier = Modifier.height(8.dp))
             Box(
                 modifier = Modifier
-                    .fillMaxWidth().height(160.dp)
+                    .fillMaxWidth().height(360.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .background(MaterialTheme.colorScheme.surface)
                     .border(1.5.dp, SlateGray200, RoundedCornerShape(12.dp))
@@ -169,7 +184,7 @@ fun BuatLaporanScreen(
                 contentAlignment = Alignment.Center
             ) {
                 when {
-                    uiState.fotoUri.isNotEmpty() -> AsyncImage(model = Uri.parse(uiState.fotoUri), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
+                    uiState.fotoUri.isNotEmpty() -> AsyncImage(model = uiState.fotoUri.toUri(), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
                     uiState.fotoUrl.isNotEmpty() -> AsyncImage(model = uiState.fotoUrl, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
                     else -> Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Icon(Icons.Default.Upload, null, tint = TextHint, modifier = Modifier.size(36.dp))
@@ -320,12 +335,20 @@ fun TeksError(pesan: String) {
 @Composable
 fun PreviewBuatLaporan() {
     MyApplicationTheme {
-        Column(modifier = Modifier.fillMaxSize().background(SlateWhite).padding(horizontal = 16.dp)) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .background(SlateWhite).padding(horizontal = 16.dp)) {
+
             Spacer(modifier = Modifier.height(24.dp))
+
             Text("Laporkan Barang", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.Bold, fontSize = 22.sp, color = TextMain)
+
             Spacer(modifier = Modifier.height(20.dp))
+
             Text("Status Barang", fontFamily = InterFontFamily, fontWeight = FontWeight.Medium, fontSize = 13.sp, color = TextMain)
+
             Spacer(modifier = Modifier.height(8.dp))
+
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Button(onClick = {}, modifier = Modifier.weight(1f).height(44.dp), shape = RoundedCornerShape(10.dp), colors = ButtonDefaults.buttonColors(containerColor = DangerRed), elevation = ButtonDefaults.buttonElevation(0.dp)) { Text("Hilang", fontFamily = InterFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = Color.White) }
                 Button(onClick = {}, modifier = Modifier.weight(1f).height(44.dp), shape = RoundedCornerShape(10.dp), colors = ButtonDefaults.buttonColors(containerColor = SlateGray50), elevation = ButtonDefaults.buttonElevation(0.dp)) { Text("Ditemukan", fontFamily = InterFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 14.sp, color = TextSub) }
@@ -333,22 +356,38 @@ fun PreviewBuatLaporan() {
             Spacer(modifier = Modifier.height(20.dp))
             Text("Foto Barang", fontFamily = InterFontFamily, fontWeight = FontWeight.Medium, fontSize = 13.sp, color = TextMain)
             Spacer(modifier = Modifier.height(8.dp))
-            Box(modifier = Modifier.fillMaxWidth().height(160.dp).clip(RoundedCornerShape(12.dp)).background(SlateGray50).border(1.5.dp, SlateGray200, RoundedCornerShape(12.dp)), contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth().
+                    height(160.dp).
+                    clip(RoundedCornerShape(12.dp)).
+                    background(SlateGray50).
+                    border(1.5.dp, SlateGray200, RoundedCornerShape(12.dp)), contentAlignment = Alignment.Center) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Icon(Icons.Default.Upload, null, tint = TextHint, modifier = Modifier.size(36.dp))
                     Spacer(modifier = Modifier.height(8.dp))
                     Text("Tekan untuk mengunggah foto", fontFamily = InterFontFamily, fontSize = 13.sp, color = TextHint)
                 }
             }
+
             Spacer(modifier = Modifier.height(20.dp))
+
             LabelWajib("Nama Barang"); Spacer(Modifier.height(6.dp))
+
             CariInTextField(value = "", onValueChange = {}, label = "", placeholder = "misalnya, Jam Hitam")
+
             Spacer(modifier = Modifier.height(16.dp))
+
             LabelWajib("Deskripsi"); Spacer(Modifier.height(6.dp))
+
             OutlinedTextField(value = "", onValueChange = {}, placeholder = { Text("Berikan detail tentang barang tersebut...", fontFamily = InterFontFamily, fontSize = 14.sp, color = TextHint) }, modifier = Modifier.fillMaxWidth().height(120.dp), shape = RoundedCornerShape(12.dp), maxLines = 5, colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Blue700, unfocusedBorderColor = SlateGray200))
+
             Spacer(modifier = Modifier.height(16.dp))
+
             LabelWajib("Lokasi"); Spacer(Modifier.height(6.dp))
+
             CariInTextField(value = "", onValueChange = {}, label = "", placeholder = "misalnya, Lab Komputer Dasar", leadingIcon = { Icon(Icons.Default.LocationOn, null, tint = TextHint) })
+
             Spacer(modifier = Modifier.height(16.dp))
             LabelWajib("Tanggal"); Spacer(Modifier.height(6.dp))
             OutlinedTextField(value = "", onValueChange = {}, placeholder = { Text("Pilih tanggal", fontFamily = InterFontFamily, fontSize = 14.sp, color = TextHint) }, leadingIcon = { Icon(Icons.Default.CalendarToday, null, tint = TextHint) }, readOnly = true, singleLine = true, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp), colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Blue700, unfocusedBorderColor = SlateGray200))

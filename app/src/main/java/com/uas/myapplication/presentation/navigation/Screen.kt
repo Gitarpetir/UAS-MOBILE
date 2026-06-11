@@ -19,7 +19,11 @@
         // =============================================
         data object Dashboard       : Screen("dashboard")
         data object Katalog         : Screen("katalog")
-        data object BuatLaporan     : Screen("buat_laporan")
+        data object BuatLaporan : Screen("buat_laporan?status={status}") {
+            fun createRoute(status: String): String {
+                return "buat_laporan?status=$status"
+            }
+        }
         data object Profil          : Screen("profil")
         data object Laporanku       : Screen("laporanku")
 

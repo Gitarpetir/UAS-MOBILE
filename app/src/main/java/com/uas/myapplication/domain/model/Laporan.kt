@@ -22,6 +22,9 @@ data class Laporan(
     val statusBarang: StatusBarang = StatusBarang.HILANG,
     val fotoUrl: String = "",
     val idPenemu: String = "",
+    val namaPenemu: String = "",
+    val nimPenemu: String = "",
+    val whatsappPenemu: String = "",
     // Metadata
     val waktuDibuat: Long = 0L,
     val jenisLaporan: JenisLaporan = JenisLaporan.HILANG
