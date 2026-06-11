@@ -31,7 +31,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.uas.myapplication.domain.model.StatusBarang
-import com.uas.myapplication.presentation.auth.login.CariInTextField
+import com.uas.myapplication.presentation.ui.components.CariInTextField
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*

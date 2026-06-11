@@ -35,7 +35,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.uas.myapplication.R
-import com.uas.myapplication.presentation.auth.login.CariInTextField
+import com.uas.myapplication.presentation.ui.components.CariInTextField
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
 

@@ -21,7 +21,7 @@ import androidx.navigation.NavController
 import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.components.BarangCard
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
-import com.uas.myapplication.presentation.ui.components.CariInFilterChip
+import com.uas.myapplication.presentation.admin.components.FilterChipAdminRow
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import androidx.compose.ui.tooling.preview.Preview
@@ -172,54 +172,7 @@ fun LaporanAdminScreen(
     }
 }
 
-@Composable
-fun FilterChipAdminRow(
-    filterAktif: FilterAdmin,
-    onFilterChange: (FilterAdmin) -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(
-                horizontal = 16.dp,
-                vertical = 12.dp
-            ),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
 
-        CariInFilterChip(
-            label = "Semua",
-            isSelected = filterAktif == FilterAdmin.SEMUA,
-            onClick = {
-                onFilterChange(FilterAdmin.SEMUA)
-            }
-        )
-
-        CariInFilterChip(
-            label = "Hilang",
-            isSelected = filterAktif == FilterAdmin.HILANG,
-            onClick = {
-                onFilterChange(FilterAdmin.HILANG)
-            }
-        )
-
-        CariInFilterChip(
-            label = "Ditemukan",
-            isSelected = filterAktif == FilterAdmin.DITEMUKAN,
-            onClick = {
-                onFilterChange(FilterAdmin.DITEMUKAN)
-            }
-        )
-
-        CariInFilterChip(
-            label = "Selesai",
-            isSelected = filterAktif == FilterAdmin.SELESAI,
-            onClick = {
-                onFilterChange(FilterAdmin.SELESAI)
-            }
-        )
-    }
-}
 
 @Preview(
     showBackground = true,

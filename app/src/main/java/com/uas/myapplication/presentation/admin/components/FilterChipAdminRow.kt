@@ -1,0 +1,59 @@
+package com.uas.myapplication.presentation.admin.components
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.uas.myapplication.presentation.admin.FilterAdmin
+import com.uas.myapplication.presentation.ui.components.CariInFilterChip
+
+@Composable
+fun FilterChipAdminRow(
+    filterAktif: FilterAdmin,
+    onFilterChange: (FilterAdmin) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                horizontal = 16.dp,
+                vertical = 12.dp
+            ),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        CariInFilterChip(
+            label = "Semua",
+            isSelected = filterAktif == FilterAdmin.SEMUA,
+            onClick = {
+                onFilterChange(FilterAdmin.SEMUA)
+            }
+        )
+
+        CariInFilterChip(
+            label = "Hilang",
+            isSelected = filterAktif == FilterAdmin.HILANG,
+            onClick = {
+                onFilterChange(FilterAdmin.HILANG)
+            }
+        )
+
+        CariInFilterChip(
+            label = "Ditemukan",
+            isSelected = filterAktif == FilterAdmin.DITEMUKAN,
+            onClick = {
+                onFilterChange(FilterAdmin.DITEMUKAN)
+            }
+        )
+
+        CariInFilterChip(
+            label = "Selesai",
+            isSelected = filterAktif == FilterAdmin.SELESAI,
+            onClick = {
+                onFilterChange(FilterAdmin.SELESAI)
+            }
+        )
+    }
+}

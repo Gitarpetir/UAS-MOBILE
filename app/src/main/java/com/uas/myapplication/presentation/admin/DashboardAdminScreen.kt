@@ -26,6 +26,7 @@ import com.uas.myapplication.presentation.ui.components.BarangCard
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.components.StatistikCard
 import com.uas.myapplication.presentation.ui.components.adminBottomNavItems
+import com.uas.myapplication.presentation.admin.components.HeaderDashboardAdmin
 import com.uas.myapplication.presentation.ui.theme.*
 
 @Composable
@@ -128,70 +129,7 @@ fun DashboardAdminScreen(
     }
 }
 
-@Composable
-fun HeaderDashboardAdmin(
-    uiState: DashboardAdminUiState
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        MaterialTheme.colorScheme.primary,
-                        MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                )
-            )
-            .padding(
-                horizontal = 16.dp,
-                vertical = 24.dp
-            )
-    ) {
 
-        Column {
-
-            Text(
-                text = "Cari.in Admin",
-                fontFamily = PoppinsFontFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
-                color = MaterialTheme.colorScheme.onPrimary
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-
-                StatistikCard(
-                    modifier = Modifier.weight(1f),
-                    jumlah = uiState.jumlahHilang,
-                    label = "Barang Hilang",
-                    warna = DangerRed
-                )
-
-                StatistikCard(
-                    modifier = Modifier.weight(1f),
-                    jumlah = uiState.jumlahDitemukan,
-                    label = "Barang Ditemukan",
-                    warna = SuccessGreen
-                )
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            StatistikCard(
-                modifier = Modifier.fillMaxWidth(),
-                jumlah = uiState.jumlahSelesai,
-                label = "Laporan Selesai",
-                warna = NeutralGrayLight
-            )
-        }
-    }
-}
 
 @Preview(
     showBackground = true,

@@ -28,6 +28,8 @@ import com.uas.myapplication.domain.model.User
 import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
+import com.uas.myapplication.presentation.profil.components.BahasaDialog
+import com.uas.myapplication.presentation.profil.components.DataCard
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
 
@@ -303,145 +305,7 @@ fun ProfilScreen(
     }
 }
 
-// =============================================
-// KOMPONEN DATA CARD
-// =============================================
-@Composable
-fun DataCard(
-    icon : ImageVector,
-    label: String,
-    value: String
-) {
-    Card(
-        modifier  = Modifier.fillMaxWidth(),
-        shape     = RoundedCornerShape(12.dp),
-        colors    = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-        elevation = CardDefaults.cardElevation(1.dp)
-    ) {
-        Row(
-            modifier          = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 14.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector        = icon,
-                contentDescription = null,
-                tint               = MaterialTheme.colorScheme.primary,
-                modifier           = Modifier.size(20.dp)
-            )
-            Spacer(modifier = Modifier.width(12.dp))
-            Column {
-                Text(
-                    text       = label,
-                    fontFamily = InterFontFamily,
-                    fontSize   = 11.sp,
-                    color      = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Text(
-                    text       = value,
-                    fontFamily = InterFontFamily,
-                    fontWeight = FontWeight.Medium,
-                    fontSize   = 14.sp,
-                    color      = MaterialTheme.colorScheme.onSurface
-                )
-            }
-        }
-    }
-}
 
-// =============================================
-// DIALOG PILIHAN BAHASA
-// =============================================
-@Composable
-fun BahasaDialog(
-    bahasaAktif: String,
-    onPilih    : (String) -> Unit,
-    onBatal    : () -> Unit
-) {
-    AlertDialog(
-        onDismissRequest = onBatal,
-        icon = {
-            Icon(
-                imageVector        = Icons.Default.Language,
-                contentDescription = null,
-                tint               = MaterialTheme.colorScheme.primary,
-                modifier           = Modifier.size(32.dp)
-            )
-        },
-        title = {
-            Text(
-                text       = "Pilih Bahasa",
-                fontFamily = PoppinsFontFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize   = 18.sp
-            )
-        },
-        text = {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                BahasaItem(
-                    label    = "Indonesia",
-                    isAktif  = bahasaAktif == "id",
-                    onClick  = { onPilih("id") }
-                )
-                BahasaItem(
-                    label    = "English",
-                    isAktif  = bahasaAktif == "en",
-                    onClick  = { onPilih("en") }
-                )
-            }
-        },
-        confirmButton = {},
-        dismissButton = {
-            TextButton(onClick = onBatal) {
-                Text(
-                    text       = "Batal",
-                    fontFamily = InterFontFamily,
-                    fontWeight = FontWeight.Medium,
-                    color      = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        },
-        containerColor = MaterialTheme.colorScheme.surface,
-        shape          = RoundedCornerShape(16.dp)
-    )
-}
-
-@Composable
-fun BahasaItem(
-    label  : String,
-    isAktif: Boolean,
-    onClick: () -> Unit
-) {
-    Row(
-        modifier          = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(10.dp))
-            .background(if (isAktif) MaterialTheme.colorScheme.primaryContainer else Color.Transparent)
-            .clickable { onClick() }
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(
-            text       = label,
-            fontFamily = InterFontFamily,
-            fontWeight = if (isAktif) FontWeight.SemiBold else FontWeight.Normal,
-            fontSize   = 15.sp,
-            color      = if (isAktif) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
-        )
-        if (isAktif) {
-            Icon(
-                imageVector        = Icons.Default.Check,
-                contentDescription = null,
-                tint               = MaterialTheme.colorScheme.primary,
-                modifier           = Modifier.size(18.dp)
-            )
-        }
-    }
-}
 
 @Preview(showBackground = true, name = "Profil Screen - Light", heightDp = 800)
 @Composable
