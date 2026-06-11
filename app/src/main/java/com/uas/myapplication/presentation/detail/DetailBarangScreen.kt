@@ -91,7 +91,7 @@ fun DetailBarangScreen(
                 Box(
                     modifier         = Modifier.fillMaxWidth().height(300.dp),
                     contentAlignment = Alignment.Center
-                ) { CircularProgressIndicator(color = Blue700) }
+                ) { CircularProgressIndicator(color = MaterialTheme.colorScheme.primary) }
             } else {
                 uiState.laporan?.let { laporan ->
 
@@ -146,7 +146,7 @@ fun DetailBarangScreen(
                             text       = uiState.errorMessage ?: "",
                             fontFamily = InterFontFamily,
                             fontSize   = 14.sp,
-                            color      = DangerRed
+                            color      = MaterialTheme.colorScheme.error
                         )
                     }
                 }

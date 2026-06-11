@@ -30,8 +30,8 @@ fun SubmitSection(
             .height(52.dp),
         shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Blue700,
-            disabledContainerColor = Blue700.copy(alpha = 0.7f)
+            containerColor = MaterialTheme.colorScheme.primary,
+            disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
         )
     ) {
 
@@ -39,7 +39,7 @@ fun SubmitSection(
 
             CircularProgressIndicator(
                 modifier = Modifier.size(22.dp),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onPrimary,
                 strokeWidth = 2.5.dp
             )
 
@@ -52,7 +52,7 @@ fun SubmitSection(
                     else
                         Icons.Default.Send,
                 contentDescription = null,
-                tint = Color.White,
+                tint = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.size(18.dp)
             )
 
@@ -67,7 +67,7 @@ fun SubmitSection(
                 fontFamily = PoppinsFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp,
-                color = Color.White
+                color = MaterialTheme.colorScheme.onPrimary
             )
         }
     }

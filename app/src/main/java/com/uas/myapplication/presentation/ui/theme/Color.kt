@@ -40,3 +40,7 @@ val DarkSurface2   = Color(0xFF334155)
 // Dark Mode — Text
 val TextMainDark   = Color(0xFFF8FAFC)
 val TextSubDark    = Color(0xFF94A3B8)
+val TextHintDark   = Color(0xFF64748B)
+
+// Outline Variant — Divider & Placeholder
+val SlateGray100Dark = Color(0xFF334155) // Divider di dark mode

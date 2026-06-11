@@ -19,6 +19,8 @@ import com.uas.myapplication.di.AppContainer
 import com.uas.myapplication.di.ViewModelFactory
 import com.uas.myapplication.presentation.admin.DashboardAdminScreen
 import com.uas.myapplication.presentation.admin.DashboardAdminViewModel
+import com.uas.myapplication.presentation.admin.LaporanAdminScreen
+import com.uas.myapplication.presentation.admin.LaporanAdminViewModel
 import com.uas.myapplication.presentation.auth.lengkapi_profil.LengkapiProfilScreen
 import com.uas.myapplication.presentation.auth.lengkapi_profil.LengkapiProfilViewModel
 import com.uas.myapplication.presentation.auth.login.LoginScreen
@@ -349,6 +351,22 @@ fun CariInNavGraph(
             )
 
             DashboardAdminScreen(
+                viewModel = viewModel,
+                navController = navController
+            )
+        }
+
+        composable(Screen.LaporanAdmin.route) {
+
+            val viewModel: LaporanAdminViewModel = viewModel(
+                factory = ViewModelFactory {
+                    LaporanAdminViewModel(
+                        AppContainer.laporanRepository
+                    )
+                }
+            )
+
+            LaporanAdminScreen(
                 viewModel = viewModel,
                 navController = navController
             )

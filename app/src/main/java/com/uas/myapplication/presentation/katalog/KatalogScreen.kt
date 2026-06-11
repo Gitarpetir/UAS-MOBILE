@@ -29,6 +29,7 @@ import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.components.CariInFilterChip
 import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
+import com.uas.myapplication.presentation.ui.theme.CariInTheme
 
 @Composable
 fun KatalogScreen(
@@ -68,16 +69,16 @@ fun KatalogScreen(
                     value         = uiState.queryPencarian,
                     onValueChange = viewModel::onQueryPencarianChange,
                     placeholder   = {
-                        Text("Cari berdasarkan nama atau deskripsi...", fontFamily = InterFontFamily, fontSize = 13.sp, color = TextHint)
+                        Text("Cari berdasarkan nama atau deskripsi...", fontFamily = InterFontFamily, fontSize = 13.sp, color = CariInTheme.colors.textHint)
                     },
-                    leadingIcon = { Icon(Icons.Default.Search, null, tint = TextHint) },
+                    leadingIcon = { Icon(Icons.Default.Search, null, tint = CariInTheme.colors.textHint) },
                     singleLine  = true,
                     modifier    = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                     shape       = RoundedCornerShape(12.dp),
                     colors      = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor   = Blue700,
-                        unfocusedBorderColor = SlateGray200,
-                        cursorColor          = Blue700
+                        focusedBorderColor   = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        cursorColor          = MaterialTheme.colorScheme.primary
                     )
                 )
             }
@@ -92,7 +93,7 @@ fun KatalogScreen(
             if (uiState.isLoading) {
                 item {
                     Box(modifier = Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator(color = Blue700)
+                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                     }
                 }
             }
@@ -111,9 +112,9 @@ fun KatalogScreen(
                 item {
                     Box(modifier = Modifier.fillMaxWidth().padding(48.dp), contentAlignment = Alignment.Center) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text("Tidak ada barang ditemukan", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.Medium, fontSize = 15.sp, color = TextSub)
+                            Text("Tidak ada barang ditemukan", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.Medium, fontSize = 15.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text("Coba ubah kata kunci atau filter", fontFamily = InterFontFamily, fontSize = 13.sp, color = TextHint)
+                            Text("Coba ubah kata kunci atau filter", fontFamily = InterFontFamily, fontSize = 13.sp, color = CariInTheme.colors.textHint)
                         }
                     }
                 }

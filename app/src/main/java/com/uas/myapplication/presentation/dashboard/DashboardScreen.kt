@@ -84,7 +84,7 @@ fun DashboardScreen(
                     Box(
                         modifier         = Modifier.fillMaxWidth().padding(32.dp),
                         contentAlignment = Alignment.Center
-                    ) { CircularProgressIndicator(color = Blue700) }
+                    ) { CircularProgressIndicator(color = MaterialTheme.colorScheme.primary) }
                 }
             }
 
@@ -107,7 +107,7 @@ fun DashboardScreen(
                             text       = "Belum ada laporan barang",
                             fontFamily = InterFontFamily,
                             fontSize   = 14.sp,
-                            color      = TextSub
+                            color      = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }

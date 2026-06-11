@@ -35,6 +35,7 @@ import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.theme.CariInTheme
 
 
 @Composable
@@ -106,7 +107,7 @@ fun LaporankuScreen(
                     Box(
                         modifier         = Modifier.fillMaxWidth().padding(32.dp),
                         contentAlignment = Alignment.Center
-                    ) { CircularProgressIndicator(color = Blue700) }
+                    ) { CircularProgressIndicator(color = MaterialTheme.colorScheme.primary) }
                 }
             }
 

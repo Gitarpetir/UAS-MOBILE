@@ -35,6 +35,7 @@ import com.uas.myapplication.presentation.auth.login.CariInTextField
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import java.util.Calendar
 import androidx.core.net.toUri
 import com.uas.myapplication.presentation.laporan.components.FormHeader
@@ -117,11 +118,11 @@ fun BuatLaporanScreen(
                         viewModel.onTanggalChange("$hari $bulan $tahun")
                     }
                     showDatePicker = false
-                }) { Text("Pilih", color = Blue700, fontFamily = InterFontFamily) }
+                }) { Text("Pilih", color = MaterialTheme.colorScheme.primary, fontFamily = InterFontFamily) }
             },
             dismissButton = {
                 TextButton(onClick = { showDatePicker = false }) {
-                    Text("Batal", color = TextSub, fontFamily = InterFontFamily)
+                    Text("Batal", color = MaterialTheme.colorScheme.onSurfaceVariant, fontFamily = InterFontFamily)
                 }
             }
         ) {

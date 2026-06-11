@@ -114,7 +114,7 @@ fun CariInBottomNavBar(
                         imageVector        = if (isSelected) item.iconAktif else item.iconNonAktif,
                         contentDescription = item.label,
                         modifier           = Modifier.size(24.dp),
-                        tint               = if (isSelected) Blue700
+                        tint               = if (isSelected) MaterialTheme.colorScheme.primary
                         else MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 },
@@ -123,12 +123,12 @@ fun CariInBottomNavBar(
                         text       = item.label,
                         fontFamily = InterFontFamily,
                         fontSize   = 10.sp,
-                        color      = if (isSelected) Blue700
+                        color      = if (isSelected) MaterialTheme.colorScheme.primary
                         else MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    indicatorColor = Blue100
+                    indicatorColor = MaterialTheme.colorScheme.primaryContainer
                 )
             )
         }
