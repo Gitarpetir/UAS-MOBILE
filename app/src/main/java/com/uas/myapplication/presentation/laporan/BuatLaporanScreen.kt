@@ -37,6 +37,11 @@ import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*
 import java.util.Calendar
 import androidx.core.net.toUri
+import com.uas.myapplication.presentation.laporan.components.FormHeader
+import com.uas.myapplication.presentation.laporan.components.LabelWajib
+import com.uas.myapplication.presentation.laporan.components.StatusBarangSelector
+import com.uas.myapplication.presentation.laporan.components.SubmitSection
+import com.uas.myapplication.presentation.laporan.components.TeksError
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -132,31 +137,17 @@ fun BuatLaporanScreen(
         ) {
             Spacer(modifier = Modifier.height(24.dp))
 
-            Text(
-                text       = "Laporkan Barang",
-                fontFamily = PoppinsFontFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize   = 22.sp,
-                color      = MaterialTheme.colorScheme.onBackground
+            FormHeader(
+                title = "Laporkan Barang"
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
             // Toggle Status Barang
-            Text("Status Barang", fontFamily = InterFontFamily, fontWeight = FontWeight.Medium, fontSize = 13.sp, color = MaterialTheme.colorScheme.onBackground)
-            Spacer(modifier = Modifier.height(8.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Button(
-                    onClick   = { viewModel.onStatusBarangChange(StatusBarang.HILANG) },
-                    modifier  = Modifier.weight(1f).height(44.dp),
-                    shape     = RoundedCornerShape(10.dp),
-                    colors    = ButtonDefaults.buttonColors(
-                        containerColor = if (uiState.statusBarang == StatusBarang.HILANG) DangerRed else MaterialTheme.colorScheme.surface,
-                        contentColor   = if (uiState.statusBarang == StatusBarang.HILANG) Color.White else TextSub
-                    ),
-                    elevation = ButtonDefaults.buttonElevation(0.dp)
-                ) { Text("Hilang", fontFamily = InterFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 14.sp) }
-
+            StatusBarangSelector(
+                selectedStatus = uiState.statusBarang,
+                onStatusChange = viewModel::onStatusBarangChange
+            )
                 Button(
                     onClick   = { viewModel.onStatusBarangChange(StatusBarang.DITEMUKAN) },
                     modifier  = Modifier.weight(1f).height(44.dp),
@@ -286,47 +277,17 @@ fun BuatLaporanScreen(
             Spacer(modifier = Modifier.height(28.dp))
 
             // Tombol Kirim / Simpan
-            Button(
-                onClick  = viewModel::kirimLaporan,
-                enabled  = !uiState.isLoading,
-                modifier = Modifier.fillMaxWidth().height(52.dp),
-                shape    = RoundedCornerShape(16.dp),
-                colors   = ButtonDefaults.buttonColors(containerColor = Blue700, disabledContainerColor = Blue700.copy(alpha = 0.7f))
-            ) {
-                if (uiState.isLoading) {
-                    CircularProgressIndicator(modifier = Modifier.size(22.dp), color = Color.White, strokeWidth = 2.5.dp)
-                } else {
-                    Icon(if (uiState.isEditMode) Icons.Default.Save else Icons.Default.Send, null, tint = Color.White, modifier = Modifier.size(18.dp))
-                    Spacer(Modifier.width(8.dp))
-                    Text(
-                        text       = if (uiState.isEditMode) "Simpan Perubahan" else "Kirim Laporan",
-                        fontFamily = PoppinsFontFamily,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize   = 16.sp,
-                        color      = Color.White
-                    )
-                }
-            }
-
+        SubmitSection(
+            isLoading = uiState.isLoading,
+            isEditMode = uiState.isEditMode,
+            onSubmit = viewModel::kirimLaporan
+        )
             Spacer(modifier = Modifier.height(24.dp))
         }
     }
-}
 
 // Komponen Label Wajib
-@Composable
-fun LabelWajib(teks: String) {
-    Row {
-        Text(text = teks, fontFamily = InterFontFamily, fontWeight = FontWeight.Medium, fontSize = 13.sp, color = MaterialTheme.colorScheme.onBackground)
-        Text(text = " *", fontFamily = InterFontFamily, fontWeight = FontWeight.Medium, fontSize = 13.sp, color = DangerRed)
-    }
-}
-
 // Komponen Teks Error
-@Composable
-fun TeksError(pesan: String) {
-    Text(text = pesan, color = DangerRed, fontFamily = InterFontFamily, fontSize = 12.sp, modifier = Modifier.padding(top = 4.dp))
-}
 
 // =============================================
 // PREVIEW
