@@ -37,8 +37,8 @@ fun DetailActionSection(
                 .height(52.dp),
             shape = RoundedCornerShape(16.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Blue700,
-                disabledContainerColor = Blue700.copy(alpha = 0.7f)
+                containerColor = MaterialTheme.colorScheme.primary,
+                disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
             )
         ) {
 
@@ -46,7 +46,7 @@ fun DetailActionSection(
 
                 CircularProgressIndicator(
                     modifier = Modifier.size(22.dp),
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     strokeWidth = 2.5.dp
                 )
 
@@ -61,7 +61,7 @@ fun DetailActionSection(
                     fontFamily = PoppinsFontFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 15.sp,
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }
@@ -112,7 +112,7 @@ fun DetailActionSection(
         shape = RoundedCornerShape(16.dp),
         border = BorderStroke(
             width = 1.dp,
-            color = SlateGray200
+            color = MaterialTheme.colorScheme.outline
         )
     ) {
 

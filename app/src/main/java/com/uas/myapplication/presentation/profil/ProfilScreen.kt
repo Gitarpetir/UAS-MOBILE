@@ -29,6 +29,7 @@ import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.theme.CariInTheme
 
 // =============================================
 // PROFIL SCREEN
@@ -83,13 +84,13 @@ fun ProfilScreen(
             Box(
                 modifier         = Modifier
                     .size(90.dp)
-                    .background(Blue100, CircleShape),
+                    .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector        = Icons.Default.Person,
                     contentDescription = "Avatar",
-                    tint               = Blue700,
+                    tint               = MaterialTheme.colorScheme.primary,
                     modifier           = Modifier.size(48.dp)
                 )
             }
@@ -109,7 +110,7 @@ fun ProfilScreen(
 
             HorizontalDivider(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                color    = SlateGray100
+                color    = MaterialTheme.colorScheme.outlineVariant
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -189,7 +190,7 @@ fun ProfilScreen(
                         Icon(
                             imageVector        = Icons.Default.DarkMode,
                             contentDescription = null,
-                            tint               = Blue700,
+                            tint               = MaterialTheme.colorScheme.primary,
                             modifier           = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(12.dp))
@@ -206,10 +207,10 @@ fun ProfilScreen(
                             checked         = uiState.isDarkMode,
                             onCheckedChange = viewModel::onDarkModeToggle,
                             colors          = SwitchDefaults.colors(
-                                checkedThumbColor   = Color.White,
-                                checkedTrackColor   = Blue700,
-                                uncheckedThumbColor = Color.White,
-                                uncheckedTrackColor = SlateGray200
+                                checkedThumbColor   = CariInTheme.colors.switchCheckedThumb,
+                                checkedTrackColor   = CariInTheme.colors.switchCheckedTrack,
+                                uncheckedThumbColor = CariInTheme.colors.switchUncheckedThumb,
+                                uncheckedTrackColor = CariInTheme.colors.switchUncheckedTrack
                             )
                         )
                     }
@@ -237,7 +238,7 @@ fun ProfilScreen(
                         Icon(
                             imageVector        = Icons.Default.Language,
                             contentDescription = null,
-                            tint               = Blue700,
+                            tint               = MaterialTheme.colorScheme.primary,
                             modifier           = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(12.dp))
@@ -255,12 +256,12 @@ fun ProfilScreen(
                                 text       = if (uiState.bahasa == "id") "Indonesia" else "English",
                                 fontFamily = InterFontFamily,
                                 fontSize   = 13.sp,
-                                color      = Blue700
+                                color      = MaterialTheme.colorScheme.primary
                             )
                             Icon(
                                 imageVector        = Icons.Default.ChevronRight,
                                 contentDescription = null,
-                                tint               = Blue700,
+                                tint               = MaterialTheme.colorScheme.primary,
                                 modifier           = Modifier.size(18.dp)
                             )
                         }
@@ -277,13 +278,13 @@ fun ProfilScreen(
                     modifier = Modifier.fillMaxWidth().height(52.dp),
                     shape    = RoundedCornerShape(16.dp),
                     colors   = ButtonDefaults.buttonColors(
-                        containerColor = DangerRed
+                        containerColor = MaterialTheme.colorScheme.error
                     )
                 ) {
                     Icon(
                         imageVector        = Icons.Default.Logout,
                         contentDescription = null,
-                        tint               = Color.White,
+                        tint               = MaterialTheme.colorScheme.onError,
                         modifier           = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
@@ -292,7 +293,7 @@ fun ProfilScreen(
                         fontFamily = PoppinsFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize   = 16.sp,
-                        color      = Color.White
+                        color      = MaterialTheme.colorScheme.onError
                     )
                 }
 
@@ -328,7 +329,7 @@ fun DataCard(
             Icon(
                 imageVector        = icon,
                 contentDescription = null,
-                tint               = Blue700,
+                tint               = MaterialTheme.colorScheme.primary,
                 modifier           = Modifier.size(20.dp)
             )
             Spacer(modifier = Modifier.width(12.dp))
@@ -337,7 +338,7 @@ fun DataCard(
                     text       = label,
                     fontFamily = InterFontFamily,
                     fontSize   = 11.sp,
-                    color      = TextSub
+                    color      = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
                     text       = value,
@@ -366,7 +367,7 @@ fun BahasaDialog(
             Icon(
                 imageVector        = Icons.Default.Language,
                 contentDescription = null,
-                tint               = Blue700,
+                tint               = MaterialTheme.colorScheme.primary,
                 modifier           = Modifier.size(32.dp)
             )
         },
@@ -399,7 +400,7 @@ fun BahasaDialog(
                     text       = "Batal",
                     fontFamily = InterFontFamily,
                     fontWeight = FontWeight.Medium,
-                    color      = TextSub
+                    color      = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         },
@@ -418,7 +419,7 @@ fun BahasaItem(
         modifier          = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(10.dp))
-            .background(if (isAktif) Blue100 else Color.Transparent)
+            .background(if (isAktif) MaterialTheme.colorScheme.primaryContainer else Color.Transparent)
             .clickable { onClick() }
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -429,13 +430,13 @@ fun BahasaItem(
             fontFamily = InterFontFamily,
             fontWeight = if (isAktif) FontWeight.SemiBold else FontWeight.Normal,
             fontSize   = 15.sp,
-            color      = if (isAktif) Blue700 else MaterialTheme.colorScheme.onSurface
+            color      = if (isAktif) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
         )
         if (isAktif) {
             Icon(
                 imageVector        = Icons.Default.Check,
                 contentDescription = null,
-                tint               = Blue700,
+                tint               = MaterialTheme.colorScheme.primary,
                 modifier           = Modifier.size(18.dp)
             )
         }

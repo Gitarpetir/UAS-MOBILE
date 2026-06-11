@@ -54,7 +54,7 @@ fun DetailInfoSection(
             text = laporan.deskripsi,
             fontFamily = InterFontFamily,
             fontSize = 14.sp,
-            color = TextSub,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             lineHeight = 22.sp
         )
 

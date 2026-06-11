@@ -90,7 +90,7 @@ fun DashboardAdminScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator(
-                            color = Blue700
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
@@ -119,7 +119,7 @@ fun DashboardAdminScreen(
                             text = "Belum ada laporan",
                             fontFamily = InterFontFamily,
                             fontSize = 14.sp,
-                            color = TextSub
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -138,8 +138,8 @@ fun HeaderDashboardAdmin(
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        Blue700,
-                        Blue800
+                        MaterialTheme.colorScheme.primary,
+                        MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 )
             )
@@ -156,7 +156,7 @@ fun HeaderDashboardAdmin(
                 fontFamily = PoppinsFontFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp,
-                color = Color.White
+                color = MaterialTheme.colorScheme.onPrimary
             )
 
             Spacer(modifier = Modifier.height(16.dp))

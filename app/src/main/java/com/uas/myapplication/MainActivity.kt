@@ -4,9 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.uas.myapplication.di.AppContainer
 import com.uas.myapplication.presentation.navigation.CariInNavGraph
@@ -21,7 +24,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            MyApplicationTheme {
+            // Baca preferensi dark mode dari DataStore secara realtime
+            // Default ke pengaturan sistem selama DataStore belum siap
+            val systemDarkTheme = isSystemInDarkTheme()
+            val isDarkMode by AppContainer.preferensiManager.isDarkMode
+                .collectAsState(initial = systemDarkTheme)
+
+            MyApplicationTheme(darkTheme = isDarkMode) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

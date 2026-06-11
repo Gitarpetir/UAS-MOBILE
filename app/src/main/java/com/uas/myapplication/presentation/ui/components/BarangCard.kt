@@ -22,6 +22,7 @@ import coil.compose.AsyncImage
 import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.theme.CariInTheme
 
 @Composable
 fun BarangCard(
@@ -51,7 +52,7 @@ fun BarangCard(
                 modifier           = Modifier
                     .size(64.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(SlateGray100)
+                    .background(CariInTheme.colors.imagePlaceholder)
             )
 
             Spacer(modifier = Modifier.width(12.dp))
@@ -76,7 +77,7 @@ fun BarangCard(
                     Icon(
                         imageVector        = Icons.Default.LocationOn,
                         contentDescription = null,
-                        tint               = TextSub,
+                        tint               = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier           = Modifier.size(12.dp)
                     )
                     Spacer(modifier = Modifier.width(2.dp))
@@ -84,7 +85,7 @@ fun BarangCard(
                         text       = laporan.lokasi,
                         fontFamily = InterFontFamily,
                         fontSize   = 12.sp,
-                        color      = TextSub,
+                        color      = MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines   = 1,
                         overflow   = TextOverflow.Ellipsis
                     )
@@ -97,7 +98,7 @@ fun BarangCard(
                     Icon(
                         imageVector        = Icons.Default.CalendarToday,
                         contentDescription = null,
-                        tint               = TextSub,
+                        tint               = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier           = Modifier.size(12.dp)
                     )
                     Spacer(modifier = Modifier.width(2.dp))
@@ -105,7 +106,7 @@ fun BarangCard(
                         text       = laporan.tanggal,
                         fontFamily = InterFontFamily,
                         fontSize   = 12.sp,
-                        color      = TextSub
+                        color      = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }

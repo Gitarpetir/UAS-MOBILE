@@ -32,6 +32,7 @@ import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.theme.CariInTheme
 
 
 @Composable
@@ -83,17 +84,17 @@ fun LaporankuScreen(
                     Button(
                         onClick  = { navController.navigate(Screen.BuatLaporan.route) },
                         shape    = RoundedCornerShape(10.dp),
-                        colors   = ButtonDefaults.buttonColors(containerColor = Blue700),
+                        colors   = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                         contentPadding = PaddingValues(horizontal = 14.dp, vertical = 8.dp)
                     ) {
-                        Icon(Icons.Default.Add, null, tint = Color.White, modifier = Modifier.size(16.dp))
+                        Icon(Icons.Default.Add, null, tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(16.dp))
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             text       = "Baru",
                             fontFamily = PoppinsFontFamily,
                             fontWeight = FontWeight.SemiBold,
                             fontSize   = 13.sp,
-                            color      = Color.White
+                            color      = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 }
@@ -105,7 +106,7 @@ fun LaporankuScreen(
                     text       = "${viewModel.getJumlahLaporan()} laporan",
                     fontFamily = InterFontFamily,
                     fontSize   = 13.sp,
-                    color      = TextSub,
+                    color      = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier   = Modifier.padding(horizontal = 16.dp)
                 )
                 Spacer(modifier = Modifier.height(12.dp))
@@ -126,7 +127,7 @@ fun LaporankuScreen(
                     Box(
                         modifier         = Modifier.fillMaxWidth().padding(32.dp),
                         contentAlignment = Alignment.Center
-                    ) { CircularProgressIndicator(color = Blue700) }
+                    ) { CircularProgressIndicator(color = MaterialTheme.colorScheme.primary) }
                 }
             }
 
@@ -161,7 +162,7 @@ fun LaporankuScreen(
                             Icon(
                                 imageVector        = Icons.Default.Inbox,
                                 contentDescription = null,
-                                tint               = TextHint,
+                                tint               = CariInTheme.colors.textHint,
                                 modifier           = Modifier.size(48.dp)
                             )
                             Spacer(modifier = Modifier.height(8.dp))
@@ -182,7 +183,7 @@ fun LaporankuScreen(
                                 fontFamily = PoppinsFontFamily,
                                 fontWeight = FontWeight.Medium,
                                 fontSize = 15.sp,
-                                color = TextSub
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
 
                             Spacer(modifier = Modifier.height(4.dp))
@@ -191,7 +192,7 @@ fun LaporankuScreen(
                                 text = deskripsiKosong,
                                 fontFamily = InterFontFamily,
                                 fontSize = 13.sp,
-                                color = TextHint
+                                color = CariInTheme.colors.textHint
                             )
                         }
                     }
@@ -225,7 +226,7 @@ fun TabLaporanku(
     TabRow(
         selectedTabIndex = selectedIndex,
         containerColor = MaterialTheme.colorScheme.background,
-        contentColor = Blue700
+        contentColor = MaterialTheme.colorScheme.primary
     ) {
 
         tabs.forEachIndexed { index, title ->

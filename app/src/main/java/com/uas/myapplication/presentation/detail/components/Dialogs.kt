@@ -33,7 +33,7 @@ fun DialogKonfirmasiTemukan(
             Icon(
                 imageVector        = Icons.Default.Search,
                 contentDescription = null,
-                tint               = Blue700,
+                tint               = MaterialTheme.colorScheme.primary,
                 modifier           = Modifier.size(32.dp)
             )
         },
@@ -50,21 +50,21 @@ fun DialogKonfirmasiTemukan(
                 text       = "Apakah Anda benar menemukan barang ini? Jika ya, mohon segera serahkan barang tersebut ke Ruangan Bersama.",
                 fontFamily = InterFontFamily,
                 fontSize   = 14.sp,
-                color      = TextSub,
+                color      = MaterialTheme.colorScheme.onSurfaceVariant,
                 lineHeight = 22.sp
             )
         },
         confirmButton = {
             Button(
                 onClick = onKonfirmasi,
-                colors  = ButtonDefaults.buttonColors(containerColor = Blue700),
+                colors  = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                 shape   = RoundedCornerShape(8.dp)
             ) {
                 Text(
                     text       = "Ya, Saya Temukan",
                     fontFamily = InterFontFamily,
                     fontWeight = FontWeight.SemiBold,
-                    color      = Color.White
+                    color      = MaterialTheme.colorScheme.onPrimary
                 )
             }
         },
@@ -72,13 +72,13 @@ fun DialogKonfirmasiTemukan(
             OutlinedButton(
                 onClick = onBatal,
                 shape   = RoundedCornerShape(8.dp),
-                border  = androidx.compose.foundation.BorderStroke(1.dp, SlateGray200)
+                border  = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Text(
                     text       = "Batal",
                     fontFamily = InterFontFamily,
                     fontWeight = FontWeight.Medium,
-                    color      = TextSub
+                    color      = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         },
@@ -114,21 +114,21 @@ fun DialogKonfirmasiMilik(
                 text       = "Silakan menuju Ruang Bersama untuk mengambil barang Anda dengan menunjukkan identitas.",
                 fontFamily = InterFontFamily,
                 fontSize   = 14.sp,
-                color      = TextSub,
+                color      = MaterialTheme.colorScheme.onSurfaceVariant,
                 lineHeight = 22.sp
             )
         },
         confirmButton = {
             Button(
                 onClick = onMengerti,
-                colors  = ButtonDefaults.buttonColors(containerColor = Blue700),
+                colors  = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                 shape   = RoundedCornerShape(8.dp)
             ) {
                 Text(
                     text       = "Mengerti",
                     fontFamily = InterFontFamily,
                     fontWeight = FontWeight.SemiBold,
-                    color      = Color.White
+                    color      = MaterialTheme.colorScheme.onPrimary
                 )
             }
         },

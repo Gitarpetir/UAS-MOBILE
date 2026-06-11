@@ -37,7 +37,7 @@ fun HapusDialog(
             Icon(
                 imageVector        = Icons.Default.DeleteForever,
                 contentDescription = null,
-                tint               = DangerRed,
+                tint               = MaterialTheme.colorScheme.error,
                 modifier           = Modifier.size(32.dp)
             )
         },
@@ -54,7 +54,7 @@ fun HapusDialog(
                 text       = "Laporan \"$namaBarang\" akan dihapus secara permanen dan tidak bisa dikembalikan.",
                 fontFamily = InterFontFamily,
                 fontSize   = 14.sp,
-                color      = TextSub
+                color      = MaterialTheme.colorScheme.onSurfaceVariant
             )
         },
         confirmButton = {
@@ -63,16 +63,16 @@ fun HapusDialog(
                 colors  = ButtonDefaults.buttonColors(containerColor = DangerRed),
                 shape   = RoundedCornerShape(8.dp)
             ) {
-                Text("Hapus", fontFamily = InterFontFamily, fontWeight = FontWeight.SemiBold, color = Color.White)
+                Text("Hapus", fontFamily = InterFontFamily, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onError)
             }
         },
         dismissButton = {
             OutlinedButton(
                 onClick = onBatal,
                 shape   = RoundedCornerShape(8.dp),
-                border  = androidx.compose.foundation.BorderStroke(1.dp, SlateGray200)
+                border  = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
-                Text("Batal", fontFamily = InterFontFamily, fontWeight = FontWeight.Medium, color = TextSub)
+                Text("Batal", fontFamily = InterFontFamily, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         },
         containerColor = MaterialTheme.colorScheme.surface,

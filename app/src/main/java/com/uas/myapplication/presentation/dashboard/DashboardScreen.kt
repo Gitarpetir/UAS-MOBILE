@@ -93,7 +93,7 @@ fun DashboardScreen(
                         fontFamily = InterFontFamily,
                         fontWeight = FontWeight.Medium,
                         fontSize = 13.sp,
-                        color    = Blue700,
+                        color    = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.clickable {
                             navController.navigate(Screen.Katalog.route)
                         }
@@ -106,7 +106,7 @@ fun DashboardScreen(
                     Box(
                         modifier         = Modifier.fillMaxWidth().padding(32.dp),
                         contentAlignment = Alignment.Center
-                    ) { CircularProgressIndicator(color = Blue700) }
+                    ) { CircularProgressIndicator(color = MaterialTheme.colorScheme.primary) }
                 }
             }
 
@@ -130,7 +130,7 @@ fun DashboardScreen(
                             text       = "Belum ada laporan barang",
                             fontFamily = InterFontFamily,
                             fontSize   = 14.sp,
-                            color      = TextSub
+                            color      = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -148,7 +148,7 @@ fun HeaderDashboard(uiState: DashboardUiState) {
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                brush = Brush.verticalGradient(colors = listOf(Blue700, Blue800))
+                brush = Brush.verticalGradient(colors = listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.onPrimaryContainer))
             )
             .padding(horizontal = 16.dp, vertical = 24.dp)
     ) {
@@ -158,7 +158,7 @@ fun HeaderDashboard(uiState: DashboardUiState) {
                 fontFamily = PoppinsFontFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize   = 24.sp,
-                color      = Color.White
+                color      = MaterialTheme.colorScheme.onPrimary
             )
             Spacer(modifier = Modifier.height(16.dp))
             Row(
@@ -200,33 +200,33 @@ fun TombolAksiDashboard(
             onClick  = onLaporKehilanganClick,
             modifier = Modifier.weight(1f).height(56.dp),
             shape    = RoundedCornerShape(12.dp),
-            colors   = ButtonDefaults.buttonColors(containerColor = Blue700)
+            colors   = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
         ) {
-            Icon(Icons.Default.Add, null, tint = Color.White, modifier = Modifier.size(18.dp))
+            Icon(Icons.Default.Add, null, tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(18.dp))
             Spacer(modifier = Modifier.width(6.dp))
             Text(
                 text       = "Laporkan\nKehilangan",
                 fontFamily = PoppinsFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize   = 13.sp,
-                color      = Color.White
+                color      = MaterialTheme.colorScheme.onPrimary
             )
         }
         OutlinedButton(
             onClick  = onLaporTemuanClick,
             modifier = Modifier.weight(1f).height(56.dp),
             shape    = RoundedCornerShape(12.dp),
-            border   = BorderStroke(1.5.dp, Blue700),
-            colors   = ButtonDefaults.outlinedButtonColors(contentColor = Blue700)
+            border   = BorderStroke(1.5.dp, MaterialTheme.colorScheme.primary),
+            colors   = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.primary)
         ) {
-            Icon(Icons.Outlined.CheckCircle, null, tint = Blue700, modifier = Modifier.size(18.dp))
+            Icon(Icons.Outlined.CheckCircle, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
             Spacer(modifier = Modifier.width(6.dp))
             Text(
                 text       = "Laporkan\nTemuan",
                 fontFamily = PoppinsFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize   = 13.sp,
-                color      = Blue700
+                color      = MaterialTheme.colorScheme.primary
             )
         }
     }
