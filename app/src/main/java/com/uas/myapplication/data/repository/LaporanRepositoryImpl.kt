@@ -159,7 +159,10 @@ class LaporanRepositoryImpl(
     override suspend fun ubahStatus(
         id: String,
         status: StatusBarang,
-        idPenemu: String
+        idPenemu: String,
+        namaPenemu: String,
+        nimPenemu: String,
+        whatsappPenemu: String
     ): Result<Unit> {
 
         return try {
@@ -168,7 +171,10 @@ class LaporanRepositoryImpl(
                 .update(
                     mapOf(
                         "status_barang" to status.name,
-                        "id_penemu" to idPenemu
+                        "id_penemu" to idPenemu,
+                        "nama_penemu" to namaPenemu,
+                        "nim_penemu" to nimPenemu,
+                        "whatsapp_penemu" to whatsappPenemu,
                     )
                 )
                 .await()

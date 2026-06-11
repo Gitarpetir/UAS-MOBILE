@@ -25,6 +25,7 @@ import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.domain.model.User
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
+import com.uas.myapplication.presentation.ui.components.InformasiPenggunaCard
 import com.uas.myapplication.presentation.ui.components.StatusBadge
 import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*
@@ -125,7 +126,7 @@ fun DetailBarangScreen(
                         contentScale       = ContentScale.Crop,
                         modifier           = Modifier
                             .fillMaxWidth()
-                            .height(240.dp)
+                            .height(420.dp)
                             .background(SlateGray100)
                     )
 
@@ -250,60 +251,21 @@ fun DetailBarangScreen(
                         // =============================================
                         // CARD INFORMASI PENGGUNA
                         // =============================================
-                        Card(
-                            modifier  = Modifier.fillMaxWidth(),
-                            shape     = RoundedCornerShape(12.dp),
-                            colors    = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.surface
-                            ),
-                            elevation = CardDefaults.cardElevation(2.dp)
-                        ) {
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                Text(
-                                    text       = "Informasi Pengguna",
-                                    fontFamily = PoppinsFontFamily,
-                                    fontWeight = FontWeight.SemiBold,
-                                    fontSize   = 15.sp,
-                                    color      = MaterialTheme.colorScheme.onSurface
-                                )
+                        InformasiPenggunaCard(
+                            title = "Informasi Pelapor",
+                            nama = laporan.namaPelapor,
+                            nim = laporan.nimPelapor
+                        )
 
-                                Spacer(modifier = Modifier.height(12.dp))
+                        if (laporan.idPenemu.isNotBlank()) {
 
-                                // Nama pelapor
-                                InfoItem(
-                                    icon  = Icons.Default.Person,
-                                    label = "Reported by",
-                                    value = laporan.namaPelapor
-                                )
+                            Spacer(modifier = Modifier.height(12.dp))
 
-                                Spacer(modifier = Modifier.height(10.dp))
-
-                                // NIM
-                                InfoItem(
-                                    icon  = Icons.Default.Badge,
-                                    label = "NIM",
-                                    value = laporan.nimPelapor
-                                )
-
-                                Spacer(modifier = Modifier.height(10.dp))
-
-                                // Email
-                                InfoItem(
-                                    icon  = Icons.Default.Email,
-                                    label = "Email",
-                                    value = laporan.emailPelapor
-                                )
-
-                                // Nomor WhatsApp — hanya tampil untuk Admin
-                                if (uiState.isAdmin && laporan.whatsappPelapor.isNotEmpty()) {
-                                    Spacer(modifier = Modifier.height(10.dp))
-                                    InfoItem(
-                                        icon  = Icons.Default.Phone,
-                                        label = "WhatsApp",
-                                        value = laporan.whatsappPelapor
-                                    )
-                                }
-                            }
+                            InformasiPenggunaCard(
+                                title = "Informasi Penemu",
+                                nama = laporan.namaPenemu,
+                                nim = laporan.nimPenemu
+                            )
                         }
 
                         Spacer(modifier = Modifier.height(20.dp))
@@ -579,137 +541,60 @@ fun DialogKonfirmasiMilik(
 // =============================================
 // PREVIEW
 // =============================================
-@Preview(showBackground = true, name = "Detail Barang - Hilang", heightDp = 1000)
+@Preview(
+    showBackground = true,
+    name = "Informasi Pelapor"
+)
 @Composable
-fun PreviewDetailBarangHilang() {
+fun PreviewInformasiPelaporCard() {
     MyApplicationTheme {
-        val dummyLaporan = Laporan(
-            id           = "1",
-            namaBarang   = "Jam Tangan",
-            deskripsi    = "Jam tangan rolex dalamnya hitam dengan emas 24 karat.",
-            lokasi       = "FT ULM BJM",
-            tanggal      = "12 April 2026",
-            statusBarang = StatusBarang.HILANG,
-            namaPelapor  = "Muhammad Alfi Gunawan",
-            nimPelapor   = "2410817110009",
-            emailPelapor = "alfi.gunawan@gmail.com"
+        InformasiPenggunaCard(
+            title = "Informasi Pelapor",
+            nama = "Muhammad Alfi Gunawan",
+            nim = "2410817110009"
         )
-        Column(
-            modifier = Modifier.fillMaxSize().background(SlateWhite)
-        ) {
-            Row(
-                modifier          = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(Icons.Default.ArrowBack, null, tint = TextMain)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("Detail Barang", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 18.sp, color = TextMain)
-            }
-            Box(modifier = Modifier.fillMaxWidth().height(240.dp).background(SlateGray100))
-            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                    Text(dummyLaporan.namaBarang, fontFamily = PoppinsFontFamily, fontWeight = FontWeight.Bold, fontSize = 22.sp, color = TextMain, modifier = Modifier.weight(1f))
-                    StatusBadge(status = dummyLaporan.statusBarang)
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(dummyLaporan.deskripsi, fontFamily = InterFontFamily, fontSize = 14.sp, color = TextSub, lineHeight = 22.sp)
-                Spacer(modifier = Modifier.height(16.dp))
-                Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = Color.White), elevation = CardDefaults.cardElevation(2.dp)) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Lokasi  & Tanggal", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
-                        Spacer(modifier = Modifier.height(12.dp))
-                        InfoItem(Icons.Default.LocationOn, "Lokasi", dummyLaporan.lokasi)
-                        Spacer(modifier = Modifier.height(10.dp))
-                        InfoItem(Icons.Default.CalendarToday, "Tanggal", dummyLaporan.tanggal)
-                    }
-                }
-                Spacer(modifier = Modifier.height(12.dp))
-                Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = Color.White), elevation = CardDefaults.cardElevation(2.dp)) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Informasi Pengguna", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
-                        Spacer(modifier = Modifier.height(12.dp))
-                        InfoItem(Icons.Default.Person, "Reported by", dummyLaporan.namaPelapor)
-                        Spacer(modifier = Modifier.height(10.dp))
-                        InfoItem(Icons.Default.Badge, "NIM", dummyLaporan.nimPelapor)
-                        Spacer(modifier = Modifier.height(10.dp))
-                        InfoItem(Icons.Default.Email, "Email", dummyLaporan.emailPelapor)
-                    }
-                }
-                Spacer(modifier = Modifier.height(20.dp))
-                Button(onClick = {}, modifier = Modifier.fillMaxWidth().height(52.dp), shape = RoundedCornerShape(16.dp), colors = ButtonDefaults.buttonColors(containerColor = Blue700)) {
-                    Text("Aku Menemukan Barang Ini", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 15.sp, color = Color.White)
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                OutlinedButton(onClick = {}, modifier = Modifier.fillMaxWidth().height(52.dp), shape = RoundedCornerShape(16.dp), border = androidx.compose.foundation.BorderStroke(1.dp, SlateGray200)) {
-                    Text("Kembali", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.Medium, fontSize = 15.sp, color = TextMain)
-                }
-            }
-        }
     }
 }
 
-@Preview(showBackground = true, name = "Detail Barang - Ditemukan", heightDp = 1000)
+@Preview(
+    showBackground = true,
+    name = "Informasi Penemu"
+)
 @Composable
-fun PreviewDetailBarangDitemukan() {
+fun PreviewInformasiPenemuCard() {
     MyApplicationTheme {
-        val dummyLaporan = Laporan(
-            id           = "2",
-            namaBarang   = "Kunci Motor",
-            deskripsi    = "Kunci motor yamaha jadul nmax kayanya.",
-            lokasi       = "Lab Big Data",
-            tanggal      = "11 April 2026",
-            statusBarang = StatusBarang.DITEMUKAN,
-            namaPelapor  = "Muhammad Alfi Gunawan",
-            nimPelapor   = "2410817110009",
-            emailPelapor = "alfi.gunawan@gmail.com"
+        InformasiPenggunaCard(
+            title = "Informasi Penemu",
+            nama = "Budi Santoso",
+            nim = "2410817110010"
         )
-        Column(modifier = Modifier.fillMaxSize().background(SlateWhite)) {
-            Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Default.ArrowBack, null, tint = TextMain)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("Detail Barang", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 18.sp, color = TextMain)
-            }
-            Box(modifier = Modifier.fillMaxWidth().height(240.dp).background(SlateGray100))
-            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                    Text(dummyLaporan.namaBarang, fontFamily = PoppinsFontFamily, fontWeight = FontWeight.Bold, fontSize = 22.sp, color = TextMain, modifier = Modifier.weight(1f))
-                    StatusBadge(status = dummyLaporan.statusBarang)
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(dummyLaporan.deskripsi, fontFamily = InterFontFamily, fontSize = 14.sp, color = TextSub, lineHeight = 22.sp)
-                Spacer(modifier = Modifier.height(16.dp))
-                Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = Color.White), elevation = CardDefaults.cardElevation(2.dp)) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Lokasi  & Tanggal", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
-                        Spacer(modifier = Modifier.height(12.dp))
-                        InfoItem(Icons.Default.LocationOn, "Lokasi", dummyLaporan.lokasi)
-                        Spacer(modifier = Modifier.height(10.dp))
-                        InfoItem(Icons.Default.CalendarToday, "Tanggal", dummyLaporan.tanggal)
-                    }
-                }
-                Spacer(modifier = Modifier.height(12.dp))
-                Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = Color.White), elevation = CardDefaults.cardElevation(2.dp)) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Informasi Pengguna", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
-                        Spacer(modifier = Modifier.height(12.dp))
-                        InfoItem(Icons.Default.Person, "Reported by", dummyLaporan.namaPelapor)
-                        Spacer(modifier = Modifier.height(10.dp))
-                        InfoItem(Icons.Default.Badge, "NIM", dummyLaporan.nimPelapor)
-                        Spacer(modifier = Modifier.height(10.dp))
-                        InfoItem(Icons.Default.Email, "Email", dummyLaporan.emailPelapor)
-                    }
-                }
-                Spacer(modifier = Modifier.height(20.dp))
-                Button(onClick = {}, modifier = Modifier.fillMaxWidth().height(52.dp), shape = RoundedCornerShape(16.dp), colors = ButtonDefaults.buttonColors(containerColor = Blue700)) {
-                    Text("Barang Ini Milik Saya", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 15.sp, color = Color.White)
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                OutlinedButton(onClick = {}, modifier = Modifier.fillMaxWidth().height(52.dp), shape = RoundedCornerShape(16.dp), border = androidx.compose.foundation.BorderStroke(1.dp, SlateGray200)) {
-                    Text("Kembali", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.Medium, fontSize = 15.sp, color = TextMain)
-                }
-            }
+    }
+}
+
+@Preview(
+    showBackground = true,
+    name = "Pelapor & Penemu"
+)
+@Composable
+fun PreviewInformasiPelaporDanPenemu() {
+    MyApplicationTheme {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+
+            InformasiPenggunaCard(
+                title = "Informasi Pelapor",
+                nama = "Muhammad Alfi Gunawan",
+                nim = "2410817110009"
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            InformasiPenggunaCard(
+                title = "Informasi Penemu",
+                nama = "Budi Santoso",
+                nim = "2410817110010"
+            )
         }
     }
 }

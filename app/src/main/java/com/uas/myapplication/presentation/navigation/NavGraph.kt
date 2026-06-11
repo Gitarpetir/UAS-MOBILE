@@ -238,7 +238,19 @@ fun CariInNavGraph(
             )
         }
 
-        composable(Screen.BuatLaporan.route) {
+        composable(
+            route = Screen.BuatLaporan.route,
+            arguments = listOf(
+                navArgument("status") {
+                    type = NavType.StringType
+                    defaultValue = "hilang"
+                }
+            )
+        ) { backStackEntry ->
+
+            val statusAwal =
+                backStackEntry.arguments?.getString("status")
+                    ?: "hilang"
 
             val viewModel: BuatLaporanViewModel = viewModel(
                 factory = ViewModelFactory {
@@ -252,6 +264,7 @@ fun CariInNavGraph(
 
             BuatLaporanScreen(
                 viewModel = viewModel,
+                statusAwal = statusAwal,
                 navController = navController
             )
         }

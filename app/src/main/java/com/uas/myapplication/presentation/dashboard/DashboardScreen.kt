@@ -61,10 +61,14 @@ fun DashboardScreen(
             item {
                 TombolAksiDashboard(
                     onLaporKehilanganClick = {
-                        navController.navigate(Screen.BuatLaporan.route)
+                        navController.navigate(
+                            Screen.BuatLaporan.createRoute("hilang")
+                        )
                     },
                     onLaporTemuanClick = {
-                        navController.navigate(Screen.BuatLaporan.route)
+                        navController.navigate(
+                            Screen.BuatLaporan.createRoute("ditemukan")
+                        )
                     }
                 )
             }

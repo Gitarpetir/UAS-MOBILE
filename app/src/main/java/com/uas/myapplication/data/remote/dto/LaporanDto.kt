@@ -23,6 +23,9 @@ data class LaporanDto(
     val jenis_laporan: String = "HILANG",
     val foto_url: String = "",
     val id_penemu: String = "",
+    val nama_penemu: String = "",
+    val nim_penemu: String = "",
+    val whatsapp_penemu: String = "",
     val waktu_dibuat: Long = 0L
 
 ) {
@@ -51,6 +54,9 @@ data class LaporanDto(
         },
         fotoUrl         = foto_url,
         idPenemu = id_penemu,
+        namaPenemu = nama_penemu,
+        nimPenemu = nim_penemu,
+        whatsappPenemu = whatsapp_penemu,
         waktuDibuat     = waktu_dibuat
     )
 }
@@ -74,5 +80,8 @@ fun Laporan.toMap(): Map<String, Any> = mapOf(
     "jenis_laporan"    to jenisLaporan.name,
     "foto_url"         to fotoUrl,
     "id_penemu"        to idPenemu,
+    "nama_penemu"     to namaPenemu,
+    "nim_penemu"      to nimPenemu,
+    "whatsapp_penemu" to whatsappPenemu,
     "waktu_dibuat"     to waktuDibuat
 )

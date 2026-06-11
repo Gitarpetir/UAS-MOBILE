@@ -50,6 +50,9 @@ interface LaporanRepository {
     suspend fun ubahStatus(
         id: String,
         status: StatusBarang,
-        idPenemu: String = ""
+        idPenemu: String = "",
+        namaPenemu: String = "",
+        nimPenemu: String = "",
+        whatsappPenemu: String = ""
     ): Result<Unit>
 }
