@@ -41,7 +41,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.uas.myapplication.R
-import com.uas.myapplication.presentation.onboarding.IlustrasiTemukan
+import com.uas.myapplication.presentation.ui.components.CariInTextField
+import com.uas.myapplication.presentation.auth.login.components.IlustrasiLoginBadge
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
 
@@ -309,73 +310,7 @@ fun LoginScreen(
     }
 }
 
-// =============================================
-// ILUSTRASI BADGE LOGIN
-// =============================================
-@Composable
-fun IlustrasiLoginBadge() {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier         = Modifier.size(160.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .size(140.dp)
-                .background(MaterialTheme.colorScheme.primaryContainer, CircleShape)
-        )
-        Box(modifier = Modifier.size(70.dp)) {
-            IlustrasiTemukan()
-        }
-    }
-}
 
-// =============================================
-// KOMPONEN TEXT FIELD REUSABLE
-// =============================================
-@Composable
-fun CariInTextField(
-    value                : String,
-    onValueChange        : (String) -> Unit,
-    label                : String,
-    placeholder          : String,
-    leadingIcon          : @Composable (() -> Unit)? = null,
-    trailingIcon         : @Composable (() -> Unit)? = null,
-    visualTransformation : VisualTransformation = VisualTransformation.None,
-    keyboardType         : KeyboardType = KeyboardType.Text,
-    isError              : Boolean = false
-) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Text(
-            text       = label,
-            fontFamily = InterFontFamily,
-            fontWeight = FontWeight.Medium,
-            fontSize   = 13.sp,
-            color      = MaterialTheme.colorScheme.onBackground,
-            modifier   = Modifier.padding(bottom = 6.dp)
-        )
-        OutlinedTextField(
-            value                = value,
-            onValueChange        = onValueChange,
-            placeholder          = {
-                Text(text = placeholder, fontFamily = InterFontFamily, fontSize = 14.sp, color = CariInTheme.colors.textHint)
-            },
-            leadingIcon          = leadingIcon,
-            trailingIcon         = trailingIcon,
-            visualTransformation = visualTransformation,
-            keyboardOptions      = KeyboardOptions(keyboardType = keyboardType),
-            isError              = isError,
-            singleLine           = true,
-            modifier             = Modifier.fillMaxWidth(),
-            shape                = RoundedCornerShape(12.dp),
-            colors               = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor   = MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                focusedLabelColor    = MaterialTheme.colorScheme.primary,
-                cursorColor          = MaterialTheme.colorScheme.primary
-            )
-        )
-    }
-}
 
 // =============================================
 // PREVIEW — heightDp ditambah agar tidak terpotong

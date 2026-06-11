@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.firebase.auth.FirebaseAuth
-import com.uas.myapplication.presentation.auth.login.CariInTextField
+import com.uas.myapplication.presentation.ui.components.CariInTextField
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import androidx.compose.ui.text.font.FontWeight

@@ -26,8 +26,8 @@ import com.uas.myapplication.presentation.navigation.Screen
 // Import komponen dari ui/components
 import com.uas.myapplication.presentation.ui.components.BarangCard
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
+import com.uas.myapplication.presentation.katalog.components.FilterChipRow
 import com.uas.myapplication.presentation.ui.theme.*
-import com.uas.myapplication.presentation.ui.components.CariInFilterChip
 import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
 
@@ -123,23 +123,7 @@ fun KatalogScreen(
     }
 }
 
-// =============================================
-// FILTER CHIP ROW
-// =============================================
-@Composable
-fun FilterChipRow(
-    filterAktif   : FilterKatalog,
-    onFilterChange: (FilterKatalog) -> Unit
-) {
-    Row(
-        modifier              = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        CariInFilterChip(label = "Semua",    isSelected = filterAktif == FilterKatalog.SEMUA,     onClick = { onFilterChange(FilterKatalog.SEMUA) })
-        CariInFilterChip(label = "Hilang",   isSelected = filterAktif == FilterKatalog.HILANG,    onClick = { onFilterChange(FilterKatalog.HILANG) })
-        CariInFilterChip(label = "Ditemukan",isSelected = filterAktif == FilterKatalog.DITEMUKAN, onClick = { onFilterChange(FilterKatalog.DITEMUKAN) })
-    }
-}
+
 
 // =============================================
 // PREVIEW
