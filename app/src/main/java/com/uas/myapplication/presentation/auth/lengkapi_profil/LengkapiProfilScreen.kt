@@ -24,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.firebase.auth.FirebaseAuth
 import com.uas.myapplication.presentation.auth.login.CariInTextField
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import androidx.compose.ui.text.font.FontWeight
 
 // =============================================
@@ -81,7 +82,7 @@ fun LengkapiProfilScreen(
                 fontFamily = InterFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize   = 14.sp,
-                color      = TextSub
+                color      = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(modifier = Modifier.height(40.dp))
@@ -93,7 +94,7 @@ fun LengkapiProfilScreen(
                 label         = "Nama Lengkap",
                 placeholder   = "Azriel Gunawan",
                 leadingIcon   = {
-                    Icon(Icons.Default.Person, contentDescription = null, tint = TextHint)
+                    Icon(Icons.Default.Person, contentDescription = null, tint = CariInTheme.colors.textHint)
                 }
             )
 
@@ -106,7 +107,7 @@ fun LengkapiProfilScreen(
                 label         = "NIM",
                 placeholder   = "Nilai Induk Mahasiswa",
                 leadingIcon   = {
-                    Icon(Icons.Default.Badge, contentDescription = null, tint = TextHint)
+                    Icon(Icons.Default.Badge, contentDescription = null, tint = CariInTheme.colors.textHint)
                 }
             )
 
@@ -119,7 +120,7 @@ fun LengkapiProfilScreen(
                 label         = "No. WhatsApp",
                 placeholder   = "Nomor Anda",
                 leadingIcon   = {
-                    Icon(Icons.Default.Phone, contentDescription = null, tint = TextHint)
+                    Icon(Icons.Default.Phone, contentDescription = null, tint = CariInTheme.colors.textHint)
                 }
             )
 
@@ -131,7 +132,7 @@ fun LengkapiProfilScreen(
             ) {
                 Text(
                     text       = uiState.value.errorMessage ?: "",
-                    color      = DangerRed,
+                    color      = MaterialTheme.colorScheme.error,
                     fontFamily = InterFontFamily,
                     fontSize   = 12.sp,
                     modifier   = Modifier
@@ -151,21 +152,21 @@ fun LengkapiProfilScreen(
                     .height(52.dp),
                 shape  = RoundedCornerShape(16.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor         = Blue700,
-                    disabledContainerColor = Blue700.copy(alpha = 0.7f)
+                    containerColor         = MaterialTheme.colorScheme.primary,
+                    disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
                 )
             ) {
                 if (uiState.value.isLoading) {
                     CircularProgressIndicator(
                         modifier    = Modifier.size(22.dp),
-                        color       = Color.White,
+                        color       = MaterialTheme.colorScheme.onPrimary,
                         strokeWidth = 2.5.dp
                     )
                 } else {
                     Icon(
                         imageVector        = Icons.Default.Person,
                         contentDescription = null,
-                        tint               = Color.White,
+                        tint               = MaterialTheme.colorScheme.onPrimary,
                         modifier           = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
@@ -174,7 +175,7 @@ fun LengkapiProfilScreen(
                         fontFamily = PoppinsFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize   = 16.sp,
-                        color      = Color.White
+                        color      = MaterialTheme.colorScheme.onPrimary
                     )
                 }
             }

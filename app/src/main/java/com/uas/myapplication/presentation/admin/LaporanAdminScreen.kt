@@ -23,6 +23,7 @@ import com.uas.myapplication.presentation.ui.components.BarangCard
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.components.CariInFilterChip
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import androidx.compose.ui.tooling.preview.Preview
 import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
@@ -77,14 +78,14 @@ fun LaporanAdminScreen(
                             text = "Cari laporan...",
                             fontFamily = InterFontFamily,
                             fontSize = 13.sp,
-                            color = TextHint
+                            color = CariInTheme.colors.textHint
                         )
                     },
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = null,
-                            tint = TextHint
+                            tint = CariInTheme.colors.textHint
                         )
                     },
                     singleLine = true,
@@ -93,9 +94,9 @@ fun LaporanAdminScreen(
                         .padding(horizontal = 16.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Blue700,
-                        unfocusedBorderColor = SlateGray200,
-                        cursorColor = Blue700
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        cursorColor = MaterialTheme.colorScheme.primary
                     )
                 )
             }
@@ -116,7 +117,7 @@ fun LaporanAdminScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator(
-                            color = Blue700
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
@@ -150,7 +151,7 @@ fun LaporanAdminScreen(
                                 fontFamily = PoppinsFontFamily,
                                 fontWeight = FontWeight.Medium,
                                 fontSize = 15.sp,
-                                color = TextSub
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
 
                             Spacer(
@@ -161,7 +162,7 @@ fun LaporanAdminScreen(
                                 text = "Coba ubah kata kunci atau filter",
                                 fontFamily = InterFontFamily,
                                 fontSize = 13.sp,
-                                color = TextHint
+                                color = CariInTheme.colors.textHint
                             )
                         }
                     }

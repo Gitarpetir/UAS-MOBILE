@@ -31,7 +31,7 @@ fun InfoItem(
         Icon(
             imageVector = icon,
             contentDescription = null,
-            tint = Blue700,
+            tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(20.dp)
         )
 
@@ -43,7 +43,7 @@ fun InfoItem(
                 text = label,
                 fontFamily = InterFontFamily,
                 fontSize = 11.sp,
-                color = TextSub
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Text(

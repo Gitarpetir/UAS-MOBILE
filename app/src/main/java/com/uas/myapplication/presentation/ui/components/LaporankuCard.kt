@@ -46,6 +46,7 @@ import com.uas.myapplication.presentation.ui.theme.SlateGray100
 import com.uas.myapplication.presentation.ui.theme.SlateGray200
 import com.uas.myapplication.presentation.ui.theme.TextSub
 import kotlin.text.ifEmpty
+import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import com.uas.myapplication.presentation.ui.theme.SuccessGreen
 import com.uas.myapplication.presentation.ui.theme.SuccessGreenLight
 // =============================================
@@ -80,7 +81,7 @@ fun LaporankuCard(
                     modifier           = Modifier
                         .size(64.dp)
                         .clip(RoundedCornerShape(8.dp))
-                        .background(SlateGray100)
+                        .background(CariInTheme.colors.imagePlaceholder)
                 )
 
                 Spacer(modifier = Modifier.width(12.dp))
@@ -132,18 +133,18 @@ fun LaporankuCard(
 
                     // Lokasi
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.LocationOn, null, tint = TextSub, modifier = Modifier.size(12.dp))
+                        Icon(Icons.Default.LocationOn, null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(12.dp))
                         Spacer(modifier = Modifier.width(2.dp))
-                        Text(text = laporan.lokasi, fontFamily = InterFontFamily, fontSize = 12.sp, color = TextSub)
+                        Text(text = laporan.lokasi, fontFamily = InterFontFamily, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
 
                     Spacer(modifier = Modifier.height(2.dp))
 
                     // Tanggal
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.CalendarToday, null, tint = TextSub, modifier = Modifier.size(12.dp))
+                        Icon(Icons.Default.CalendarToday, null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(12.dp))
                         Spacer(modifier = Modifier.width(2.dp))
-                        Text(text = laporan.tanggal, fontFamily = InterFontFamily, fontSize = 12.sp, color = TextSub)
+                        Text(text = laporan.tanggal, fontFamily = InterFontFamily, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
             }
@@ -151,7 +152,7 @@ fun LaporankuCard(
             Spacer(modifier = Modifier.height(10.dp))
 
             // Divider
-            HorizontalDivider(color = SlateGray100)
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -166,12 +167,12 @@ fun LaporankuCard(
                         onClick = onEditClick,
                         modifier = Modifier.weight(1f).height(38.dp),
                         shape = RoundedCornerShape(8.dp),
-                        border = androidx.compose.foundation.BorderStroke(1.dp, SlateGray200)
+                        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                     ) {
                         Icon(
                             Icons.Default.Edit,
                             null,
-                            tint = TextSub,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.size(14.dp)
                         )
                         Spacer(modifier = Modifier.width(4.dp))
@@ -180,7 +181,7 @@ fun LaporankuCard(
                             fontFamily = InterFontFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 13.sp,
-                            color = TextSub
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
 

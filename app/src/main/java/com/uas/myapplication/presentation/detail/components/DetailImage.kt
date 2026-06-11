@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.uas.myapplication.presentation.ui.theme.SlateGray100
+import com.uas.myapplication.presentation.ui.theme.CariInTheme
 
 @Composable
 fun DetailImage(
@@ -23,7 +23,7 @@ fun DetailImage(
         modifier = Modifier
             .fillMaxWidth()
             .height(420.dp)
-            .background(SlateGray100)
+            .background(CariInTheme.colors.imagePlaceholder)
     )
 }
 

@@ -52,7 +52,7 @@ fun StatusBarangSelector(
                     if (selectedStatus == StatusBarang.HILANG)
                         Color.White
                     else
-                        TextSub
+                        MaterialTheme.colorScheme.onSurfaceVariant
             ),
             elevation = ButtonDefaults.buttonElevation(0.dp)
         ) {
@@ -83,7 +83,7 @@ fun StatusBarangSelector(
                     if (selectedStatus == StatusBarang.DITEMUKAN)
                         Color.White
                     else
-                        TextSub
+                        MaterialTheme.colorScheme.onSurfaceVariant
             ),
             elevation = ButtonDefaults.buttonElevation(0.dp)
         ) {

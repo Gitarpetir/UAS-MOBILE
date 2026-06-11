@@ -117,7 +117,7 @@ fun OnboardingScreen(
                     .height(52.dp),
                 shape  = RoundedCornerShape(16.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Blue700
+                    containerColor = MaterialTheme.colorScheme.primary
                 )
             ) {
                 Text(
@@ -125,7 +125,7 @@ fun OnboardingScreen(
                     fontFamily = PoppinsFontFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize   = 16.sp,
-                    color      = Color.White
+                    color      = MaterialTheme.colorScheme.onPrimary
                 )
             }
 
@@ -137,7 +137,7 @@ fun OnboardingScreen(
                         fontFamily = InterFontFamily,
                         fontWeight = FontWeight.Normal,
                         fontSize   = 14.sp,
-                        color      = TextSub
+                        color      = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             } else {
@@ -202,7 +202,7 @@ fun OnboardingPageContent(
             fontFamily = InterFontFamily,
             fontWeight = FontWeight.Normal,
             fontSize   = 14.sp,
-            color      = TextSub,
+            color      = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign  = TextAlign.Center,
             lineHeight = 22.sp
         )
@@ -232,7 +232,7 @@ fun IlustrasiKacaPembesar() {
         Box(
             modifier = Modifier
                 .size(180.dp)
-                .background(Blue100, CircleShape)
+                .background(MaterialTheme.colorScheme.primaryContainer, CircleShape)
         )
 
         // Canvas ikon kaca pembesar
@@ -467,7 +467,7 @@ fun DotsIndicator(
                     .height(8.dp)
                     .width(lebarDot)
                     .background(
-                        color  = if (isSelected) Blue700 else SlateGray200,
+                        color  = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                         shape  = CircleShape
                     )
             )

@@ -37,6 +37,7 @@ import com.google.android.gms.common.api.ApiException
 import com.uas.myapplication.R
 import com.uas.myapplication.presentation.auth.login.CariInTextField
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.theme.CariInTheme
 
 @Composable
 fun RegisterScreen(
@@ -103,7 +104,7 @@ fun RegisterScreen(
                 fontFamily = InterFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize   = 14.sp,
-                color      = TextSub
+                color      = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -115,7 +116,7 @@ fun RegisterScreen(
                 label         = "Nama Lengkap",
                 placeholder   = "Azriel Gunawan",
                 leadingIcon   = {
-                    Icon(Icons.Default.Person, contentDescription = null, tint = TextHint)
+                    Icon(Icons.Default.Person, contentDescription = null, tint = CariInTheme.colors.textHint)
                 }
             )
 
@@ -128,7 +129,7 @@ fun RegisterScreen(
                 label         = "NIM",
                 placeholder   = "Nilai Induk Mahasiswa",
                 leadingIcon   = {
-                    Icon(Icons.Default.Badge, contentDescription = null, tint = TextHint)
+                    Icon(Icons.Default.Badge, contentDescription = null, tint = CariInTheme.colors.textHint)
                 },
                 keyboardType  = KeyboardType.Number
             )
@@ -142,7 +143,7 @@ fun RegisterScreen(
                 label         = "No. WhatsApp",
                 placeholder   = "Nomor Anda",
                 leadingIcon   = {
-                    Icon(Icons.Default.Phone, contentDescription = null, tint = TextHint)
+                    Icon(Icons.Default.Phone, contentDescription = null, tint = CariInTheme.colors.textHint)
                 },
                 keyboardType  = KeyboardType.Phone
             )
@@ -156,7 +157,7 @@ fun RegisterScreen(
                 label         = "Email",
                 placeholder   = "email.kamu@gmail.com",
                 leadingIcon   = {
-                    Icon(Icons.Default.Email, contentDescription = null, tint = TextHint)
+                    Icon(Icons.Default.Email, contentDescription = null, tint = CariInTheme.colors.textHint)
                 },
                 keyboardType  = KeyboardType.Email
             )
@@ -170,7 +171,7 @@ fun RegisterScreen(
                 label         = "Password",
                 placeholder   = "Buat password",
                 leadingIcon   = {
-                    Icon(Icons.Default.Lock, contentDescription = null, tint = TextHint)
+                    Icon(Icons.Default.Lock, contentDescription = null, tint = CariInTheme.colors.textHint)
                 },
                 trailingIcon  = {
                     IconButton(onClick = viewModel::onTogglePasswordVisibility) {
@@ -178,7 +179,7 @@ fun RegisterScreen(
                             imageVector = if (uiState.passwordVisible)
                                 Icons.Default.Visibility else Icons.Default.VisibilityOff,
                             contentDescription = null,
-                            tint = TextHint
+                            tint = CariInTheme.colors.textHint
                         )
                     }
                 },
@@ -196,7 +197,7 @@ fun RegisterScreen(
                 label         = "Konfirmasi Password",
                 placeholder   = "Konfirmasi password kamu",
                 leadingIcon   = {
-                    Icon(Icons.Default.Lock, contentDescription = null, tint = TextHint)
+                    Icon(Icons.Default.Lock, contentDescription = null, tint = CariInTheme.colors.textHint)
                 },
                 trailingIcon  = {
                     IconButton(onClick = viewModel::onToggleKonfirmasiPasswordVisibility) {
@@ -204,7 +205,7 @@ fun RegisterScreen(
                             imageVector = if (uiState.konfirmasiPasswordVisible)
                                 Icons.Default.Visibility else Icons.Default.VisibilityOff,
                             contentDescription = null,
-                            tint = TextHint
+                            tint = CariInTheme.colors.textHint
                         )
                     }
                 },
@@ -222,7 +223,7 @@ fun RegisterScreen(
             ) {
                 Text(
                     text       = "Password dan konfirmasi password tidak sama",
-                    color      = DangerRed,
+                    color      = MaterialTheme.colorScheme.error,
                     fontFamily = InterFontFamily,
                     fontSize   = 12.sp,
                     modifier   = Modifier.fillMaxWidth().padding(top = 6.dp)
@@ -237,7 +238,7 @@ fun RegisterScreen(
             ) {
                 Text(
                     text       = uiState.errorMessage ?: "",
-                    color      = DangerRed,
+                    color      = MaterialTheme.colorScheme.error,
                     fontFamily = InterFontFamily,
                     fontSize   = 12.sp,
                     modifier   = Modifier.fillMaxWidth().padding(top = 6.dp)
@@ -253,21 +254,21 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxWidth().height(52.dp),
                 shape    = RoundedCornerShape(16.dp),
                 colors   = ButtonDefaults.buttonColors(
-                    containerColor         = Blue700,
-                    disabledContainerColor = Blue700.copy(alpha = 0.7f)
+                    containerColor         = MaterialTheme.colorScheme.primary,
+                    disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
                 )
             ) {
                 if (uiState.isLoading) {
                     CircularProgressIndicator(
                         modifier    = Modifier.size(22.dp),
-                        color       = Color.White,
+                        color       = MaterialTheme.colorScheme.onPrimary,
                         strokeWidth = 2.5.dp
                     )
                 } else {
                     Icon(
                         imageVector        = Icons.Default.PersonAdd,
                         contentDescription = null,
-                        tint               = Color.White,
+                        tint               = MaterialTheme.colorScheme.onPrimary,
                         modifier           = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
@@ -276,7 +277,7 @@ fun RegisterScreen(
                         fontFamily = PoppinsFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize   = 16.sp,
-                        color      = Color.White
+                        color      = MaterialTheme.colorScheme.onPrimary
                     )
                 }
             }
@@ -288,9 +289,9 @@ fun RegisterScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier          = Modifier.fillMaxWidth()
             ) {
-                HorizontalDivider(modifier = Modifier.weight(1f), color = SlateGray200)
-                Text("  atau  ", fontFamily = InterFontFamily, fontSize = 12.sp, color = TextSub)
-                HorizontalDivider(modifier = Modifier.weight(1f), color = SlateGray200)
+                HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outline)
+                Text("  atau  ", fontFamily = InterFontFamily, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outline)
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -311,12 +312,12 @@ fun RegisterScreen(
                 colors   = ButtonDefaults.outlinedButtonColors(
                     contentColor = MaterialTheme.colorScheme.onBackground
                 ),
-                border = BorderStroke(width = 1.5.dp, color = SlateGray200)
+                border = BorderStroke(width = 1.5.dp, color = MaterialTheme.colorScheme.outline)
             ) {
                 if (uiState.isLoading) {
                     CircularProgressIndicator(
                         modifier    = Modifier.size(22.dp),
-                        color       = Blue700,
+                        color       = MaterialTheme.colorScheme.primary,
                         strokeWidth = 2.5.dp
                     )
                 } else {
@@ -346,12 +347,12 @@ fun RegisterScreen(
                     Text(
                         text = buildAnnotatedString {
                             withStyle(SpanStyle(
-                                color      = TextSub,
+                                color      = MaterialTheme.colorScheme.onSurfaceVariant,
                                 fontFamily = InterFontFamily,
                                 fontSize   = 14.sp
                             )) { append("Sudah punya akun? ") }
                             withStyle(SpanStyle(
-                                color      = Blue700,
+                                color      = MaterialTheme.colorScheme.primary,
                                 fontFamily = InterFontFamily,
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize   = 14.sp

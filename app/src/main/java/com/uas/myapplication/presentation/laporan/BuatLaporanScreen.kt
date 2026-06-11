@@ -35,6 +35,7 @@ import com.uas.myapplication.presentation.auth.login.CariInTextField
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import java.util.Calendar
 import androidx.core.net.toUri
 import com.uas.myapplication.presentation.laporan.components.FormHeader
@@ -102,20 +103,20 @@ fun BuatLaporanScreen(
                         viewModel.onTanggalChange("$hari $bulan $tahun")
                     }
                     showDatePicker = false
-                }) { Text("Pilih", color = Blue700, fontFamily = InterFontFamily) }
+                }) { Text("Pilih", color = MaterialTheme.colorScheme.primary, fontFamily = InterFontFamily) }
             },
             dismissButton = {
                 TextButton(onClick = { showDatePicker = false }) {
-                    Text("Batal", color = TextSub, fontFamily = InterFontFamily)
+                    Text("Batal", color = MaterialTheme.colorScheme.onSurfaceVariant, fontFamily = InterFontFamily)
                 }
             }
         ) {
             DatePicker(
                 state  = datePickerState,
                 colors = DatePickerDefaults.colors(
-                    selectedDayContainerColor  = Blue700,
-                    todayDateBorderColor       = Blue700,
-                    selectedYearContainerColor = Blue700
+                    selectedDayContainerColor  = MaterialTheme.colorScheme.primary,
+                    todayDateBorderColor       = MaterialTheme.colorScheme.primary,
+                    selectedYearContainerColor = MaterialTheme.colorScheme.primary
                 )
             )
         }
@@ -154,7 +155,7 @@ fun BuatLaporanScreen(
                     shape     = RoundedCornerShape(10.dp),
                     colors    = ButtonDefaults.buttonColors(
                         containerColor = if (uiState.statusBarang == StatusBarang.DITEMUKAN) SuccessGreen else MaterialTheme.colorScheme.surface,
-                        contentColor   = if (uiState.statusBarang == StatusBarang.DITEMUKAN) Color.White else TextSub
+                        contentColor   = if (uiState.statusBarang == StatusBarang.DITEMUKAN) Color.White else MaterialTheme.colorScheme.onSurfaceVariant
                     ),
                     elevation = ButtonDefaults.buttonElevation(0.dp)
                 ) { Text("Ditemukan", fontFamily = InterFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 14.sp) }
@@ -170,7 +171,7 @@ fun BuatLaporanScreen(
                     .fillMaxWidth().height(360.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .background(MaterialTheme.colorScheme.surface)
-                    .border(1.5.dp, SlateGray200, RoundedCornerShape(12.dp))
+                    .border(1.5.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(12.dp))
                     .clickable { fotoLauncher.launch("image/*") },
                 contentAlignment = Alignment.Center
             ) {
@@ -178,9 +179,9 @@ fun BuatLaporanScreen(
                     uiState.fotoUri.isNotEmpty() -> AsyncImage(model = uiState.fotoUri.toUri(), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
                     uiState.fotoUrl.isNotEmpty() -> AsyncImage(model = uiState.fotoUrl, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
                     else -> Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Icon(Icons.Default.Upload, null, tint = TextHint, modifier = Modifier.size(36.dp))
+                        Icon(Icons.Default.Upload, null, tint = CariInTheme.colors.textHint, modifier = Modifier.size(36.dp))
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Tekan untuk mengunggah foto", fontFamily = InterFontFamily, fontSize = 13.sp, color = TextHint)
+                        Text("Tekan untuk mengunggah foto", fontFamily = InterFontFamily, fontSize = 13.sp, color = CariInTheme.colors.textHint)
                     }
                 }
             }
@@ -201,12 +202,12 @@ fun BuatLaporanScreen(
             OutlinedTextField(
                 value         = uiState.deskripsi,
                 onValueChange = viewModel::onDeskripsiChange,
-                placeholder   = { Text("Berikan detail tentang barang tersebut...", fontFamily = InterFontFamily, fontSize = 14.sp, color = TextHint) },
+                placeholder   = { Text("Berikan detail tentang barang tersebut...", fontFamily = InterFontFamily, fontSize = 14.sp, color = CariInTheme.colors.textHint) },
                 modifier      = Modifier.fillMaxWidth().height(120.dp),
                 shape         = RoundedCornerShape(12.dp),
                 isError       = uiState.deskripsiError,
                 maxLines      = 5,
-                colors        = OutlinedTextFieldDefaults.colors(focusedBorderColor = Blue700, unfocusedBorderColor = SlateGray200, cursorColor = Blue700, errorBorderColor = DangerRed)
+                colors        = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary, errorBorderColor = MaterialTheme.colorScheme.error)
             )
             if (uiState.deskripsiError) TeksError("Deskripsi wajib diisi")
 
@@ -215,7 +216,7 @@ fun BuatLaporanScreen(
             // Lokasi
             LabelWajib("Lokasi")
             Spacer(modifier = Modifier.height(6.dp))
-            CariInTextField(value = uiState.lokasi, onValueChange = viewModel::onLokasiChange, label = "", placeholder = "misalnya, Lab Komputer Dasar", leadingIcon = { Icon(Icons.Default.LocationOn, null, tint = TextHint) }, isError = uiState.lokasiError)
+            CariInTextField(value = uiState.lokasi, onValueChange = viewModel::onLokasiChange, label = "", placeholder = "misalnya, Lab Komputer Dasar", leadingIcon = { Icon(Icons.Default.LocationOn, null, tint = CariInTheme.colors.textHint) }, isError = uiState.lokasiError)
             if (uiState.lokasiError) TeksError("Lokasi wajib diisi")
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -235,14 +236,14 @@ fun BuatLaporanScreen(
                             "Pilih tanggal",
                             fontFamily = InterFontFamily,
                             fontSize = 14.sp,
-                            color = TextHint
+                            color = CariInTheme.colors.textHint
                         )
                     },
                     leadingIcon = {
                         Icon(
                             Icons.Default.CalendarToday,
                             contentDescription = null,
-                            tint = TextHint
+                            tint = CariInTheme.colors.textHint
                         )
                     },
                     readOnly = true,
@@ -251,9 +252,9 @@ fun BuatLaporanScreen(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Blue700,
-                        unfocusedBorderColor = SlateGray200,
-                        errorBorderColor = DangerRed
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        errorBorderColor = MaterialTheme.colorScheme.error
                     )
                 )
 
@@ -271,7 +272,7 @@ fun BuatLaporanScreen(
             }
 
             AnimatedVisibility(visible = uiState.errorMessage != null, enter = fadeIn(), exit = fadeOut()) {
-                Text(text = uiState.errorMessage ?: "", color = DangerRed, fontFamily = InterFontFamily, fontSize = 12.sp, modifier = Modifier.fillMaxWidth().padding(top = 8.dp))
+                Text(text = uiState.errorMessage ?: "", color = MaterialTheme.colorScheme.error, fontFamily = InterFontFamily, fontSize = 12.sp, modifier = Modifier.fillMaxWidth().padding(top = 8.dp))
             }
 
             Spacer(modifier = Modifier.height(28.dp))

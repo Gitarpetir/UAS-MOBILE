@@ -3,6 +3,7 @@ package com.uas.myapplication.presentation.ui.components
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
@@ -31,17 +32,17 @@ fun CariInFilterChip(
             )
         },
         colors = FilterChipDefaults.filterChipColors(
-            selectedContainerColor = Blue700,
-            selectedLabelColor = Color.White,
+            selectedContainerColor = MaterialTheme.colorScheme.primary,
+            selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
             containerColor = androidx.compose.material3.MaterialTheme.colorScheme.surface,
-            labelColor = TextSub
+            labelColor = MaterialTheme.colorScheme.onSurfaceVariant
         ),
         border = FilterChipDefaults.filterChipBorder(
             enabled = true,
             selected = isSelected,
-            selectedBorderColor = Blue700,
+            selectedBorderColor = MaterialTheme.colorScheme.primary,
             selectedBorderWidth = 0.dp,
-            borderColor = SlateGray200,
+            borderColor = MaterialTheme.colorScheme.outline,
             borderWidth = 1.dp
         )
     )

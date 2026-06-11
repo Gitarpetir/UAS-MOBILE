@@ -43,6 +43,7 @@ import com.google.android.gms.common.api.ApiException
 import com.uas.myapplication.R
 import com.uas.myapplication.presentation.onboarding.IlustrasiTemukan
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.theme.CariInTheme
 
 // =============================================
 // LOGIN SCREEN
@@ -121,7 +122,7 @@ fun LoginScreen(
                 fontFamily = InterFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize   = 14.sp,
-                color      = TextSub,
+                color      = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign  = TextAlign.Center
             )
 
@@ -134,7 +135,7 @@ fun LoginScreen(
                 label         = "Email",
                 placeholder   = "email.kamu@gmail.com",
                 leadingIcon   = {
-                    Icon(Icons.Default.Email, contentDescription = null, tint = TextHint)
+                    Icon(Icons.Default.Email, contentDescription = null, tint = CariInTheme.colors.textHint)
                 },
                 keyboardType  = KeyboardType.Email
             )
@@ -148,7 +149,7 @@ fun LoginScreen(
                 label         = "Password",
                 placeholder   = "Masukkan password",
                 leadingIcon   = {
-                    Icon(Icons.Default.Lock, contentDescription = null, tint = TextHint)
+                    Icon(Icons.Default.Lock, contentDescription = null, tint = CariInTheme.colors.textHint)
                 },
                 trailingIcon  = {
                     IconButton(onClick = viewModel::onTogglePasswordVisibility) {
@@ -157,7 +158,7 @@ fun LoginScreen(
                                 Icons.Default.Visibility else Icons.Default.VisibilityOff,
                             contentDescription = if (uiState.passwordVisible)
                                 "Sembunyikan password" else "Tampilkan password",
-                            tint = TextHint
+                            tint = CariInTheme.colors.textHint
                         )
                     }
                 },
@@ -174,7 +175,7 @@ fun LoginScreen(
             ) {
                 Text(
                     text       = uiState.errorMessage ?: "",
-                    color      = DangerRed,
+                    color      = MaterialTheme.colorScheme.error,
                     fontFamily = InterFontFamily,
                     fontSize   = 12.sp,
                     modifier   = Modifier
@@ -192,21 +193,21 @@ fun LoginScreen(
                 modifier = Modifier.fillMaxWidth().height(52.dp),
                 shape    = RoundedCornerShape(16.dp),
                 colors   = ButtonDefaults.buttonColors(
-                    containerColor         = Blue700,
-                    disabledContainerColor = Blue700.copy(alpha = 0.7f)
+                    containerColor         = MaterialTheme.colorScheme.primary,
+                    disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
                 )
             ) {
                 if (uiState.isLoading) {
                     CircularProgressIndicator(
                         modifier    = Modifier.size(22.dp),
-                        color       = Color.White,
+                        color       = MaterialTheme.colorScheme.onPrimary,
                         strokeWidth = 2.5.dp
                     )
                 } else {
                     Icon(
                         imageVector        = Icons.Default.Lock,
                         contentDescription = null,
-                        tint               = Color.White,
+                        tint               = MaterialTheme.colorScheme.onPrimary,
                         modifier           = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
@@ -215,7 +216,7 @@ fun LoginScreen(
                         fontFamily = PoppinsFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize   = 16.sp,
-                        color      = Color.White
+                        color      = MaterialTheme.colorScheme.onPrimary
                     )
                 }
             }
@@ -227,14 +228,14 @@ fun LoginScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier          = Modifier.fillMaxWidth()
             ) {
-                HorizontalDivider(modifier = Modifier.weight(1f), color = SlateGray200)
+                HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outline)
                 Text(
                     text       = "  atau lanjutkan dengan  ",
                     fontFamily = InterFontFamily,
                     fontSize   = 12.sp,
-                    color      = TextSub
+                    color      = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                HorizontalDivider(modifier = Modifier.weight(1f), color = SlateGray200)
+                HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outline)
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -255,12 +256,12 @@ fun LoginScreen(
                 colors   = ButtonDefaults.outlinedButtonColors(
                     contentColor = MaterialTheme.colorScheme.onBackground
                 ),
-                border = BorderStroke(width = 1.5.dp, color = SlateGray200)
+                border = BorderStroke(width = 1.5.dp, color = MaterialTheme.colorScheme.outline)
             ) {
                 if (uiState.isLoading) {
                     CircularProgressIndicator(
                         modifier    = Modifier.size(22.dp),
-                        color       = Blue700,
+                        color       = MaterialTheme.colorScheme.primary,
                         strokeWidth = 2.5.dp
                     )
                 } else {
@@ -289,12 +290,12 @@ fun LoginScreen(
                 Text(
                     text = buildAnnotatedString {
                         withStyle(SpanStyle(
-                            color      = TextSub,
+                            color      = MaterialTheme.colorScheme.onSurfaceVariant,
                             fontFamily = InterFontFamily,
                             fontSize   = 14.sp
                         )) { append("Tidak mempunyai akun? ") }
                         withStyle(SpanStyle(
-                            color      = Blue700,
+                            color      = MaterialTheme.colorScheme.primary,
                             fontFamily = InterFontFamily,
                             fontWeight = FontWeight.SemiBold,
                             fontSize   = 14.sp
@@ -320,7 +321,7 @@ fun IlustrasiLoginBadge() {
         Box(
             modifier = Modifier
                 .size(140.dp)
-                .background(Blue100, CircleShape)
+                .background(MaterialTheme.colorScheme.primaryContainer, CircleShape)
         )
         Box(modifier = Modifier.size(70.dp)) {
             IlustrasiTemukan()
@@ -356,7 +357,7 @@ fun CariInTextField(
             value                = value,
             onValueChange        = onValueChange,
             placeholder          = {
-                Text(text = placeholder, fontFamily = InterFontFamily, fontSize = 14.sp, color = TextHint)
+                Text(text = placeholder, fontFamily = InterFontFamily, fontSize = 14.sp, color = CariInTheme.colors.textHint)
             },
             leadingIcon          = leadingIcon,
             trailingIcon         = trailingIcon,
@@ -367,10 +368,10 @@ fun CariInTextField(
             modifier             = Modifier.fillMaxWidth(),
             shape                = RoundedCornerShape(12.dp),
             colors               = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor   = Blue700,
-                unfocusedBorderColor = SlateGray200,
-                focusedLabelColor    = Blue700,
-                cursorColor          = Blue700
+                focusedBorderColor   = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                focusedLabelColor    = MaterialTheme.colorScheme.primary,
+                cursorColor          = MaterialTheme.colorScheme.primary
             )
         )
     }
