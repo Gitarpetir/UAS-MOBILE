@@ -46,9 +46,6 @@ import com.uas.myapplication.presentation.auth.login.components.IlustrasiLoginBa
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
 
-// =============================================
-// LOGIN SCREEN
-// =============================================
 @Composable
 fun LoginScreen(
     viewModel     : LoginViewModel,
