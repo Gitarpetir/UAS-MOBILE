@@ -15,6 +15,8 @@ fun FilterChipAdminRow(
     filterAktif: FilterAdmin,
     onFilterChange: (FilterAdmin) -> Unit
 ) {
+    val strings = com.uas.myapplication.presentation.ui.StringProvider.get(com.uas.myapplication.presentation.ui.LocalBahasa.current)
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -25,7 +27,7 @@ fun FilterChipAdminRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         CariInFilterChip(
-            label = "Semua",
+            label = strings.filterAll,
             isSelected = filterAktif == FilterAdmin.SEMUA,
             onClick = {
                 onFilterChange(FilterAdmin.SEMUA)
@@ -33,7 +35,7 @@ fun FilterChipAdminRow(
         )
 
         CariInFilterChip(
-            label = "Hilang",
+            label = strings.filterLost,
             isSelected = filterAktif == FilterAdmin.HILANG,
             onClick = {
                 onFilterChange(FilterAdmin.HILANG)
@@ -41,7 +43,7 @@ fun FilterChipAdminRow(
         )
 
         CariInFilterChip(
-            label = "Ditemukan",
+            label = strings.filterFound,
             isSelected = filterAktif == FilterAdmin.DITEMUKAN,
             onClick = {
                 onFilterChange(FilterAdmin.DITEMUKAN)
@@ -49,7 +51,7 @@ fun FilterChipAdminRow(
         )
 
         CariInFilterChip(
-            label = "Selesai",
+            label = strings.filterCompleted,
             isSelected = filterAktif == FilterAdmin.SELESAI,
             onClick = {
                 onFilterChange(FilterAdmin.SELESAI)

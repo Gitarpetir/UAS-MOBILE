@@ -18,11 +18,14 @@ import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.presentation.ui.components.common.InfoItem
 import com.uas.myapplication.presentation.ui.components.StatusBadge
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun DetailInfoSection(
     laporan: Laporan
 ) {
+    val strings = StringProvider.get(LocalBahasa.current)
 
     Column {
 
@@ -74,7 +77,7 @@ fun DetailInfoSection(
             ) {
 
                 Text(
-                    text = "Lokasi & Tanggal",
+                    text = "${strings.locationLabel} & ${strings.dateLabel}",
                     fontFamily = PoppinsFontFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 15.sp,
@@ -85,7 +88,7 @@ fun DetailInfoSection(
 
                 InfoItem(
                     icon = Icons.Default.LocationOn,
-                    label = "Lokasi",
+                    label = strings.locationLabel,
                     value = laporan.lokasi
                 )
 
@@ -93,7 +96,7 @@ fun DetailInfoSection(
 
                 InfoItem(
                     icon = Icons.Default.CalendarToday,
-                    label = "Tanggal",
+                    label = strings.dateLabel,
                     value = laporan.tanggal
                 )
             }

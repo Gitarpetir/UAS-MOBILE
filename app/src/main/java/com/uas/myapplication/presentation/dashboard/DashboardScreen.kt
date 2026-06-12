@@ -20,11 +20,13 @@ import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.components.BarangCard
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
-import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
+import com.uas.myapplication.presentation.ui.components.getMahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.dashboard.components.BarangTerbaruHeader
 import com.uas.myapplication.presentation.dashboard.components.DashboardHeader
 import com.uas.myapplication.presentation.dashboard.components.QuickActionSection
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun DashboardScreen(
@@ -32,12 +34,13 @@ fun DashboardScreen(
     navController: NavController
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val strings = StringProvider.get(LocalBahasa.current)
 
     Scaffold(
         bottomBar = {
             CariInBottomNavBar(
                 navController = navController,
-                items = mahasiswaBottomNavItems
+                items = getMahasiswaBottomNavItems(strings)
             )
         }
     ) { paddingValues ->
@@ -104,7 +107,7 @@ fun DashboardScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text       = "Belum ada laporan barang",
+                            text       = strings.noItemReportsYet,
                             fontFamily = InterFontFamily,
                             fontSize   = 14.sp,
                             color      = MaterialTheme.colorScheme.onSurfaceVariant
@@ -119,6 +122,7 @@ fun DashboardScreen(
 @Preview(showBackground = true, name = "Dashboard Screen - Light", heightDp = 900)
 @Composable
 fun PreviewDashboardScreen() {
+    val strings = StringProvider.get("id")
     MyApplicationTheme {
         val dummyLaporan = listOf(
             Laporan(id = "1", namaBarang = "Jam Tangan", lokasi = "Ruang Baca", tanggal = "12 April 2026", statusBarang = StatusBarang.HILANG),
@@ -149,8 +153,8 @@ fun PreviewDashboardScreen() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment     = Alignment.CenterVertically
             ) {
-                Text("Barang Terbaru", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 16.sp, color = TextMain)
-                Text("Lihat Semua", fontFamily = InterFontFamily, fontSize = 13.sp, color = Blue700)
+                Text(strings.recentItemsHeader, fontFamily = PoppinsFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 16.sp, color = TextMain)
+                Text(strings.btnSeeAll, fontFamily = InterFontFamily, fontSize = 13.sp, color = Blue700)
             }
             dummyLaporan.forEach { laporan ->
                 BarangCard(laporan = laporan, onClick = {})

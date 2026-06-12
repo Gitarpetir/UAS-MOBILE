@@ -26,7 +26,7 @@ import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.domain.model.User
 import com.uas.myapplication.presentation.detail.components.DetailImage
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
-import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
+import com.uas.myapplication.presentation.ui.components.getMahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.detail.components.DetailActionSection
 import com.uas.myapplication.presentation.detail.components.DetailHeader
@@ -34,6 +34,8 @@ import com.uas.myapplication.presentation.detail.components.DetailInfoSection
 import com.uas.myapplication.presentation.detail.components.DialogKonfirmasiMilik
 import com.uas.myapplication.presentation.detail.components.DialogKonfirmasiTemukan
 import com.uas.myapplication.presentation.detail.components.InformasiPenggunaCard
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun DetailBarangScreen(
@@ -42,6 +44,7 @@ fun DetailBarangScreen(
     navController: NavController
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val strings = StringProvider.get(LocalBahasa.current)
 
     LaunchedEffect(laporanId) {
         viewModel.muatDetail(laporanId)
@@ -71,7 +74,7 @@ fun DetailBarangScreen(
         bottomBar = {
             CariInBottomNavBar(
                 navController = navController,
-                items = mahasiswaBottomNavItems
+                items = getMahasiswaBottomNavItems(strings)
             )
         }
     ) { paddingValues ->
@@ -110,7 +113,7 @@ fun DetailBarangScreen(
                         Spacer(modifier = Modifier.height(12.dp))
 
                         InformasiPenggunaCard(
-                            title = "Informasi Pelapor",
+                            title = strings.reporterInfo,
                             nama = laporan.namaPelapor,
                             nim = laporan.nimPelapor
                         )
@@ -118,7 +121,7 @@ fun DetailBarangScreen(
                         if (laporan.idPenemu.isNotBlank()) {
                             Spacer(modifier = Modifier.height(12.dp))
                             InformasiPenggunaCard(
-                                title = "Informasi Penemu",
+                                title = strings.finderInfo,
                                 nama = laporan.namaPenemu,
                                 nim = laporan.nimPenemu
                             )

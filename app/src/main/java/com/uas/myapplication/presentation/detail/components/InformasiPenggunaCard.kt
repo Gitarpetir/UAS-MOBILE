@@ -23,6 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.uas.myapplication.presentation.ui.theme.MyApplicationTheme
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun InformasiPenggunaCard(
@@ -30,6 +32,8 @@ fun InformasiPenggunaCard(
     nama: String,
     nim: String
 ) {
+    val strings = StringProvider.get(LocalBahasa.current)
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
@@ -54,7 +58,7 @@ fun InformasiPenggunaCard(
 
             InfoItem(
                 icon = Icons.Default.Person,
-                label = "Nama",
+                label = strings.nameLabel,
                 value = nama
             )
 
@@ -62,7 +66,7 @@ fun InformasiPenggunaCard(
 
             InfoItem(
                 icon = Icons.Default.Badge,
-                label = "NIM",
+                label = strings.nimLabel,
                 value = nim
             )
 

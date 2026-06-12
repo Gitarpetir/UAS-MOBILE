@@ -18,11 +18,15 @@ import com.uas.myapplication.presentation.ui.theme.Blue700
 import com.uas.myapplication.presentation.ui.theme.InterFontFamily
 import com.uas.myapplication.presentation.ui.theme.MyApplicationTheme
 import com.uas.myapplication.presentation.ui.theme.PoppinsFontFamily
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun BarangTerbaruHeader(
     onLihatSemuaClick: () -> Unit
 ) {
+    val strings = StringProvider.get(LocalBahasa.current)
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -31,14 +35,14 @@ fun BarangTerbaruHeader(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Barang Terbaru",
+            text = strings.recentItemsHeader,
             fontFamily = PoppinsFontFamily,
             fontWeight = FontWeight.SemiBold,
             fontSize = 16.sp,
             color = MaterialTheme.colorScheme.onBackground
         )
         Text(
-            text = "Lihat Semua",
+            text = strings.btnSeeAll,
             fontFamily = InterFontFamily,
             fontWeight = FontWeight.Medium,
             fontSize = 13.sp,

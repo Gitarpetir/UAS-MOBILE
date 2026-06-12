@@ -13,13 +13,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun StatusBadge(status: StatusBarang) {
+    val strings = StringProvider.get(LocalBahasa.current)
+    
     val (label, bgColor, textColor) = when (status) {
-        StatusBarang.HILANG    -> Triple("Hilang",    DangerRedLight,    DangerRed)
-        StatusBarang.DITEMUKAN -> Triple("Ditemukan", SuccessGreenLight, SuccessGreen)
-        StatusBarang.SELESAI   -> Triple("Selesai",   NeutralGrayLight,  NeutralGray)
+        StatusBarang.HILANG    -> Triple(strings.statusBadgeLost,    DangerRedLight,    DangerRed)
+        StatusBarang.DITEMUKAN -> Triple(strings.statusBadgeFound, SuccessGreenLight, SuccessGreen)
+        StatusBarang.SELESAI   -> Triple(strings.statusBadgeCompleted,   NeutralGrayLight,  NeutralGray)
     }
 
     Box(

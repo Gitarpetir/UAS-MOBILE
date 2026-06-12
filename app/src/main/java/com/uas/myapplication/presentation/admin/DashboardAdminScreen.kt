@@ -35,12 +35,13 @@ fun DashboardAdminScreen(
     navController: NavController
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val strings = com.uas.myapplication.presentation.ui.StringProvider.get(com.uas.myapplication.presentation.ui.LocalBahasa.current)
 
     Scaffold(
         bottomBar = {
             CariInBottomNavBar(
                 navController = navController,
-                items = adminBottomNavItems
+                items = com.uas.myapplication.presentation.ui.components.getAdminBottomNavItems(strings)
             )
         }
     ) { paddingValues ->
@@ -70,7 +71,7 @@ fun DashboardAdminScreen(
                 ) {
 
                     Text(
-                        text = "Laporan Terbaru",
+                        text = strings.recentReportsHeader,
                         fontFamily = PoppinsFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 16.sp,
@@ -117,7 +118,7 @@ fun DashboardAdminScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "Belum ada laporan",
+                            text = strings.noItemReportsYet,
                             fontFamily = InterFontFamily,
                             fontSize = 14.sp,
                             color = MaterialTheme.colorScheme.onSurfaceVariant

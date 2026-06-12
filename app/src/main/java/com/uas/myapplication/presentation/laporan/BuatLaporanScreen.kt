@@ -33,7 +33,7 @@ import coil.compose.AsyncImage
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.presentation.ui.components.CariInTextField
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
-import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
+import com.uas.myapplication.presentation.ui.components.getMahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import java.util.Calendar
@@ -45,6 +45,8 @@ import com.uas.myapplication.presentation.laporan.components.SubmitSection
 import com.uas.myapplication.presentation.laporan.components.TeksError
 import com.uas.myapplication.presentation.laporan.components.FotoPicker
 import com.uas.myapplication.presentation.laporan.components.TanggalField
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,6 +57,7 @@ fun BuatLaporanScreen(
     navController: NavController
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val strings = StringProvider.get(LocalBahasa.current)
 
     LaunchedEffect(statusAwal) {
 
@@ -118,11 +121,11 @@ fun BuatLaporanScreen(
                         viewModel.onTanggalChange("$hari $bulan $tahun")
                     }
                     showDatePicker = false
-                }) { Text("Pilih", color = MaterialTheme.colorScheme.primary, fontFamily = InterFontFamily) }
+                }) { Text(strings.btnSelect, color = MaterialTheme.colorScheme.primary, fontFamily = InterFontFamily) }
             },
             dismissButton = {
                 TextButton(onClick = { showDatePicker = false }) {
-                    Text("Batal", color = MaterialTheme.colorScheme.onSurfaceVariant, fontFamily = InterFontFamily)
+                    Text(strings.btnCancel, color = MaterialTheme.colorScheme.onSurfaceVariant, fontFamily = InterFontFamily)
                 }
             }
         ) {
@@ -140,7 +143,7 @@ fun BuatLaporanScreen(
     Scaffold(bottomBar = {
         CariInBottomNavBar(
             navController = navController,
-            items = mahasiswaBottomNavItems
+            items = getMahasiswaBottomNavItems(strings)
         )
     }) { paddingValues ->
         Column(
@@ -154,7 +157,7 @@ fun BuatLaporanScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             FormHeader(
-                title = "Laporkan Barang"
+                title = strings.reportItemTitle
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -178,30 +181,30 @@ fun BuatLaporanScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
             // Nama Barang
-            LabelWajib("Nama Barang")
+            LabelWajib(strings.itemNameLabel)
 
             CariInTextField(
                 value = uiState.namaBarang,
                 onValueChange = viewModel::onNamaBarangChange,
                 label = "",
-                placeholder = "misalnya, Jam Hitam",
+                placeholder = strings.itemNamePlaceholder,
                 isError = uiState.namaBarangError
             )
 
             if (uiState.namaBarangError) {
-                TeksError("Nama barang wajib diisi")
+                TeksError(strings.itemNameRequired)
             }
             Spacer(modifier = Modifier.height(16.dp))
 
             // Deskripsi
-            LabelWajib("Deskripsi")
+            LabelWajib(strings.descriptionLabel)
             Spacer(modifier = Modifier.height(6.dp))
             OutlinedTextField(
                 value = uiState.deskripsi,
                 onValueChange = viewModel::onDeskripsiChange,
                 placeholder = {
                     Text(
-                        "Berikan detail tentang barang tersebut...",
+                        strings.descriptionPlaceholder,
                         fontFamily = InterFontFamily,
                         fontSize = 14.sp,
                         color = TextHint
@@ -218,21 +221,21 @@ fun BuatLaporanScreen(
                     errorBorderColor = DangerRed
                 )
             )
-            if (uiState.deskripsiError) TeksError("Deskripsi wajib diisi")
+            if (uiState.deskripsiError) TeksError(strings.descriptionRequired)
 
             Spacer(modifier = Modifier.height(16.dp))
 
             // Lokasi
-            LabelWajib("Lokasi")
+            LabelWajib(strings.locationLabel)
             CariInTextField(
                 value = uiState.lokasi,
                 onValueChange = viewModel::onLokasiChange,
                 label = "",
-                placeholder = "misalnya, Lab Komputer Dasar",
+                placeholder = strings.locationPlaceholder,
                 leadingIcon = { Icon(Icons.Default.LocationOn, null, tint = TextHint) },
                 isError = uiState.lokasiError
             )
-            if (uiState.lokasiError) TeksError("Lokasi wajib diisi")
+            if (uiState.lokasiError) TeksError(strings.locationRequired)
 
             Spacer(modifier = Modifier.height(16.dp))
 

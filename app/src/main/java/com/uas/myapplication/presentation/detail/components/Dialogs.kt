@@ -21,12 +21,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun DialogKonfirmasiTemukan(
     onKonfirmasi: () -> Unit,
     onBatal     : () -> Unit
 ) {
+    val strings = StringProvider.get(LocalBahasa.current)
+
     AlertDialog(
         onDismissRequest = onBatal,
         icon = {
@@ -39,7 +43,7 @@ fun DialogKonfirmasiTemukan(
         },
         title = {
             Text(
-                text       = "Konfirmasi Penemuan",
+                text       = strings.dialogFoundTitle,
                 fontFamily = PoppinsFontFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize   = 18.sp
@@ -47,7 +51,7 @@ fun DialogKonfirmasiTemukan(
         },
         text = {
             Text(
-                text       = "Apakah Anda benar menemukan barang ini? Jika ya, mohon segera serahkan barang tersebut ke Ruangan Bersama.",
+                text       = strings.dialogFoundText,
                 fontFamily = InterFontFamily,
                 fontSize   = 14.sp,
                 color      = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -61,7 +65,7 @@ fun DialogKonfirmasiTemukan(
                 shape   = RoundedCornerShape(8.dp)
             ) {
                 Text(
-                    text       = "Ya, Saya Temukan",
+                    text       = strings.btnYesIFoundIt,
                     fontFamily = InterFontFamily,
                     fontWeight = FontWeight.SemiBold,
                     color      = MaterialTheme.colorScheme.onPrimary
@@ -75,7 +79,7 @@ fun DialogKonfirmasiTemukan(
                 border  = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Text(
-                    text       = "Batal",
+                    text       = strings.btnCancel,
                     fontFamily = InterFontFamily,
                     fontWeight = FontWeight.Medium,
                     color      = MaterialTheme.colorScheme.onSurfaceVariant
@@ -91,6 +95,8 @@ fun DialogKonfirmasiTemukan(
 fun DialogKonfirmasiMilik(
     onMengerti: () -> Unit
 ) {
+    val strings = StringProvider.get(LocalBahasa.current)
+
     AlertDialog(
         onDismissRequest = onMengerti,
         icon = {
@@ -103,7 +109,7 @@ fun DialogKonfirmasiMilik(
         },
         title = {
             Text(
-                text       = "Ambil Barangmu",
+                text       = strings.dialogMineTitle,
                 fontFamily = PoppinsFontFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize   = 18.sp
@@ -111,7 +117,7 @@ fun DialogKonfirmasiMilik(
         },
         text = {
             Text(
-                text       = "Silakan menuju Ruang Bersama untuk mengambil barang Anda dengan menunjukkan identitas.",
+                text       = strings.dialogMineText,
                 fontFamily = InterFontFamily,
                 fontSize   = 14.sp,
                 color      = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -125,7 +131,7 @@ fun DialogKonfirmasiMilik(
                 shape   = RoundedCornerShape(8.dp)
             ) {
                 Text(
-                    text       = "Mengerti",
+                    text       = strings.btnUnderstood,
                     fontFamily = InterFontFamily,
                     fontWeight = FontWeight.SemiBold,
                     color      = MaterialTheme.colorScheme.onPrimary

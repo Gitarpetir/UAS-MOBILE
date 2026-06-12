@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.uas.myapplication.presentation.ui.theme.InterFontFamily
 import com.uas.myapplication.presentation.ui.theme.PoppinsFontFamily
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun BahasaDialog(
@@ -25,6 +27,8 @@ fun BahasaDialog(
     onPilih    : (String) -> Unit,
     onBatal    : () -> Unit
 ) {
+    val strings = StringProvider.get(LocalBahasa.current)
+
     AlertDialog(
         onDismissRequest = onBatal,
         icon = {
@@ -37,7 +41,7 @@ fun BahasaDialog(
         },
         title = {
             Text(
-                text       = "Pilih Bahasa",
+                text       = strings.selectLanguageTitle,
                 fontFamily = PoppinsFontFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize   = 18.sp
@@ -46,12 +50,12 @@ fun BahasaDialog(
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 BahasaItem(
-                    label    = "Indonesia",
+                    label    = strings.langIndonesian,
                     isAktif  = bahasaAktif == "id",
                     onClick  = { onPilih("id") }
                 )
                 BahasaItem(
-                    label    = "English",
+                    label    = strings.langEnglish,
                     isAktif  = bahasaAktif == "en",
                     onClick  = { onPilih("en") }
                 )
@@ -61,7 +65,7 @@ fun BahasaDialog(
         dismissButton = {
             TextButton(onClick = onBatal) {
                 Text(
-                    text       = "Batal",
+                    text       = strings.btnCancel,
                     fontFamily = InterFontFamily,
                     fontWeight = FontWeight.Medium,
                     color      = MaterialTheme.colorScheme.onSurfaceVariant

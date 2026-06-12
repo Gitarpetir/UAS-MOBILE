@@ -18,6 +18,10 @@ import androidx.navigation.compose.rememberNavController
 import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.theme.*
 
+import com.uas.myapplication.presentation.ui.Strings
+import com.uas.myapplication.presentation.ui.StringProvider
+import com.uas.myapplication.presentation.ui.LocalBahasa
+
 // =============================================
 // DATA MODEL ITEM NAVIGASI
 // =============================================
@@ -29,57 +33,56 @@ data class BottomNavItem(
 )
 
 // Daftar 5 item bottom navigation
-val mahasiswaBottomNavItems = listOf(
+fun getMahasiswaBottomNavItems(strings: Strings) = listOf(
     BottomNavItem(
-        label       = "Beranda",
+        label       = strings.navHome,
         route       = Screen.Dashboard.route,
         iconAktif   = Icons.Filled.Home,
         iconNonAktif = Icons.Outlined.Home
     ),
     BottomNavItem(
-        label       = "Katalog",
+        label       = strings.navCatalog,
         route       = Screen.Katalog.route,
         iconAktif   = Icons.Filled.List,
         iconNonAktif = Icons.Outlined.List
     ),
     BottomNavItem(
-        label       = "Laporan",
+        label       = strings.navReport,
         route       = Screen.BuatLaporan.route,
         iconAktif   = Icons.Filled.AddCircle,
         iconNonAktif = Icons.Outlined.AddCircle
     ),
     BottomNavItem(
-        label       = "Laporanku",
+        label       = strings.navMyReports,
         route       = Screen.Laporanku.route,
         iconAktif   = Icons.Filled.Article,
         iconNonAktif = Icons.Outlined.Article
     ),
     BottomNavItem(
-        label       = "Profil",
+        label       = strings.navProfile,
         route       = Screen.Profil.route,
         iconAktif   = Icons.Filled.Person,
         iconNonAktif = Icons.Outlined.Person
     )
 )
 
-val adminBottomNavItems = listOf(
-
+fun getAdminBottomNavItems(strings: Strings) = listOf(
     BottomNavItem(
-        label = "Beranda",
+        label = strings.navHome,
         route = Screen.DashboardAdmin.route,
         iconAktif = Icons.Filled.Home,
         iconNonAktif = Icons.Outlined.Home
     ),
 
     BottomNavItem(
-        label = "Laporan",
+        label = strings.navAdminReports,
         route = Screen.LaporanAdmin.route,
         iconAktif = Icons.Filled.Article,
         iconNonAktif = Icons.Outlined.Article
     ),
 
     BottomNavItem(
-        label = "Profil",
+        label = strings.navProfile,
         route = Screen.Profil.route,
         iconAktif = Icons.Filled.Person,
         iconNonAktif = Icons.Outlined.Person
@@ -144,7 +147,7 @@ fun PreviewBottomNavBar() {
     MyApplicationTheme {
         CariInBottomNavBar(
             navController = rememberNavController(),
-            items = mahasiswaBottomNavItems
+            items = getMahasiswaBottomNavItems(StringProvider.get("id"))
         )
     }
 }

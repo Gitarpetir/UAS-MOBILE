@@ -36,6 +36,7 @@ fun LengkapiProfilScreen(
     onSimpanSuccess: () -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+    val strings = com.uas.myapplication.presentation.ui.StringProvider.get(com.uas.myapplication.presentation.ui.LocalBahasa.current)
 
     // Isi nama otomatis dari akun Google saat halaman pertama dibuka
     LaunchedEffect(Unit) {
@@ -67,7 +68,7 @@ fun LengkapiProfilScreen(
 
             // Judul
             Text(
-                text       = "Lengkapi Profil",
+                text       = strings.completeProfileTitle,
                 fontFamily = PoppinsFontFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize   = 28.sp,
@@ -78,7 +79,7 @@ fun LengkapiProfilScreen(
 
             // Subtitle
             Text(
-                text       = "Lengkapi data profilmu di Cari.in",
+                text       = strings.completeProfileSubtitle,
                 fontFamily = InterFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize   = 14.sp,
@@ -91,8 +92,8 @@ fun LengkapiProfilScreen(
             CariInTextField(
                 value         = uiState.value.namaLengkap,
                 onValueChange = viewModel::onNamaLengkapChange,
-                label         = "Nama Lengkap",
-                placeholder   = "Azriel Gunawan",
+                label         = strings.fullNameLabel,
+                placeholder   = strings.fullNamePlaceholder,
                 leadingIcon   = {
                     Icon(Icons.Default.Person, contentDescription = null, tint = CariInTheme.colors.textHint)
                 }
@@ -104,8 +105,8 @@ fun LengkapiProfilScreen(
             CariInTextField(
                 value         = uiState.value.nim,
                 onValueChange = viewModel::onNimChange,
-                label         = "NIM",
-                placeholder   = "Nilai Induk Mahasiswa",
+                label         = strings.nimLabel,
+                placeholder   = strings.nimPlaceholder,
                 leadingIcon   = {
                     Icon(Icons.Default.Badge, contentDescription = null, tint = CariInTheme.colors.textHint)
                 }
@@ -117,8 +118,8 @@ fun LengkapiProfilScreen(
             CariInTextField(
                 value         = uiState.value.nomorWhatsapp,
                 onValueChange = viewModel::onNomorWhatsappChange,
-                label         = "No. WhatsApp",
-                placeholder   = "Nomor Anda",
+                label         = strings.waLabel,
+                placeholder   = strings.waPlaceholder,
                 leadingIcon   = {
                     Icon(Icons.Default.Phone, contentDescription = null, tint = CariInTheme.colors.textHint)
                 }
@@ -171,7 +172,7 @@ fun LengkapiProfilScreen(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text       = "Simpan Profil",
+                        text       = strings.btnSaveProfile,
                         fontFamily = PoppinsFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize   = 16.sp,

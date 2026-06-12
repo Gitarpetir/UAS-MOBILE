@@ -26,9 +26,12 @@ import com.uas.myapplication.presentation.ui.theme.DangerRed
 import com.uas.myapplication.presentation.ui.theme.MyApplicationTheme
 import com.uas.myapplication.presentation.ui.theme.PoppinsFontFamily
 import com.uas.myapplication.presentation.ui.theme.SuccessGreen
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun DashboardHeader (uiState: DashboardUiState) {
+    val strings = StringProvider.get(LocalBahasa.current)
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -53,13 +56,13 @@ fun DashboardHeader (uiState: DashboardUiState) {
                 StatistikCard(
                     modifier = Modifier.weight(1f),
                     jumlah   = uiState.jumlahHilang,
-                    label    = "Barang Hilang",
+                    label    = strings.lostReportsHeader,
                     warna    = DangerRed
                 )
                 StatistikCard(
                     modifier = Modifier.weight(1f),
                     jumlah   = uiState.jumlahDitemukan,
-                    label    = "Barang Ditemukan",
+                    label    = strings.foundReportsHeader,
                     warna    = SuccessGreen
                 )
             }

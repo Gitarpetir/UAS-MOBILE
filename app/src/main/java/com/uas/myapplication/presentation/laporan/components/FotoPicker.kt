@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import androidx.core.net.toUri
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun FotoPicker(
@@ -25,9 +27,10 @@ fun FotoPicker(
     fotoUrl: String,
     onClick: () -> Unit
 ) {
+    val strings = StringProvider.get(LocalBahasa.current)
 
     Text(
-        text = "Foto Barang",
+        text = strings.photoLabel,
         fontFamily = InterFontFamily
     )
 
@@ -86,7 +89,7 @@ fun FotoPicker(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = "Tekan untuk mengunggah foto",
+                        text = strings.tapToUpload,
                         fontFamily = InterFontFamily,
                         color = TextHint
                     )

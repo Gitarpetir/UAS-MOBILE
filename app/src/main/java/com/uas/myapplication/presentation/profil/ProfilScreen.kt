@@ -27,11 +27,13 @@ import com.uas.myapplication.data.local.PreferensiManager
 import com.uas.myapplication.domain.model.User
 import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
-import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
+import com.uas.myapplication.presentation.ui.components.getMahasiswaBottomNavItems
 import com.uas.myapplication.presentation.profil.components.BahasaDialog
 import com.uas.myapplication.presentation.profil.components.DataCard
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 // =============================================
 // PROFIL SCREEN
@@ -42,6 +44,7 @@ fun ProfilScreen(
     navController: NavController
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val strings = StringProvider.get(LocalBahasa.current)
 
     // Navigasi ke Login setelah logout
     LaunchedEffect(uiState.logoutSuccess) {
@@ -66,7 +69,7 @@ fun ProfilScreen(
         bottomBar = {
             CariInBottomNavBar(
                 navController = navController,
-                items = mahasiswaBottomNavItems
+                items = getMahasiswaBottomNavItems(strings)
             )
         }
     ) { paddingValues ->
@@ -126,7 +129,7 @@ fun ProfilScreen(
                     .padding(horizontal = 16.dp)
             ) {
                 Text(
-                    text       = "Data Pengguna",
+                    text       = strings.userDataSection,
                     fontFamily = PoppinsFontFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize   = 16.sp,
@@ -138,7 +141,7 @@ fun ProfilScreen(
                 // Card Email
                 DataCard(
                     icon  = Icons.Default.Email,
-                    label = "Email",
+                    label = strings.emailLabel,
                     value = uiState.user?.email ?: "..."
                 )
 
@@ -147,7 +150,7 @@ fun ProfilScreen(
                 // Card NIM
                 DataCard(
                     icon  = Icons.Default.Badge,
-                    label = "NIM",
+                    label = strings.nimLabel,
                     value = uiState.user?.nim ?: "..."
                 )
 
@@ -155,7 +158,7 @@ fun ProfilScreen(
 
                 DataCard(
                     icon = Icons.Default.Phone,
-                    label = "Nomor WhatsApp",
+                    label = strings.waLabel,
                     value = uiState.user?.nomorWhatsapp ?: "-"
                 )
 
@@ -165,7 +168,7 @@ fun ProfilScreen(
                 // SECTION PREFERENSI
                 // =============================================
                 Text(
-                    text       = "Preferensi",
+                    text       = strings.preferencesSection,
                     fontFamily = PoppinsFontFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize   = 16.sp,
@@ -197,7 +200,7 @@ fun ProfilScreen(
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
-                            text       = "Mode Gelap",
+                            text       = strings.darkModeLabel,
                             fontFamily = InterFontFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize   = 14.sp,
@@ -245,7 +248,7 @@ fun ProfilScreen(
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
-                            text       = "Bahasa",
+                            text       = strings.languageLabel,
                             fontFamily = InterFontFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize   = 14.sp,
@@ -255,7 +258,7 @@ fun ProfilScreen(
                         // Label bahasa aktif + ikon panah
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
-                                text       = if (uiState.bahasa == "id") "Indonesia" else "English",
+                                text       = if (uiState.bahasa == "id") strings.langIndonesian else strings.langEnglish,
                                 fontFamily = InterFontFamily,
                                 fontSize   = 13.sp,
                                 color      = MaterialTheme.colorScheme.primary
@@ -291,7 +294,7 @@ fun ProfilScreen(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text       = "Keluar",
+                        text       = strings.btnLogout,
                         fontFamily = PoppinsFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize   = 16.sp,

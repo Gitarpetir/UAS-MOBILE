@@ -24,6 +24,8 @@ import com.uas.myapplication.presentation.ui.theme.MyApplicationTheme
 import com.uas.myapplication.presentation.ui.theme.PoppinsFontFamily
 import com.uas.myapplication.presentation.ui.theme.SlateGray200
 import com.uas.myapplication.presentation.ui.theme.TextSub
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun HapusDialog(
@@ -31,6 +33,8 @@ fun HapusDialog(
     onKonfirmasi: () -> Unit,
     onBatal     : () -> Unit
 ) {
+    val strings = StringProvider.get(LocalBahasa.current)
+
     AlertDialog(
         onDismissRequest = onBatal,
         icon = {
@@ -43,7 +47,7 @@ fun HapusDialog(
         },
         title = {
             Text(
-                text       = "Hapus Laporan?",
+                text       = strings.deleteReportTitle,
                 fontFamily = PoppinsFontFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize   = 18.sp
@@ -51,7 +55,7 @@ fun HapusDialog(
         },
         text = {
             Text(
-                text       = "Laporan \"$namaBarang\" akan dihapus secara permanen dan tidak bisa dikembalikan.",
+                text       = String.format(strings.deleteReportMessage, namaBarang),
                 fontFamily = InterFontFamily,
                 fontSize   = 14.sp,
                 color      = MaterialTheme.colorScheme.onSurfaceVariant
@@ -63,7 +67,7 @@ fun HapusDialog(
                 colors  = ButtonDefaults.buttonColors(containerColor = DangerRed),
                 shape   = RoundedCornerShape(8.dp)
             ) {
-                Text("Hapus", fontFamily = InterFontFamily, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onError)
+                Text(strings.btnDelete, fontFamily = InterFontFamily, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onError)
             }
         },
         dismissButton = {
@@ -72,7 +76,7 @@ fun HapusDialog(
                 shape   = RoundedCornerShape(8.dp),
                 border  = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
-                Text("Batal", fontFamily = InterFontFamily, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(strings.btnCancel, fontFamily = InterFontFamily, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         },
         containerColor = MaterialTheme.colorScheme.surface,

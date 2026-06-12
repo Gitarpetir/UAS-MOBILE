@@ -58,6 +58,7 @@ fun LoginScreen(
 ) { 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context  = LocalContext.current
+    val strings = com.uas.myapplication.presentation.ui.StringProvider.get(com.uas.myapplication.presentation.ui.LocalBahasa.current)
 
     // Launcher untuk Google Sign-In
     val googleLauncher = rememberLauncherForActivityResult(
@@ -108,7 +109,7 @@ fun LoginScreen(
 
             // Judul
             Text(
-                text       = "Selamat Datang",
+                text       = strings.welcome,
                 fontFamily = PoppinsFontFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize   = 24.sp,
@@ -119,7 +120,7 @@ fun LoginScreen(
 
             // Subtitle — sudah diganti dari "Lost & Found" ke "Cari.in"
             Text(
-                text       = "Masuk untuk mengakses Cari.in",
+                text       = strings.loginSubtitle,
                 fontFamily = InterFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize   = 14.sp,
@@ -133,8 +134,8 @@ fun LoginScreen(
             CariInTextField(
                 value         = uiState.email,
                 onValueChange = viewModel::onEmailChange,
-                label         = "Email",
-                placeholder   = "email.kamu@gmail.com",
+                label         = strings.emailLabel,
+                placeholder   = strings.emailPlaceholder,
                 leadingIcon   = {
                     Icon(Icons.Default.Email, contentDescription = null, tint = CariInTheme.colors.textHint)
                 },
@@ -147,8 +148,8 @@ fun LoginScreen(
             CariInTextField(
                 value         = uiState.password,
                 onValueChange = viewModel::onPasswordChange,
-                label         = "Password",
-                placeholder   = "Masukkan password",
+                label         = strings.passwordLabel,
+                placeholder   = strings.passwordPlaceholder,
                 leadingIcon   = {
                     Icon(Icons.Default.Lock, contentDescription = null, tint = CariInTheme.colors.textHint)
                 },
@@ -158,7 +159,7 @@ fun LoginScreen(
                             imageVector = if (uiState.passwordVisible)
                                 Icons.Default.Visibility else Icons.Default.VisibilityOff,
                             contentDescription = if (uiState.passwordVisible)
-                                "Sembunyikan password" else "Tampilkan password",
+                                strings.hidePassword else strings.showPassword,
                             tint = CariInTheme.colors.textHint
                         )
                     }
@@ -213,7 +214,7 @@ fun LoginScreen(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text       = "Masuk",
+                        text       = strings.btnLogin,
                         fontFamily = PoppinsFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize   = 16.sp,
@@ -231,7 +232,7 @@ fun LoginScreen(
             ) {
                 HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outline)
                 Text(
-                    text       = "  atau lanjutkan dengan  ",
+                    text       = strings.orContinueWith,
                     fontFamily = InterFontFamily,
                     fontSize   = 12.sp,
                     color      = MaterialTheme.colorScheme.onSurfaceVariant
@@ -275,7 +276,7 @@ fun LoginScreen(
                     )
                     Spacer(modifier = Modifier.width(10.dp))
                     Text(
-                        text       = "Masuk dengan Google",
+                        text       = strings.btnGoogleLogin,
                         fontFamily = PoppinsFontFamily,
                         fontWeight = FontWeight.Medium,
                         fontSize   = 15.sp,
@@ -294,13 +295,13 @@ fun LoginScreen(
                             color      = MaterialTheme.colorScheme.onSurfaceVariant,
                             fontFamily = InterFontFamily,
                             fontSize   = 14.sp
-                        )) { append("Tidak mempunyai akun? ") }
+                        )) { append(strings.noAccountText) }
                         withStyle(SpanStyle(
                             color      = MaterialTheme.colorScheme.primary,
                             fontFamily = InterFontFamily,
                             fontWeight = FontWeight.SemiBold,
                             fontSize   = 14.sp
-                        )) { append("Buat Akun") }
+                        )) { append(strings.btnCreateAccount) }
                     }
                 )
             }
