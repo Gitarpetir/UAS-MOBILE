@@ -23,6 +23,7 @@ import com.uas.myapplication.presentation.ui.StringProvider
 fun DetailActionSection(
     laporan: Laporan,
     isAdmin: Boolean,
+    currentUserId: String?,
     isLoading: Boolean,
     onAksiClick: () -> Unit,
     onSelesaikan: () -> Unit,
@@ -30,7 +31,35 @@ fun DetailActionSection(
 ) {
     val strings = StringProvider.get(LocalBahasa.current)
 
-    if (laporan.statusBarang != StatusBarang.SELESAI) {
+    val isPelapor = currentUserId == laporan.idPelapor
+
+    val showAksiButton = !isAdmin && currentUserId != null && when (laporan.statusBarang) {
+        StatusBarang.HILANG -> {
+            !isPelapor
+        }
+        StatusBarang.DITEMUKAN -> {
+            if (laporan.jenisLaporan == com.uas.myapplication.domain.model.JenisLaporan.HILANG) {
+                isPelapor
+            } else {
+                !isPelapor && currentUserId != laporan.idPenemu
+            }
+        }
+        else -> false
+    }
+
+    if (showAksiButton) {
+
+        val btnText = when (laporan.statusBarang) {
+            StatusBarang.HILANG -> strings.btnFoundThisItem
+            StatusBarang.DITEMUKAN -> {
+                if (laporan.jenisLaporan == com.uas.myapplication.domain.model.JenisLaporan.HILANG) {
+                    strings.claimItem // "Klaim Barang Ini"
+                } else {
+                    strings.btnThisIsMine // "Barang Ini Milik Saya"
+                }
+            }
+            else -> ""
+        }
 
         Button(
             onClick = onAksiClick,
@@ -56,11 +85,7 @@ fun DetailActionSection(
             } else {
 
                 Text(
-                    text = when (laporan.statusBarang) {
-                        StatusBarang.HILANG -> strings.btnFoundThisItem
-                        StatusBarang.DITEMUKAN -> strings.btnThisIsMine
-                        else -> ""
-                    },
+                    text = btnText,
                     fontFamily = PoppinsFontFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 15.sp,
@@ -72,7 +97,7 @@ fun DetailActionSection(
         Spacer(modifier = Modifier.height(8.dp))
     }
 
-    if (isAdmin) {
+    if (isAdmin && laporan.statusBarang != StatusBarang.SELESAI) {
 
         Button(
             onClick = onSelesaikan,
@@ -162,6 +187,7 @@ private fun PreviewDetailActionSectionHilang() {
                 whatsappPenemu = ""
             ),
             isAdmin = false,
+            currentUserId = null,
             isLoading = false,
             onAksiClick = {},
             onSelesaikan = {},
@@ -201,6 +227,7 @@ private fun PreviewDetailActionSectionAdmin() {
                 whatsappPenemu = ""
             ),
             isAdmin = true,
+            currentUserId = null,
             isLoading = false,
             onAksiClick = {},
             onSelesaikan = {},

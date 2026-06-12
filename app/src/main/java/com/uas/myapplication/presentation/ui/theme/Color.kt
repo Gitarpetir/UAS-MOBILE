@@ -27,6 +27,8 @@ val TextHint       = Color(0xFF94A3B8) // Placeholder / hint
 // Status Barang
 val DangerRed      = Color(0xFFEF4444) // HILANG
 val DangerRedLight = Color(0xFFFEE2E2) // Background badge HILANG
+val WarningOrange  = Color(0xFFF59E0B) // DIKLAIM
+val WarningOrangeLight = Color(0xFFFEF3C7) // Background badge DIKLAIM
 val SuccessGreen   = Color(0xFF10B981) // DITEMUKAN
 val SuccessGreenLight = Color(0xFFD1FAE5) // Background badge DITEMUKAN
 val NeutralGray    = Color(0xFF6B7280) // SELESAI

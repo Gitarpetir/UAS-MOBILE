@@ -26,6 +26,10 @@ data class LaporanDto(
     val nama_penemu: String = "",
     val nim_penemu: String = "",
     val whatsapp_penemu: String = "",
+    val id_pemilik: String = "",
+    val nama_pemilik: String = "",
+    val nim_pemilik: String = "",
+    val whatsapp_pemilik: String = "",
     val waktu_dibuat: Long = 0L
 
 ) {
@@ -45,6 +49,7 @@ data class LaporanDto(
         tanggal         = tanggal,
         statusBarang    = when (status_barang) {
             "DITEMUKAN" -> StatusBarang.DITEMUKAN
+            "DIKLAIM"   -> StatusBarang.DIKLAIM
             "SELESAI"   -> StatusBarang.SELESAI
             else        -> StatusBarang.HILANG
         },
@@ -57,6 +62,10 @@ data class LaporanDto(
         namaPenemu = nama_penemu,
         nimPenemu = nim_penemu,
         whatsappPenemu = whatsapp_penemu,
+        idPemilik = id_pemilik,
+        namaPemilik = nama_pemilik,
+        nimPemilik = nim_pemilik,
+        whatsappPemilik = whatsapp_pemilik,
         waktuDibuat     = waktu_dibuat
     )
 }
@@ -83,5 +92,9 @@ fun Laporan.toMap(): Map<String, Any> = mapOf(
     "nama_penemu"     to namaPenemu,
     "nim_penemu"      to nimPenemu,
     "whatsapp_penemu" to whatsappPenemu,
+    "id_pemilik"       to idPemilik,
+    "nama_pemilik"     to namaPemilik,
+    "nim_pemilik"      to nimPemilik,
+    "whatsapp_pemilik" to whatsappPemilik,
     "waktu_dibuat"     to waktuDibuat
 )

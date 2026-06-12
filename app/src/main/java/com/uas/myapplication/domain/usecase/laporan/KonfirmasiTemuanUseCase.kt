@@ -14,10 +14,14 @@ class KonfirmasiTemuanUseCase(
     suspend operator fun invoke(
         id: String,
         status: StatusBarang,
-        idPenemu: String = "",
-        namaPenemu: String = "",
-        nimPenemu: String = "",
-        whatsappPenemu: String = ""
+        idPenemu: String? = null,
+        namaPenemu: String? = null,
+        nimPenemu: String? = null,
+        whatsappPenemu: String? = null,
+        idPemilik: String? = null,
+        namaPemilik: String? = null,
+        nimPemilik: String? = null,
+        whatsappPemilik: String? = null
     ): Result<Unit> {
         return laporanRepository.ubahStatus(
             id = id,
@@ -25,7 +29,11 @@ class KonfirmasiTemuanUseCase(
             idPenemu = idPenemu,
             namaPenemu = namaPenemu,
             nimPenemu = nimPenemu,
-            whatsappPenemu = whatsappPenemu
+            whatsappPenemu = whatsappPenemu,
+            idPemilik = idPemilik,
+            namaPemilik = namaPemilik,
+            nimPemilik = nimPemilik,
+            whatsappPemilik = whatsappPemilik
         )
     }
 }

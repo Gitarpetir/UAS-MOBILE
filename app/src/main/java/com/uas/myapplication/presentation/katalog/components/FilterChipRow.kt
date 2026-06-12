@@ -2,6 +2,8 @@ package com.uas.myapplication.presentation.katalog.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -19,11 +21,15 @@ fun FilterChipRow(
 ) {
     val strings = StringProvider.get(LocalBahasa.current)
     Row(
-        modifier              = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
+        modifier              = Modifier
+            .fillMaxWidth()
+            .horizontalScroll(rememberScrollState())
+            .padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         CariInFilterChip(label = strings.filterAll,    isSelected = filterAktif == FilterKatalog.SEMUA,     onClick = { onFilterChange(FilterKatalog.SEMUA) })
         CariInFilterChip(label = strings.filterLost,   isSelected = filterAktif == FilterKatalog.HILANG,    onClick = { onFilterChange(FilterKatalog.HILANG) })
         CariInFilterChip(label = strings.filterFound,isSelected = filterAktif == FilterKatalog.DITEMUKAN, onClick = { onFilterChange(FilterKatalog.DITEMUKAN) })
+        CariInFilterChip(label = strings.statusBadgeCompleted,isSelected = filterAktif == FilterKatalog.SELESAI, onClick = { onFilterChange(FilterKatalog.SELESAI) })
     }
 }

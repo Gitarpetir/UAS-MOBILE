@@ -75,15 +75,15 @@ fun getAdminBottomNavItems(strings: Strings) = listOf(
     ),
 
     BottomNavItem(
-        label = strings.navAdminReports,
-        route = Screen.LaporanAdmin.route,
-        iconAktif = Icons.Filled.Article,
-        iconNonAktif = Icons.Outlined.Article
+        label = strings.navCatalog,
+        route = Screen.KatalogAdmin.route,
+        iconAktif = Icons.Filled.List,
+        iconNonAktif = Icons.Outlined.List
     ),
 
     BottomNavItem(
         label = strings.navProfile,
-        route = Screen.Profil.route,
+        route = Screen.ProfilAdmin.route,
         iconAktif = Icons.Filled.Person,
         iconNonAktif = Icons.Outlined.Person
     )
@@ -110,7 +110,13 @@ fun CariInBottomNavBar(
             NavigationBarItem(
                 selected = isSelected,
                 onClick = {
-                    navController.navigate(item.route)
+                    navController.navigate(item.route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 },
                 icon = {
                     Icon(

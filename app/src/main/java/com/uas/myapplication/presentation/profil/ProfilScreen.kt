@@ -27,9 +27,13 @@ import com.uas.myapplication.data.local.PreferensiManager
 import com.uas.myapplication.domain.model.User
 import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
+import com.uas.myapplication.presentation.ui.components.getAdminBottomNavItems
 import com.uas.myapplication.presentation.ui.components.getMahasiswaBottomNavItems
 import com.uas.myapplication.presentation.profil.components.BahasaDialog
 import com.uas.myapplication.presentation.profil.components.DataCard
+import com.uas.myapplication.presentation.profil.components.LogoutButton
+import com.uas.myapplication.presentation.profil.components.ProfilAvatar
+import com.uas.myapplication.presentation.profil.components.ProfilPreferensiSection
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import com.uas.myapplication.presentation.ui.LocalBahasa
@@ -41,7 +45,8 @@ import com.uas.myapplication.presentation.ui.StringProvider
 @Composable
 fun ProfilScreen(
     viewModel    : ProfilViewModel,
-    navController: NavController
+    navController: NavController,
+    isAdmin      : Boolean = false
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val strings = StringProvider.get(LocalBahasa.current)
@@ -69,7 +74,7 @@ fun ProfilScreen(
         bottomBar = {
             CariInBottomNavBar(
                 navController = navController,
-                items = getMahasiswaBottomNavItems(strings)
+                items = if (isAdmin) getAdminBottomNavItems(strings) else getMahasiswaBottomNavItems(strings)
             )
         }
     ) { paddingValues ->
@@ -84,31 +89,10 @@ fun ProfilScreen(
             Spacer(modifier = Modifier.height(40.dp))
 
             // =============================================
-            // AVATAR — ikon user dalam lingkaran biru muda
+            // AVATAR
             // =============================================
-            Box(
-                modifier         = Modifier
-                    .size(90.dp)
-                    .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector        = Icons.Default.Person,
-                    contentDescription = "Avatar",
-                    tint               = MaterialTheme.colorScheme.primary,
-                    modifier           = Modifier.size(48.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Nama lengkap
-            Text(
-                text       = uiState.user?.namaLengkap ?: "...",
-                fontFamily = PoppinsFontFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize   = 20.sp,
-                color      = MaterialTheme.colorScheme.onBackground
+            ProfilAvatar(
+                namaLengkap = uiState.user?.namaLengkap ?: "..."
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -167,140 +151,27 @@ fun ProfilScreen(
                 // =============================================
                 // SECTION PREFERENSI
                 // =============================================
-                Text(
-                    text       = strings.preferencesSection,
-                    fontFamily = PoppinsFontFamily,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize   = 16.sp,
-                    color      = MaterialTheme.colorScheme.onBackground
+                ProfilPreferensiSection(
+                    title = strings.preferencesSection,
+                    darkModeLabel = strings.darkModeLabel,
+                    languageLabel = strings.languageLabel,
+                    langIndonesian = strings.langIndonesian,
+                    langEnglish = strings.langEnglish,
+                    isDarkMode = uiState.isDarkMode,
+                    bahasa = uiState.bahasa,
+                    onDarkModeToggle = viewModel::onDarkModeToggle,
+                    onBahasaClick = viewModel::onBahasaClick
                 )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                // Card Mode Gelap
-                Card(
-                    modifier  = Modifier.fillMaxWidth(),
-                    shape     = RoundedCornerShape(12.dp),
-                    colors    = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    ),
-                    elevation = CardDefaults.cardElevation(1.dp)
-                ) {
-                    Row(
-                        modifier          = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 14.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector        = Icons.Default.DarkMode,
-                            contentDescription = null,
-                            tint               = MaterialTheme.colorScheme.primary,
-                            modifier           = Modifier.size(20.dp)
-                        )
-                        Spacer(modifier = Modifier.width(12.dp))
-                        Text(
-                            text       = strings.darkModeLabel,
-                            fontFamily = InterFontFamily,
-                            fontWeight = FontWeight.Medium,
-                            fontSize   = 14.sp,
-                            color      = MaterialTheme.colorScheme.onSurface,
-                            modifier   = Modifier.weight(1f)
-                        )
-                        // Toggle switch — realtime
-                        Switch(
-                            checked         = uiState.isDarkMode,
-                            onCheckedChange = viewModel::onDarkModeToggle,
-                            colors          = SwitchDefaults.colors(
-                                checkedThumbColor   = CariInTheme.colors.switchCheckedThumb,
-                                checkedTrackColor   = CariInTheme.colors.switchCheckedTrack,
-                                uncheckedThumbColor = CariInTheme.colors.switchUncheckedThumb,
-                                uncheckedTrackColor = CariInTheme.colors.switchUncheckedTrack
-                            )
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Card Bahasa
-                Card(
-                    modifier  = Modifier
-                        .fillMaxWidth()
-                        .clickable { viewModel.onBahasaClick() },
-                    shape     = RoundedCornerShape(12.dp),
-                    colors    = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    ),
-                    elevation = CardDefaults.cardElevation(1.dp)
-                ) {
-                    Row(
-                        modifier          = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 14.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector        = Icons.Default.Language,
-                            contentDescription = null,
-                            tint               = MaterialTheme.colorScheme.primary,
-                            modifier           = Modifier.size(20.dp)
-                        )
-                        Spacer(modifier = Modifier.width(12.dp))
-                        Text(
-                            text       = strings.languageLabel,
-                            fontFamily = InterFontFamily,
-                            fontWeight = FontWeight.Medium,
-                            fontSize   = 14.sp,
-                            color      = MaterialTheme.colorScheme.onSurface,
-                            modifier   = Modifier.weight(1f)
-                        )
-                        // Label bahasa aktif + ikon panah
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                text       = if (uiState.bahasa == "id") strings.langIndonesian else strings.langEnglish,
-                                fontFamily = InterFontFamily,
-                                fontSize   = 13.sp,
-                                color      = MaterialTheme.colorScheme.primary
-                            )
-                            Icon(
-                                imageVector        = Icons.Default.ChevronRight,
-                                contentDescription = null,
-                                tint               = MaterialTheme.colorScheme.primary,
-                                modifier           = Modifier.size(18.dp)
-                            )
-                        }
-                    }
-                }
 
                 Spacer(modifier = Modifier.height(32.dp))
 
                 // =============================================
                 // TOMBOL KELUAR
                 // =============================================
-                Button(
-                    onClick  = viewModel::onLogout,
-                    modifier = Modifier.fillMaxWidth().height(52.dp),
-                    shape    = RoundedCornerShape(16.dp),
-                    colors   = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.error
-                    )
-                ) {
-                    Icon(
-                        imageVector        = Icons.Default.Logout,
-                        contentDescription = null,
-                        tint               = MaterialTheme.colorScheme.onError,
-                        modifier           = Modifier.size(18.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text       = strings.btnLogout,
-                        fontFamily = PoppinsFontFamily,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize   = 16.sp,
-                        color      = MaterialTheme.colorScheme.onError
-                    )
-                }
+                LogoutButton(
+                    label = strings.btnLogout,
+                    onClick = viewModel::onLogout
+                )
 
                 Spacer(modifier = Modifier.height(32.dp))
             }

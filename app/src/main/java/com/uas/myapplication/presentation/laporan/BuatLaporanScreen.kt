@@ -140,12 +140,18 @@ fun BuatLaporanScreen(
         }
     }
 
-    Scaffold(bottomBar = {
-        CariInBottomNavBar(
-            navController = navController,
-            items = getMahasiswaBottomNavItems(strings)
-        )
-    }) { paddingValues ->
+    val isEditMode = !laporanId.isNullOrEmpty()
+
+    Scaffold(
+        bottomBar = {
+            if (!isEditMode) {
+                CariInBottomNavBar(
+                    navController = navController,
+                    items = getMahasiswaBottomNavItems(strings)
+                )
+            }
+        }
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -157,7 +163,8 @@ fun BuatLaporanScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             FormHeader(
-                title = strings.reportItemTitle
+                title = if (isEditMode) "Edit Barang" else strings.reportItemTitle,
+                onBackClick = if (isEditMode) { { navController.popBackStack() } } else null
             )
 
             Spacer(modifier = Modifier.height(20.dp))

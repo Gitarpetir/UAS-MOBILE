@@ -82,6 +82,7 @@ class DetailBarangViewModel(
         when (status) {
             StatusBarang.HILANG    -> _uiState.update { it.copy(showDialogTemukan = true) }
             StatusBarang.DITEMUKAN -> _uiState.update { it.copy(showDialogMilik = true) }
+            StatusBarang.DIKLAIM -> { /* Tidak ada aksi untuk user */ }
             StatusBarang.SELESAI   -> { /* Tidak ada aksi */ }
         }
     }
@@ -92,6 +93,31 @@ class DetailBarangViewModel(
 
     fun onBatalDialogMilik() {
         _uiState.update { it.copy(showDialogMilik = false) }
+    }
+
+    // Konfirmasi "Barang Ini Milik Saya" — ubah status DITEMUKAN → DIKLAIM
+    fun onKonfirmasiMilik() {
+        val laporanId = _uiState.value.laporan?.id ?: return
+        val currentUid = authRepository.getCurrentUserId() ?: return
+        
+        viewModelScope.launch {
+            _uiState.update { it.copy(showDialogMilik = false, isLoading = true) }
+            
+            val user = getUserProfileUseCase(currentUid).getOrNull()
+            
+            konfirmasiTemuanUseCase(
+                id = laporanId,
+                status = StatusBarang.DIKLAIM,
+                idPemilik = currentUid,
+                namaPemilik = user?.namaLengkap ?: "",
+                nimPemilik = user?.nim ?: "",
+                whatsappPemilik = user?.nomorWhatsapp ?: ""
+            )
+            
+            _uiState.update {
+                it.copy(isLoading = false, aksiSuccess = true)
+            }
+        }
     }
 
     // Konfirmasi "Aku Menemukan Barang Ini" — ubah status HILANG → DITEMUKAN

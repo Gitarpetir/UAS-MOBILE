@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.uas.myapplication.presentation.admin.FilterAdmin
+import com.uas.myapplication.presentation.admin.katalog.FilterAdmin
 import com.uas.myapplication.presentation.ui.components.CariInFilterChip
 
 @Composable

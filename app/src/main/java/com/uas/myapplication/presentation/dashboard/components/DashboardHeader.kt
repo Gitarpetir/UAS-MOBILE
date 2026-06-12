@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -32,12 +33,13 @@ import com.uas.myapplication.presentation.ui.StringProvider
 @Composable
 fun DashboardHeader (uiState: DashboardUiState) {
     val strings = StringProvider.get(LocalBahasa.current)
+    val isDark = androidx.compose.foundation.isSystemInDarkTheme()
+    val backgroundColor = if (isDark) com.uas.myapplication.presentation.ui.theme.DarkBackground else MaterialTheme.colorScheme.primary
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(
-                brush = Brush.verticalGradient(colors = listOf(Blue700, Blue800))
-            )
+            .background(color = backgroundColor)
             .padding(horizontal = 16.dp, vertical = 24.dp)
     ) {
         Column {

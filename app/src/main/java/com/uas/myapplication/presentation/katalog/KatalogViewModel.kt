@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 // Filter yang bisa dipilih pengguna
-enum class FilterKatalog { SEMUA, HILANG, DITEMUKAN }
+enum class FilterKatalog { SEMUA, HILANG, DITEMUKAN, SELESAI }
 
 data class KatalogUiState(
     val semuaLaporan  : List<Laporan>  = emptyList(),
@@ -84,7 +84,8 @@ class KatalogViewModel(
                 when (state.filterAktif) {
                     FilterKatalog.SEMUA     -> true
                     FilterKatalog.HILANG    -> laporan.statusBarang == StatusBarang.HILANG
-                    FilterKatalog.DITEMUKAN -> laporan.statusBarang == StatusBarang.DITEMUKAN
+                    FilterKatalog.DITEMUKAN -> laporan.statusBarang == StatusBarang.DITEMUKAN || laporan.statusBarang == StatusBarang.DIKLAIM
+                    FilterKatalog.SELESAI   -> laporan.statusBarang == StatusBarang.SELESAI
                 }
             }
             // Filter berdasarkan teks pencarian
