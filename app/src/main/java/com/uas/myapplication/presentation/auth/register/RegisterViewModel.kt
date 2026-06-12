@@ -2,7 +2,8 @@ package com.uas.myapplication.presentation.auth.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.uas.myapplication.domain.repository.AuthRepository
+import com.uas.myapplication.domain.usecase.auth.RegisterUseCase
+import com.uas.myapplication.domain.usecase.auth.LoginWithGoogleUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,7 +27,8 @@ data class RegisterUiState(
 )
 
 class RegisterViewModel(
-    private val authRepository: AuthRepository
+    private val registerUseCase: RegisterUseCase,
+    private val loginWithGoogleUseCase: LoginWithGoogleUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(RegisterUiState())
@@ -106,7 +108,7 @@ class RegisterViewModel(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
-            val result = authRepository.registerWithEmail(
+            val result = registerUseCase(
                 namaLengkap   = state.namaLengkap.trim(),
                 nim           = state.nim.trim(),
                 email         = state.email.trim(),
@@ -130,7 +132,7 @@ class RegisterViewModel(
     fun loginWithGoogle(idToken: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
-            val result = authRepository.loginWithGoogle(idToken)
+            val result = loginWithGoogleUseCase(idToken)
             result.fold(
                 onSuccess = {
                     _uiState.update { it.copy(isLoading = false, googleSuccess = true) }

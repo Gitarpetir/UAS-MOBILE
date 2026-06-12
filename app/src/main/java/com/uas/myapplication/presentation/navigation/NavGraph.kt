@@ -48,6 +48,9 @@ import com.uas.myapplication.presentation.profil.ProfilViewModel
  * Logika startDestination:
  * - Jika pengguna sudah login → langsung ke Dashboard / Dashboard Admin
  * - Jika belum login → ke Onboarding
+ *
+ * Dependensi ViewModel sekarang menggunakan Use Cases dari AppContainer
+ * alih-alih Repository langsung (sesuai prinsip Clean Architecture).
  */
 @Composable
 fun CariInNavGraph(
@@ -87,7 +90,8 @@ fun CariInNavGraph(
             val viewModel: LoginViewModel = viewModel(
                 factory = ViewModelFactory {
                     LoginViewModel(
-                        AppContainer.authRepository
+                        loginUseCase = AppContainer.loginUseCase,
+                        loginWithGoogleUseCase = AppContainer.loginWithGoogleUseCase
                     )
                 }
             )
@@ -125,7 +129,8 @@ fun CariInNavGraph(
             val viewModel: RegisterViewModel = viewModel(
                 factory = ViewModelFactory {
                     RegisterViewModel(
-                        AppContainer.authRepository
+                        registerUseCase = AppContainer.registerUseCase,
+                        loginWithGoogleUseCase = AppContainer.loginWithGoogleUseCase
                     )
                 }
             )
@@ -157,7 +162,7 @@ fun CariInNavGraph(
                 factory = ViewModelFactory {
                     LengkapiProfilViewModel(
                         authRepository = AppContainer.authRepository,
-                        userRepository = AppContainer.userRepository
+                        updateUserProfileUseCase = AppContainer.updateUserProfileUseCase
                     )
                 }
             )
@@ -183,7 +188,7 @@ fun CariInNavGraph(
             val viewModel: DashboardViewModel = viewModel(
                 factory = ViewModelFactory {
                     DashboardViewModel(
-                        AppContainer.laporanRepository
+                        getAllLaporanUseCase = AppContainer.getAllLaporanUseCase
                     )
                 }
             )
@@ -199,7 +204,7 @@ fun CariInNavGraph(
             val viewModel: KatalogViewModel = viewModel(
                 factory = ViewModelFactory {
                     KatalogViewModel(
-                        AppContainer.laporanRepository
+                        getAllLaporanUseCase = AppContainer.getAllLaporanUseCase
                     )
                 }
             )
@@ -226,8 +231,9 @@ fun CariInNavGraph(
             val viewModel: DetailBarangViewModel = viewModel(
                 factory = ViewModelFactory {
                     DetailBarangViewModel(
-                        laporanRepository = AppContainer.laporanRepository,
-                        userRepository = AppContainer.userRepository,
+                        getLaporanByIdUseCase = AppContainer.getLaporanByIdUseCase,
+                        getUserProfileUseCase = AppContainer.getUserProfileUseCase,
+                        konfirmasiTemuanUseCase = AppContainer.konfirmasiTemuanUseCase,
                         authRepository = AppContainer.authRepository
                     )
                 }
@@ -257,9 +263,11 @@ fun CariInNavGraph(
             val viewModel: BuatLaporanViewModel = viewModel(
                 factory = ViewModelFactory {
                     BuatLaporanViewModel(
-                        laporanRepository = AppContainer.laporanRepository,
-                        authRepository = AppContainer.authRepository,
-                        userRepository = AppContainer.userRepository
+                        buatLaporanUseCase = AppContainer.buatLaporanUseCase,
+                        editLaporanUseCase = AppContainer.editLaporanUseCase,
+                        getLaporanByIdUseCase = AppContainer.getLaporanByIdUseCase,
+                        getUserProfileUseCase = AppContainer.getUserProfileUseCase,
+                        authRepository = AppContainer.authRepository
                     )
                 }
             )
@@ -287,9 +295,11 @@ fun CariInNavGraph(
             val viewModel: BuatLaporanViewModel = viewModel(
                 factory = ViewModelFactory {
                     BuatLaporanViewModel(
-                        laporanRepository = AppContainer.laporanRepository,
-                        authRepository = AppContainer.authRepository,
-                        userRepository = AppContainer.userRepository
+                        buatLaporanUseCase = AppContainer.buatLaporanUseCase,
+                        editLaporanUseCase = AppContainer.editLaporanUseCase,
+                        getLaporanByIdUseCase = AppContainer.getLaporanByIdUseCase,
+                        getUserProfileUseCase = AppContainer.getUserProfileUseCase,
+                        authRepository = AppContainer.authRepository
                     )
                 }
             )
@@ -306,7 +316,8 @@ fun CariInNavGraph(
             val viewModel: LaporankuViewModel = viewModel(
                 factory = ViewModelFactory {
                     LaporankuViewModel(
-                        laporanRepository = AppContainer.laporanRepository,
+                        getAllLaporanUseCase = AppContainer.getAllLaporanUseCase,
+                        hapusLaporanUseCase = AppContainer.hapusLaporanUseCase,
                         authRepository = AppContainer.authRepository
                     )
                 }
@@ -324,7 +335,8 @@ fun CariInNavGraph(
                 factory = ViewModelFactory {
                     ProfilViewModel(
                         authRepository = AppContainer.authRepository,
-                        userRepository = AppContainer.userRepository,
+                        getUserProfileUseCase = AppContainer.getUserProfileUseCase,
+                        logOutUseCase = AppContainer.logOutUseCase,
                         preferensiManager = AppContainer.preferensiManager
                     )
                 }
@@ -345,7 +357,7 @@ fun CariInNavGraph(
             val viewModel: DashboardAdminViewModel = viewModel(
                 factory = ViewModelFactory {
                     DashboardAdminViewModel(
-                        AppContainer.laporanRepository
+                        getAllLaporanUseCase = AppContainer.getAllLaporanUseCase
                     )
                 }
             )
@@ -361,7 +373,7 @@ fun CariInNavGraph(
             val viewModel: LaporanAdminViewModel = viewModel(
                 factory = ViewModelFactory {
                     LaporanAdminViewModel(
-                        AppContainer.laporanRepository
+                        getAllLaporanUseCase = AppContainer.getAllLaporanUseCase
                     )
                 }
             )

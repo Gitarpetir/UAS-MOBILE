@@ -1,35 +1,25 @@
 package com.uas.myapplication.data.repository
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.firestore.FirebaseFirestore
-import com.uas.myapplication.data.remote.dto.UserDto
+import com.uas.myapplication.data.remote.datasource.AuthRemoteDataSource
+import com.uas.myapplication.data.remote.datasource.UserRemoteDataSource
 import com.uas.myapplication.data.remote.dto.toMap
+import com.uas.myapplication.domain.model.GoogleAuthResult
 import com.uas.myapplication.domain.model.User
 import com.uas.myapplication.domain.repository.AuthRepository
-import kotlinx.coroutines.tasks.await
-import android.content.Context
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.uas.myapplication.domain.model.GoogleAuthResult
 
-
-
+/**
+ * Implementasi AuthRepository.
+ * Sekarang bergantung pada DataSource, bukan langsung ke Firebase SDK.
+ */
 class AuthRepositoryImpl(
-    private val auth     : FirebaseAuth,
-    private val firestore: FirebaseFirestore,
-    private val context  : Context
+    private val authRemoteDataSource: AuthRemoteDataSource,
+    private val userRemoteDataSource: UserRemoteDataSource
 ) : AuthRepository {
-
-    private val usersCollection = firestore.collection("users")
 
     override suspend fun loginWithEmail(email: String, password: String): Result<User> {
         return try {
-            val authResult = auth.signInWithEmailAndPassword(email, password).await()
-            val uid = authResult.user?.uid ?: throw Exception("UID tidak ditemukan")
-            val snapshot = usersCollection.document(uid).get().await()
-            val userDto = snapshot.toObject(UserDto::class.java)
-                ?: throw Exception("Data pengguna tidak ditemukan")
+            val uid = authRemoteDataSource.loginWithEmail(email, password)
+            val userDto = userRemoteDataSource.getUserById(uid)
             Result.success(userDto.toDomain())
         } catch (e: Exception) {
             Result.failure(e)
@@ -39,79 +29,63 @@ class AuthRepositoryImpl(
     override suspend fun loginWithGoogle(
         idToken: String
     ): Result<GoogleAuthResult> {
-
         return try {
+            val (uid, isNewUser) = authRemoteDataSource.loginWithGoogle(idToken)
 
-            val credential =
-                GoogleAuthProvider.getCredential(idToken, null)
-
-            val authResult =
-                auth.signInWithCredential(credential).await()
-
-            val firebaseUser =
-                authResult.user ?: throw Exception("Login Google gagal")
-
-            val snapshot =
-                usersCollection.document(firebaseUser.uid)
-                    .get()
-                    .await()
-
-            if (snapshot.exists()) {
-
-                val userDto =
-                    snapshot.toObject(UserDto::class.java)
-                        ?: throw Exception("Data pengguna tidak ditemukan")
-
-                Result.success(
-                    GoogleAuthResult(
-                        user = userDto.toDomain(),
-                        isNewUser = false
+            if (!isNewUser) {
+                // User sudah ada — ambil data dari Firestore
+                try {
+                    val userDto = userRemoteDataSource.getUserById(uid)
+                    Result.success(
+                        GoogleAuthResult(
+                            user = userDto.toDomain(),
+                            isNewUser = false
+                        )
                     )
-                )
-
+                } catch (e: Exception) {
+                    // Jika data user belum ada di Firestore meskipun bukan new user
+                    // (kasus edge: user Firebase Auth ada tapi dokumen Firestore belum dibuat)
+                    Result.success(
+                        GoogleAuthResult(
+                            user = User(uid = uid, email = "", peran = "mahasiswa"),
+                            isNewUser = true
+                        )
+                    )
+                }
             } else {
-
-                val newUser = User(
-                    uid = firebaseUser.uid,
-                    namaLengkap = firebaseUser.displayName ?: "",
-                    email = firebaseUser.email ?: "",
-                    peran = "mahasiswa"
-                )
-
+                // User baru — belum ada di Firestore
                 Result.success(
                     GoogleAuthResult(
-                        user = newUser,
+                        user = User(uid = uid, peran = "mahasiswa"),
                         isNewUser = true
                     )
                 )
             }
-
         } catch (e: Exception) {
             Result.failure(e)
         }
     }
 
     override suspend fun registerWithEmail(
-        namaLengkap  : String,
-        nim          : String,
-        email        : String,
-        password     : String,
+        namaLengkap: String,
+        nim: String,
+        email: String,
+        password: String,
         nomorWhatsapp: String
     ): Result<User> {
         return try {
-            val authResult = auth.createUserWithEmailAndPassword(email, password).await()
-            val uid = authResult.user?.uid ?: throw Exception("UID tidak ditemukan")
+            val uid = authRemoteDataSource.registerWithEmail(email, password)
 
             val newUser = User(
-                uid           = uid,
-                namaLengkap   = namaLengkap,
-                nim           = nim,
-                email         = email,
+                uid = uid,
+                namaLengkap = namaLengkap,
+                nim = nim,
+                email = email,
                 nomorWhatsapp = nomorWhatsapp,
-                peran         = "mahasiswa"
+                peran = "mahasiswa"
             )
 
-            usersCollection.document(uid).set(newUser.toMap()).await()
+            userRemoteDataSource.saveUser(uid, newUser.toMap())
             Result.success(newUser)
         } catch (e: Exception) {
             Result.failure(e)
@@ -119,20 +93,10 @@ class AuthRepositoryImpl(
     }
 
     override suspend fun logout() {
-
-        auth.signOut()
-
-        val gso = GoogleSignInOptions.Builder(
-            GoogleSignInOptions.DEFAULT_SIGN_IN
-        )
-            .requestEmail()
-            .build()
-
-        GoogleSignIn.getClient(context, gso)
-            .signOut()
+        authRemoteDataSource.logout()
     }
 
     override fun getCurrentUserId(): String? {
-        return auth.currentUser?.uid
+        return authRemoteDataSource.getCurrentUserId()
     }
 }

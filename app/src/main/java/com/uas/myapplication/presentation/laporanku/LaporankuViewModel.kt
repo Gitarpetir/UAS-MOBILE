@@ -6,7 +6,8 @@ import com.uas.myapplication.domain.model.JenisLaporan
 import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.domain.repository.AuthRepository
-import com.uas.myapplication.domain.repository.LaporanRepository
+import com.uas.myapplication.domain.usecase.laporan.GetAllLaporanUseCase
+import com.uas.myapplication.domain.usecase.laporan.HapusLaporanUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,8 +31,9 @@ data class LaporankuUiState(
 )
 
 class LaporankuViewModel(
-    private val laporanRepository: LaporanRepository,
-    private val authRepository   : AuthRepository
+    private val getAllLaporanUseCase: GetAllLaporanUseCase,
+    private val hapusLaporanUseCase: HapusLaporanUseCase,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LaporankuUiState())
@@ -44,7 +46,7 @@ class LaporankuViewModel(
     private fun ambilLaporanku() {
         viewModelScope.launch {
 
-            laporanRepository.getAllLaporan()
+            getAllLaporanUseCase()
                 .collect { daftarLaporan ->
 
                     _uiState.update {
@@ -123,7 +125,7 @@ class LaporankuViewModel(
         val laporan = _uiState.value.laporanYangDihapus ?: return
         viewModelScope.launch {
             _uiState.update { it.copy(showHapusDialog = false, laporanYangDihapus = null) }
-            laporanRepository.hapusLaporan(laporan.id)
+            hapusLaporanUseCase(laporan.id)
         }
     }
 

@@ -1,23 +1,21 @@
 package com.uas.myapplication.data.repository
 
-import com.google.firebase.firestore.FirebaseFirestore
-import com.uas.myapplication.data.remote.dto.UserDto
+import com.uas.myapplication.data.remote.datasource.UserRemoteDataSource
 import com.uas.myapplication.data.remote.dto.toMap
 import com.uas.myapplication.domain.model.User
 import com.uas.myapplication.domain.repository.UserRepository
-import kotlinx.coroutines.tasks.await
 
+/**
+ * Implementasi UserRepository.
+ * Sekarang bergantung pada UserRemoteDataSource, bukan langsung ke Firestore SDK.
+ */
 class UserRepositoryImpl(
-    private val firestore: FirebaseFirestore
+    private val userRemoteDataSource: UserRemoteDataSource
 ) : UserRepository {
-
-    private val usersCollection = firestore.collection("users")
 
     override suspend fun getUserById(uid: String): Result<User> {
         return try {
-            val snapshot = usersCollection.document(uid).get().await()
-            val userDto  = snapshot.toObject(UserDto::class.java)
-                ?: throw Exception("Data pengguna tidak ditemukan")
+            val userDto = userRemoteDataSource.getUserById(uid)
             Result.success(userDto.toDomain())
         } catch (e: Exception) {
             Result.failure(e)
@@ -26,7 +24,7 @@ class UserRepositoryImpl(
 
     override suspend fun saveUser(user: User): Result<Unit> {
         return try {
-            usersCollection.document(user.uid).set(user.toMap()).await()
+            userRemoteDataSource.saveUser(user.uid, user.toMap())
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)
@@ -38,19 +36,20 @@ class UserRepositoryImpl(
      * Digunakan di Halaman Lengkapi Profil setelah login Google.
      */
     override suspend fun updateUser(
-        uid          : String,
-        namaLengkap  : String,
-        nim          : String,
+        uid: String,
+        namaLengkap: String,
+        nim: String,
         nomorWhatsapp: String
     ): Result<Unit> {
         return try {
-            usersCollection.document(uid).update(
+            userRemoteDataSource.updateUser(
+                uid,
                 mapOf(
-                    "nama_lengkap"   to namaLengkap,
-                    "nim"            to nim,
+                    "nama_lengkap" to namaLengkap,
+                    "nim" to nim,
                     "nomor_whatsapp" to nomorWhatsapp
                 )
-            ).await()
+            )
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)

@@ -2,7 +2,8 @@ package com.uas.myapplication.presentation.auth.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.uas.myapplication.domain.repository.AuthRepository
+import com.uas.myapplication.domain.usecase.auth.LoginUseCase
+import com.uas.myapplication.domain.usecase.auth.LoginWithGoogleUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +25,8 @@ data class LoginUiState(
 )
 
 class LoginViewModel(
-    private val authRepository: AuthRepository
+    private val loginUseCase: LoginUseCase,
+    private val loginWithGoogleUseCase: LoginWithGoogleUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUiState())
@@ -50,7 +52,7 @@ class LoginViewModel(
         }
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
-            val result = authRepository.loginWithEmail(state.email.trim(), state.password)
+            val result = loginUseCase(state.email.trim(), state.password)
             result.fold(
                 onSuccess = { user ->
                     _uiState.update { it.copy(isLoading = false, loginSuccess = true, isAdmin = user.isAdmin()) }
@@ -65,7 +67,7 @@ class LoginViewModel(
     fun loginWithGoogle(idToken: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
-            val result = authRepository.loginWithGoogle(idToken)
+            val result = loginWithGoogleUseCase(idToken)
             result.fold(
                 onSuccess = { result ->
 
