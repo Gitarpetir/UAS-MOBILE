@@ -22,6 +22,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -38,6 +40,7 @@ import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import com.uas.myapplication.presentation.ui.LocalBahasa
 import com.uas.myapplication.presentation.ui.StringProvider
+import com.uas.myapplication.presentation.ui.components.OfflineBanner
 
 @Composable
 fun LaporankuScreen(
@@ -47,6 +50,11 @@ fun LaporankuScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val laporanByTab = viewModel.getLaporanByTab()
     val strings = StringProvider.get(LocalBahasa.current)
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.loadData(context)
+    }
 
     if (uiState.showHapusDialog) {
         HapusDialog(
@@ -71,6 +79,12 @@ fun LaporankuScreen(
                 .padding(paddingValues),
             contentPadding = PaddingValues(bottom = 16.dp)
         ) {
+            if (uiState.isOfflineMode) {
+                item {
+                    OfflineBanner()
+                }
+            }
+
             item {
 
                 LaporankuHeader(

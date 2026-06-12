@@ -32,7 +32,11 @@ class MainActivity : ComponentActivity() {
             val bahasa by AppContainer.preferensiManager.bahasa
                 .collectAsState(initial = "id")
 
-            CompositionLocalProvider(LocalBahasa provides bahasa) {
+            val registryOwner = androidx.activity.compose.LocalActivityResultRegistryOwner.current ?: this@MainActivity
+            CompositionLocalProvider(
+                LocalBahasa provides bahasa,
+                androidx.activity.compose.LocalActivityResultRegistryOwner provides registryOwner
+            ) {
                 MyApplicationTheme(darkTheme = isDarkMode) {
                     Surface(
                         modifier = Modifier.fillMaxSize(),

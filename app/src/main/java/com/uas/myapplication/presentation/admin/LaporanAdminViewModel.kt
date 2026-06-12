@@ -24,7 +24,8 @@ data class LaporanAdminUiState(
     val filterAktif: FilterAdmin = FilterAdmin.SEMUA,
     val queryPencarian: String = "",
     val isLoading: Boolean = true,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
+    val isOfflineMode: Boolean = false
 )
 
 class LaporanAdminViewModel(
@@ -34,13 +35,20 @@ class LaporanAdminViewModel(
     private val _uiState = MutableStateFlow(LaporanAdminUiState())
     val uiState: StateFlow<LaporanAdminUiState> = _uiState.asStateFlow()
 
-    init {
-        ambilSemuaLaporan()
-    }
+    private var networkJob: kotlinx.coroutines.Job? = null
+    private var laporanJob: kotlinx.coroutines.Job? = null
 
-    private fun ambilSemuaLaporan() {
-        viewModelScope.launch {
-            getAllLaporanUseCase().collect { daftarLaporan ->
+    fun ambilSemuaLaporan(context: android.content.Context) {
+        networkJob?.cancel()
+        networkJob = viewModelScope.launch {
+            com.uas.myapplication.data.util.NetworkMonitor(context).isConnected.collect { isConnected ->
+                _uiState.update { it.copy(isOfflineMode = !isConnected) }
+            }
+        }
+
+        laporanJob?.cancel()
+        laporanJob = viewModelScope.launch {
+            getAllLaporanUseCase(context).collect { daftarLaporan ->
 
                 _uiState.update {
                     it.copy(
