@@ -48,6 +48,7 @@ fun RegisterScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context  = LocalContext.current
+    val strings = com.uas.myapplication.presentation.ui.StringProvider.get(com.uas.myapplication.presentation.ui.LocalBahasa.current)
 
     val googleLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
@@ -90,7 +91,7 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(52.dp))
 
             Text(
-                text       = "Buat Akun",
+                text       = strings.registerTitle,
                 fontFamily = PoppinsFontFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize   = 28.sp,
@@ -100,7 +101,7 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text       = "Daftar dan bergabung di Cari.in",
+                text       = strings.registerSubtitle,
                 fontFamily = InterFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize   = 14.sp,
@@ -113,8 +114,8 @@ fun RegisterScreen(
             CariInTextField(
                 value         = uiState.namaLengkap,
                 onValueChange = viewModel::onNamaLengkapChange,
-                label         = "Nama Lengkap",
-                placeholder   = "Azriel Gunawan",
+                label         = strings.fullNameLabel,
+                placeholder   = strings.fullNamePlaceholder,
                 leadingIcon   = {
                     Icon(Icons.Default.Person, contentDescription = null, tint = CariInTheme.colors.textHint)
                 }
@@ -126,8 +127,8 @@ fun RegisterScreen(
             CariInTextField(
                 value         = uiState.nim,
                 onValueChange = viewModel::onNimChange,
-                label         = "NIM",
-                placeholder   = "Nilai Induk Mahasiswa",
+                label         = strings.nimLabel,
+                placeholder   = strings.nimPlaceholder,
                 leadingIcon   = {
                     Icon(Icons.Default.Badge, contentDescription = null, tint = CariInTheme.colors.textHint)
                 },
@@ -140,8 +141,8 @@ fun RegisterScreen(
             CariInTextField(
                 value         = uiState.nomorWhatsapp,
                 onValueChange = viewModel::onNomorWhatsappChange,
-                label         = "No. WhatsApp",
-                placeholder   = "Nomor Anda",
+                label         = strings.waLabel,
+                placeholder   = strings.waPlaceholder,
                 leadingIcon   = {
                     Icon(Icons.Default.Phone, contentDescription = null, tint = CariInTheme.colors.textHint)
                 },
@@ -154,8 +155,8 @@ fun RegisterScreen(
             CariInTextField(
                 value         = uiState.email,
                 onValueChange = viewModel::onEmailChange,
-                label         = "Email",
-                placeholder   = "email.kamu@gmail.com",
+                label         = strings.emailLabel,
+                placeholder   = strings.emailPlaceholder,
                 leadingIcon   = {
                     Icon(Icons.Default.Email, contentDescription = null, tint = CariInTheme.colors.textHint)
                 },
@@ -168,8 +169,8 @@ fun RegisterScreen(
             CariInTextField(
                 value         = uiState.password,
                 onValueChange = viewModel::onPasswordChange,
-                label         = "Password",
-                placeholder   = "Buat password",
+                label         = strings.passwordLabel,
+                placeholder   = strings.createPasswordPlaceholder,
                 leadingIcon   = {
                     Icon(Icons.Default.Lock, contentDescription = null, tint = CariInTheme.colors.textHint)
                 },
@@ -194,8 +195,8 @@ fun RegisterScreen(
             CariInTextField(
                 value         = uiState.konfirmasiPassword,
                 onValueChange = viewModel::onKonfirmasiPasswordChange,
-                label         = "Konfirmasi Password",
-                placeholder   = "Konfirmasi password kamu",
+                label         = strings.confirmPasswordLabel,
+                placeholder   = strings.confirmPasswordPlaceholder,
                 leadingIcon   = {
                     Icon(Icons.Default.Lock, contentDescription = null, tint = CariInTheme.colors.textHint)
                 },
@@ -222,7 +223,7 @@ fun RegisterScreen(
                 exit    = fadeOut()
             ) {
                 Text(
-                    text       = "Password dan konfirmasi password tidak sama",
+                    text       = strings.passwordMismatchError,
                     color      = MaterialTheme.colorScheme.error,
                     fontFamily = InterFontFamily,
                     fontSize   = 12.sp,
@@ -273,7 +274,7 @@ fun RegisterScreen(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text       = "Buat Akun",
+                        text       = strings.btnRegister,
                         fontFamily = PoppinsFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize   = 16.sp,
@@ -290,7 +291,7 @@ fun RegisterScreen(
                 modifier          = Modifier.fillMaxWidth()
             ) {
                 HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outline)
-                Text("  atau  ", fontFamily = InterFontFamily, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(strings.orText, fontFamily = InterFontFamily, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outline)
             }
 
@@ -330,7 +331,7 @@ fun RegisterScreen(
                     )
                     Spacer(modifier = Modifier.width(10.dp))
                     Text(
-                        text       = "Hubungkan dengan Google",
+                        text       = strings.btnGoogleConnect,
                         fontFamily = PoppinsFontFamily,
                         fontWeight = FontWeight.Medium,
                         fontSize   = 15.sp,
@@ -350,13 +351,13 @@ fun RegisterScreen(
                                 color      = MaterialTheme.colorScheme.onSurfaceVariant,
                                 fontFamily = InterFontFamily,
                                 fontSize   = 14.sp
-                            )) { append("Sudah punya akun? ") }
+                            )) { append(strings.alreadyHaveAccountText) }
                             withStyle(SpanStyle(
                                 color      = MaterialTheme.colorScheme.primary,
                                 fontFamily = InterFontFamily,
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize   = 14.sp
-                            )) { append("Masuk") }
+                            )) { append(strings.btnLogin) }
                         }
                     )
                 }

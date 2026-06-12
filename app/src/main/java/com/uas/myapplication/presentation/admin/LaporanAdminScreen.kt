@@ -27,7 +27,6 @@ import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import androidx.compose.ui.tooling.preview.Preview
 import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
-import com.uas.myapplication.presentation.ui.components.adminBottomNavItems
 
 @Composable
 fun LaporanAdminScreen(
@@ -35,12 +34,13 @@ fun LaporanAdminScreen(
     navController: NavController
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val strings = com.uas.myapplication.presentation.ui.StringProvider.get(com.uas.myapplication.presentation.ui.LocalBahasa.current)
 
     Scaffold(
         bottomBar = {
             CariInBottomNavBar(
                 navController = navController,
-                items = adminBottomNavItems
+                items = com.uas.myapplication.presentation.ui.components.getAdminBottomNavItems(strings)
             )
         }
     ) { paddingValues ->
@@ -55,7 +55,7 @@ fun LaporanAdminScreen(
 
             item {
                 Text(
-                    text = "Kelola Laporan",
+                    text = strings.manageReportsHeader,
                     fontFamily = PoppinsFontFamily,
                     fontWeight = FontWeight.Bold,
                     fontSize = 22.sp,
@@ -75,7 +75,7 @@ fun LaporanAdminScreen(
                     onValueChange = viewModel::onQueryPencarianChange,
                     placeholder = {
                         Text(
-                            text = "Cari laporan...",
+                            text = strings.searchPlaceholder,
                             fontFamily = InterFontFamily,
                             fontSize = 13.sp,
                             color = CariInTheme.colors.textHint
@@ -147,7 +147,7 @@ fun LaporanAdminScreen(
                         ) {
 
                             Text(
-                                text = "Tidak ada laporan ditemukan",
+                                text = strings.noItemsFound,
                                 fontFamily = PoppinsFontFamily,
                                 fontWeight = FontWeight.Medium,
                                 fontSize = 15.sp,
@@ -159,7 +159,7 @@ fun LaporanAdminScreen(
                             )
 
                             Text(
-                                text = "Coba ubah kata kunci atau filter",
+                                text = strings.tryChangingFilter,
                                 fontFamily = InterFontFamily,
                                 fontSize = 13.sp,
                                 color = CariInTheme.colors.textHint

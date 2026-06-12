@@ -21,6 +21,8 @@ import com.uas.myapplication.presentation.ui.theme.SuccessGreen
 fun HeaderDashboardAdmin(
     uiState: DashboardAdminUiState
 ) {
+    val strings = com.uas.myapplication.presentation.ui.StringProvider.get(com.uas.myapplication.presentation.ui.LocalBahasa.current)
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -55,14 +57,14 @@ fun HeaderDashboardAdmin(
                 StatistikCard(
                     modifier = Modifier.weight(1f),
                     jumlah = uiState.jumlahHilang,
-                    label = "Barang Hilang",
+                    label = strings.statLostItems,
                     warna = DangerRed
                 )
 
                 StatistikCard(
                     modifier = Modifier.weight(1f),
                     jumlah = uiState.jumlahDitemukan,
-                    label = "Barang Ditemukan",
+                    label = strings.statFoundItems,
                     warna = SuccessGreen
                 )
             }
@@ -72,7 +74,7 @@ fun HeaderDashboardAdmin(
             StatistikCard(
                 modifier = Modifier.fillMaxWidth(),
                 jumlah = uiState.jumlahSelesai,
-                label = "Laporan Selesai",
+                label = strings.statCompletedReports,
                 warna = NeutralGrayLight
             )
         }

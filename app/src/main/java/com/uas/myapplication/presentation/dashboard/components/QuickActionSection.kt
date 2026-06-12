@@ -28,12 +28,16 @@ import androidx.compose.ui.unit.sp
 import com.uas.myapplication.presentation.ui.theme.Blue700
 import com.uas.myapplication.presentation.ui.theme.MyApplicationTheme
 import com.uas.myapplication.presentation.ui.theme.PoppinsFontFamily
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun QuickActionSection(
     onLaporKehilanganClick: () -> Unit,
     onLaporTemuanClick    : () -> Unit
 ) {
+    val strings = StringProvider.get(LocalBahasa.current)
+
     Row(
         modifier              = Modifier
             .fillMaxWidth()
@@ -49,7 +53,7 @@ fun QuickActionSection(
             Icon(Icons.Default.Add, null, tint = Color.White, modifier = Modifier.size(18.dp))
             Spacer(modifier = Modifier.width(6.dp))
             Text(
-                text       = "Laporkan\nKehilangan",
+                text       = strings.btnReportLost,
                 fontFamily = PoppinsFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize   = 13.sp,
@@ -66,7 +70,7 @@ fun QuickActionSection(
             Icon(Icons.Outlined.CheckCircle, null, tint = Blue700, modifier = Modifier.size(18.dp))
             Spacer(modifier = Modifier.width(6.dp))
             Text(
-                text       = "Laporkan\nTemuan",
+                text       = strings.btnReportFound,
                 fontFamily = PoppinsFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize   = 13.sp,

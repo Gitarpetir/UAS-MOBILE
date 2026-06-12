@@ -17,6 +17,8 @@ import com.uas.myapplication.presentation.onboarding.components.DotsIndicator
 import com.uas.myapplication.presentation.onboarding.components.OnboardingPageContent
 import com.uas.myapplication.presentation.ui.theme.*
 import kotlinx.coroutines.launch
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 data class OnboardingPage(
     val judul: String,
@@ -26,24 +28,6 @@ data class OnboardingPage(
 
 enum class IlustrasiType { KACAPEMBESAR, TEMUKAN, SENYUM }
 
-val onboardingPages = listOf(
-    OnboardingPage(
-        judul        = "Laporkan Barang Hilang",
-        deskripsi    = "Laporkan barang yang hilang di kampus dengan cepat, beserta foto dan detailnya.",
-        tipeIlustrasi = IlustrasiType.KACAPEMBESAR
-    ),
-    OnboardingPage(
-        judul        = "Temukan Apa yang Hilang",
-        deskripsi    = "Telusuri barang yang ditemukan dan klaim barang Anda yang hilang.",
-        tipeIlustrasi = IlustrasiType.TEMUKAN
-    ),
-    OnboardingPage(
-        judul        = "Bantu Orang Lain",
-        deskripsi    = "Laporkan temuan barang dan bantu temukan pemiliknya",
-        tipeIlustrasi = IlustrasiType.SENYUM
-    )
-)
-
 // =============================================
 // SCREEN UTAMA
 // =============================================
@@ -51,6 +35,26 @@ val onboardingPages = listOf(
 fun OnboardingScreen(
     onSelesai: () -> Unit
 ) {
+    val strings = StringProvider.get(LocalBahasa.current)
+
+    val onboardingPages = listOf(
+        OnboardingPage(
+            judul        = strings.onboardingTitle1,
+            deskripsi    = strings.onboardingDesc1,
+            tipeIlustrasi = IlustrasiType.KACAPEMBESAR
+        ),
+        OnboardingPage(
+            judul        = strings.onboardingTitle2,
+            deskripsi    = strings.onboardingDesc2,
+            tipeIlustrasi = IlustrasiType.TEMUKAN
+        ),
+        OnboardingPage(
+            judul        = strings.onboardingTitle3,
+            deskripsi    = strings.onboardingDesc3,
+            tipeIlustrasi = IlustrasiType.SENYUM
+        )
+    )
+
     val pagerState   = rememberPagerState(pageCount = { onboardingPages.size })
     val scope        = rememberCoroutineScope()
     val isLastPage   = pagerState.currentPage == onboardingPages.lastIndex
@@ -107,7 +111,7 @@ fun OnboardingScreen(
                 )
             ) {
                 Text(
-                    text       = if (isLastPage) "Ayo Mulai" else "Lanjut",
+                    text       = if (isLastPage) strings.btnAyoMulai else strings.btnLanjut,
                     fontFamily = PoppinsFontFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize   = 16.sp,
@@ -119,7 +123,7 @@ fun OnboardingScreen(
             if (!isLastPage) {
                 TextButton(onClick = onSelesai) {
                     Text(
-                        text       = "Lewati",
+                        text       = strings.btnLewati,
                         fontFamily = InterFontFamily,
                         fontWeight = FontWeight.Normal,
                         fontSize   = 14.sp,
@@ -137,39 +141,6 @@ fun OnboardingScreen(
 // =============================================
 // PREVIEW
 // =============================================
-@Preview(showBackground = true, name = "Onboarding Halaman 1")
-@Composable
-fun PreviewOnboarding1() {
-    MyApplicationTheme {
-        OnboardingPageContent(
-            page      = onboardingPages[0],
-            pageIndex = 0
-        )
-    }
-}
-
-@Preview(showBackground = true, name = "Onboarding Halaman 2")
-@Composable
-fun PreviewOnboarding2() {
-    MyApplicationTheme {
-        OnboardingPageContent(
-            page      = onboardingPages[1],
-            pageIndex = 1
-        )
-    }
-}
-
-@Preview(showBackground = true, name = "Onboarding Halaman 3")
-@Composable
-fun PreviewOnboarding3() {
-    MyApplicationTheme {
-        OnboardingPageContent(
-            page      = onboardingPages[2],
-            pageIndex = 2
-        )
-    }
-}
-
 @Preview(showBackground = true, name = "Onboarding Full Screen")
 @Composable
 fun PreviewOnboardingScreen() {

@@ -13,22 +13,25 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import com.uas.myapplication.presentation.laporanku.TabLaporanku
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun EmptyStateLaporanku(
     tabAktif: TabLaporanku
 ) {
+    val strings = StringProvider.get(LocalBahasa.current)
 
     val judulKosong = when (tabAktif) {
-        TabLaporanku.BARANGKU -> "Belum ada laporan kehilangan"
-        TabLaporanku.TEMUANKU -> "Belum ada laporan temuan"
-        TabLaporanku.KONTRIBUSI -> "Belum ada kontribusi"
+        TabLaporanku.BARANGKU -> strings.emptyStateLostTitle
+        TabLaporanku.TEMUANKU -> strings.emptyStateFoundTitle
+        TabLaporanku.KONTRIBUSI -> strings.emptyStateContribTitle
     }
 
     val deskripsiKosong = when (tabAktif) {
-        TabLaporanku.BARANGKU -> "Tekan tombol + Baru untuk membuat laporan kehilangan"
-        TabLaporanku.TEMUANKU -> "Tekan tombol + Baru untuk membuat laporan temuan"
-        TabLaporanku.KONTRIBUSI -> "Kontribusimu akan muncul di sini"
+        TabLaporanku.BARANGKU -> strings.emptyStateLostDesc
+        TabLaporanku.TEMUANKU -> strings.emptyStateFoundDesc
+        TabLaporanku.KONTRIBUSI -> strings.emptyStateContribDesc
     }
 
     Column(

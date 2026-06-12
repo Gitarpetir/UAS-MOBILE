@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.sp
 import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun DetailActionSection(
@@ -26,6 +28,7 @@ fun DetailActionSection(
     onSelesaikan: () -> Unit,
     onKembali: () -> Unit
 ) {
+    val strings = StringProvider.get(LocalBahasa.current)
 
     if (laporan.statusBarang != StatusBarang.SELESAI) {
 
@@ -54,8 +57,8 @@ fun DetailActionSection(
 
                 Text(
                     text = when (laporan.statusBarang) {
-                        StatusBarang.HILANG -> "Aku Menemukan Barang Ini"
-                        StatusBarang.DITEMUKAN -> "Barang Ini Milik Saya"
+                        StatusBarang.HILANG -> strings.btnFoundThisItem
+                        StatusBarang.DITEMUKAN -> strings.btnThisIsMine
                         else -> ""
                     },
                     fontFamily = PoppinsFontFamily,
@@ -93,7 +96,7 @@ fun DetailActionSection(
             Spacer(modifier = Modifier.width(8.dp))
 
             Text(
-                text = "Selesaikan Laporan",
+                text = strings.btnFinishReport,
                 fontFamily = PoppinsFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 15.sp,
@@ -117,7 +120,7 @@ fun DetailActionSection(
     ) {
 
         Text(
-            text = "Kembali",
+            text = strings.btnBack,
             fontFamily = PoppinsFontFamily,
             fontWeight = FontWeight.Medium,
             fontSize = 15.sp,

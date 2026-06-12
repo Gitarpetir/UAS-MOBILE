@@ -33,10 +33,11 @@ import com.uas.myapplication.presentation.laporanku.components.JumlahLaporanText
 import com.uas.myapplication.presentation.laporanku.components.LaporankuHeader
 import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
-import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
+import com.uas.myapplication.presentation.ui.components.getMahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
-
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun LaporankuScreen(
@@ -45,6 +46,7 @@ fun LaporankuScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val laporanByTab = viewModel.getLaporanByTab()
+    val strings = StringProvider.get(LocalBahasa.current)
 
     if (uiState.showHapusDialog) {
         HapusDialog(
@@ -58,7 +60,7 @@ fun LaporankuScreen(
         bottomBar = {
             CariInBottomNavBar(
                 navController = navController,
-                items = mahasiswaBottomNavItems
+                items = getMahasiswaBottomNavItems(strings)
             )
         }
     ) { paddingValues ->

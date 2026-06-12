@@ -25,17 +25,21 @@ import androidx.compose.ui.unit.sp
 import com.uas.myapplication.presentation.ui.theme.Blue700
 import com.uas.myapplication.presentation.ui.theme.PoppinsFontFamily
 import com.uas.myapplication.presentation.ui.theme.TextMain
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun LaporankuHeader(
     onTambahClick: () -> Unit
 ){
+    val strings = StringProvider.get(LocalBahasa.current)
+
     Row(
     modifier              = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 20.dp),
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment     = Alignment.CenterVertically
 ) {
-    Text("Laporanku", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.Bold, fontSize = 22.sp, color = TextMain)
+    Text(strings.myReportsHeader, fontFamily = PoppinsFontFamily, fontWeight = FontWeight.Bold, fontSize = 22.sp, color = TextMain)
         Button(
             onClick = onTambahClick,
             shape = RoundedCornerShape(10.dp),
@@ -49,6 +53,6 @@ fun LaporankuHeader(
         ) {
         Icon(Icons.Default.Add, null, tint = Color.White, modifier = Modifier.size(16.dp))
         Spacer(Modifier.width(4.dp))
-        Text("Baru", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = Color.White)
+        Text(strings.btnNew, fontFamily = PoppinsFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = Color.White)
     }
 }}

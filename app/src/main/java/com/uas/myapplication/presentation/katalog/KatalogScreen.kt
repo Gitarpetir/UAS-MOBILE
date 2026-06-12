@@ -28,8 +28,10 @@ import com.uas.myapplication.presentation.ui.components.BarangCard
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.katalog.components.FilterChipRow
 import com.uas.myapplication.presentation.ui.theme.*
-import com.uas.myapplication.presentation.ui.components.mahasiswaBottomNavItems
+import com.uas.myapplication.presentation.ui.components.getMahasiswaBottomNavItems
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun KatalogScreen(
@@ -37,12 +39,13 @@ fun KatalogScreen(
     navController: NavController
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val strings = StringProvider.get(LocalBahasa.current)
 
     Scaffold(
         bottomBar = {
             CariInBottomNavBar(
                 navController = navController,
-                items = mahasiswaBottomNavItems
+                items = getMahasiswaBottomNavItems(strings)
             )
         }
     ) { paddingValues ->
@@ -55,7 +58,7 @@ fun KatalogScreen(
         ) {
             item {
                 Text(
-                    text       = "Katalog Barang",
+                    text       = strings.catalogTitle,
                     fontFamily = PoppinsFontFamily,
                     fontWeight = FontWeight.Bold,
                     fontSize   = 22.sp,
@@ -69,7 +72,7 @@ fun KatalogScreen(
                     value         = uiState.queryPencarian,
                     onValueChange = viewModel::onQueryPencarianChange,
                     placeholder   = {
-                        Text("Cari berdasarkan nama atau deskripsi...", fontFamily = InterFontFamily, fontSize = 13.sp, color = CariInTheme.colors.textHint)
+                        Text(strings.searchPlaceholder, fontFamily = InterFontFamily, fontSize = 13.sp, color = CariInTheme.colors.textHint)
                     },
                     leadingIcon = { Icon(Icons.Default.Search, null, tint = CariInTheme.colors.textHint) },
                     singleLine  = true,
@@ -112,9 +115,9 @@ fun KatalogScreen(
                 item {
                     Box(modifier = Modifier.fillMaxWidth().padding(48.dp), contentAlignment = Alignment.Center) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text("Tidak ada barang ditemukan", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.Medium, fontSize = 15.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(strings.noItemsFound, fontFamily = PoppinsFontFamily, fontWeight = FontWeight.Medium, fontSize = 15.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text("Coba ubah kata kunci atau filter", fontFamily = InterFontFamily, fontSize = 13.sp, color = CariInTheme.colors.textHint)
+                            Text(strings.tryChangingFilter, fontFamily = InterFontFamily, fontSize = 13.sp, color = CariInTheme.colors.textHint)
                         }
                     }
                 }
@@ -131,6 +134,7 @@ fun KatalogScreen(
 @Preview(showBackground = true, name = "Katalog Screen - Light", heightDp = 900)
 @Composable
 fun PreviewKatalogScreen() {
+    val strings = StringProvider.get("id")
     MyApplicationTheme {
         val dummyLaporan = listOf(
             Laporan(id = "1", namaBarang = "Jam Tangan", lokasi = "Ruang Baca", tanggal = "12 April 2026", statusBarang = StatusBarang.HILANG),
@@ -138,8 +142,8 @@ fun PreviewKatalogScreen() {
             Laporan(id = "3", namaBarang = "Tumbler Pink", lokasi = "Lab Big Data", tanggal = "10 April 2026", statusBarang = StatusBarang.HILANG)
         )
         Column(modifier = Modifier.fillMaxSize().background(SlateWhite)) {
-            Text("Katalog Barang", fontFamily = PoppinsFontFamily, fontWeight = FontWeight.Bold, fontSize = 22.sp, color = TextMain, modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 24.dp, bottom = 12.dp))
-            OutlinedTextField(value = "", onValueChange = {}, placeholder = { Text("Cari berdasarkan nama atau deskripsi...", fontFamily = InterFontFamily, fontSize = 13.sp, color = TextHint) }, leadingIcon = { Icon(Icons.Default.Search, null, tint = TextHint) }, singleLine = true, modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp), shape = RoundedCornerShape(12.dp), colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Blue700, unfocusedBorderColor = SlateGray200))
+            Text(strings.catalogTitle, fontFamily = PoppinsFontFamily, fontWeight = FontWeight.Bold, fontSize = 22.sp, color = TextMain, modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 24.dp, bottom = 12.dp))
+            OutlinedTextField(value = "", onValueChange = {}, placeholder = { Text(strings.searchPlaceholder, fontFamily = InterFontFamily, fontSize = 13.sp, color = TextHint) }, leadingIcon = { Icon(Icons.Default.Search, null, tint = TextHint) }, singleLine = true, modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp), shape = RoundedCornerShape(12.dp), colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Blue700, unfocusedBorderColor = SlateGray200))
             FilterChipRow(filterAktif = FilterKatalog.SEMUA, onFilterChange = {})
             dummyLaporan.forEach { laporan -> BarangCard(laporan = laporan, onClick = {}) }
         }

@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
 
 @Composable
 fun SubmitSection(
@@ -21,6 +23,7 @@ fun SubmitSection(
     isEditMode: Boolean,
     onSubmit: () -> Unit
 ) {
+    val strings = StringProvider.get(LocalBahasa.current)
 
     Button(
         onClick = onSubmit,
@@ -61,9 +64,9 @@ fun SubmitSection(
             Text(
                 text =
                     if (isEditMode)
-                        "Simpan Perubahan"
+                        strings.btnSave
                     else
-                        "Kirim Laporan",
+                        strings.btnSubmitReport,
                 fontFamily = PoppinsFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp,

@@ -12,15 +12,19 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.presentation.ui.theme.*
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
+import java.util.Locale
 
 @Composable
 fun StatusBarangSelector(
     selectedStatus: StatusBarang,
     onStatusChange: (StatusBarang) -> Unit
 ) {
+    val strings = StringProvider.get(LocalBahasa.current)
 
     Text(
-        text = "Status Barang",
+        text = strings.selectStatus,
         fontFamily = InterFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 13.sp,
@@ -57,7 +61,7 @@ fun StatusBarangSelector(
             elevation = ButtonDefaults.buttonElevation(0.dp)
         ) {
             Text(
-                "Hilang",
+                strings.statusLost.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
                 fontFamily = InterFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 14.sp
@@ -88,7 +92,7 @@ fun StatusBarangSelector(
             elevation = ButtonDefaults.buttonElevation(0.dp)
         ) {
             Text(
-                "Ditemukan",
+                strings.statusFound.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
                 fontFamily = InterFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 14.sp

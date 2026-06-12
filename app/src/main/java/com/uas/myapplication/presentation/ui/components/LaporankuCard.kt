@@ -49,6 +49,9 @@ import kotlin.text.ifEmpty
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import com.uas.myapplication.presentation.ui.theme.SuccessGreen
 import com.uas.myapplication.presentation.ui.theme.SuccessGreenLight
+import com.uas.myapplication.presentation.ui.LocalBahasa
+import com.uas.myapplication.presentation.ui.StringProvider
+
 // =============================================
 // CARD LAPORANKU — dengan badge deskriptif
 // =============================================
@@ -60,6 +63,8 @@ fun LaporankuCard(
     onEditClick : () -> Unit,
     onHapusClick: () -> Unit
 ) {
+    val strings = StringProvider.get(LocalBahasa.current)
+
     Card(
         modifier  = Modifier
             .fillMaxWidth()
@@ -111,7 +116,7 @@ fun LaporankuCard(
                                 .padding(horizontal = 10.dp, vertical = 4.dp)
                         ) {
                             Text(
-                                text = "Barangmu Ditemukan",
+                                text = strings.yourItemFound,
                                 fontFamily = InterFontFamily,
                                 fontWeight = FontWeight.Medium,
                                 fontSize = 11.sp,
@@ -177,7 +182,7 @@ fun LaporankuCard(
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = "Edit",
+                            text = strings.btnEdit,
                             fontFamily = InterFontFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 13.sp,
@@ -204,7 +209,7 @@ fun LaporankuCard(
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = "Hapus",
+                            text = strings.btnDelete,
                             fontFamily = InterFontFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 13.sp,
