@@ -35,6 +35,11 @@ fun LaporanAdminScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val strings = com.uas.myapplication.presentation.ui.StringProvider.get(com.uas.myapplication.presentation.ui.LocalBahasa.current)
+    val context = androidx.compose.ui.platform.LocalContext.current
+
+    androidx.compose.runtime.LaunchedEffect(Unit) {
+        viewModel.ambilSemuaLaporan(context)
+    }
 
     Scaffold(
         bottomBar = {
@@ -52,6 +57,11 @@ fun LaporanAdminScreen(
                 .padding(paddingValues),
             contentPadding = PaddingValues(bottom = 16.dp)
         ) {
+            if (uiState.isOfflineMode) {
+                item {
+                    com.uas.myapplication.presentation.ui.components.OfflineBanner()
+                }
+            }
 
             item {
                 Text(

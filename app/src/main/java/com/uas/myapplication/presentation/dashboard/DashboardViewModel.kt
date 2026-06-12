@@ -16,7 +16,8 @@ data class DashboardUiState(
     val jumlahHilang   : Int           = 0,
     val jumlahDitemukan: Int           = 0,
     val isLoading      : Boolean       = true,
-    val errorMessage   : String?       = null
+    val errorMessage   : String?       = null,
+    val isOfflineMode  : Boolean       = false
 )
 
 class DashboardViewModel(
@@ -26,15 +27,26 @@ class DashboardViewModel(
     private val _uiState = MutableStateFlow(DashboardUiState())
     val uiState: StateFlow<DashboardUiState> = _uiState.asStateFlow()
 
-    init {
-        // Mulai observasi data saat ViewModel pertama dibuat
-        ambilLaporan()
-    }
+    // Hapus init karena butuh context dari UI
+    // init {
+    //     ambilLaporan()
+    // }
 
-    private fun ambilLaporan() {
-        viewModelScope.launch {
+    private var networkJob: kotlinx.coroutines.Job? = null
+    private var laporanJob: kotlinx.coroutines.Job? = null
+
+    fun ambilLaporan(context: android.content.Context) {
+        networkJob?.cancel()
+        networkJob = viewModelScope.launch {
+            com.uas.myapplication.data.util.NetworkMonitor(context).isConnected.collect { isConnected ->
+                _uiState.update { it.copy(isOfflineMode = !isConnected) }
+            }
+        }
+
+        laporanJob?.cancel()
+        laporanJob = viewModelScope.launch {
             // Flow realtime — otomatis update saat data di Firestore berubah
-            getAllLaporanUseCase().collect { daftarLaporan ->
+            getAllLaporanUseCase(context).collect { daftarLaporan ->
                 _uiState.update {
                     it.copy(
                         daftarLaporan   = daftarLaporan,

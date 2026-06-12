@@ -101,7 +101,8 @@ object AppContainer {
 
     val laporanRepository: LaporanRepository by lazy {
         LaporanRepositoryImpl(
-            laporanRemoteDataSource = laporanRemoteDataSource
+            laporanRemoteDataSource = laporanRemoteDataSource,
+            laporanDao = com.uas.myapplication.data.local.database.AppDatabase.getInstance(appContext).laporanDao()
         )
     }
 

@@ -7,6 +7,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -27,6 +29,7 @@ import com.uas.myapplication.presentation.dashboard.components.DashboardHeader
 import com.uas.myapplication.presentation.dashboard.components.QuickActionSection
 import com.uas.myapplication.presentation.ui.LocalBahasa
 import com.uas.myapplication.presentation.ui.StringProvider
+import com.uas.myapplication.presentation.ui.components.OfflineBanner
 
 @Composable
 fun DashboardScreen(
@@ -35,6 +38,11 @@ fun DashboardScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val strings = StringProvider.get(LocalBahasa.current)
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.ambilLaporan(context)
+    }
 
     Scaffold(
         bottomBar = {
@@ -51,6 +59,12 @@ fun DashboardScreen(
                 .padding(paddingValues),
             contentPadding = PaddingValues(bottom = 16.dp)
         ) {
+            if (uiState.isOfflineMode) {
+                item {
+                    OfflineBanner()
+                }
+            }
+
             item {
                 DashboardHeader(
                     uiState = uiState
