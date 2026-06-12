@@ -7,31 +7,56 @@ import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.domain.repository.LaporanRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import com.uas.myapplication.data.local.entity.toEntity
+import com.uas.myapplication.data.local.entity.toDomain
 
 /**
  * Implementasi LaporanRepository.
  * Sekarang bergantung pada LaporanRemoteDataSource, bukan langsung ke Firestore & OkHttp SDK.
  */
 class LaporanRepositoryImpl(
-    private val laporanRemoteDataSource: LaporanRemoteDataSource
+    private val laporanRemoteDataSource: LaporanRemoteDataSource,
+    private val laporanDao: com.uas.myapplication.data.local.dao.LaporanDao
 ) : LaporanRepository {
 
     /**
      * Mengambil semua laporan secara realtime menggunakan Flow.
      * DataSource mengembalikan DTO, Repository memetakan ke Domain Model.
      */
-    override fun getAllLaporan(): Flow<List<Laporan>> {
-        return laporanRemoteDataSource.getAllLaporan().map { dtoList ->
-            dtoList.map { it.toDomain() }
+    /**
+     * Mengambil semua laporan secara realtime menggunakan Flow.
+     * DataSource mengembalikan DTO, Repository memetakan ke Domain Model.
+     */
+    override fun getAllLaporan(context: android.content.Context): Flow<List<Laporan>> {
+        return if (com.uas.myapplication.data.util.NetworkHelper.isConnected(context)) {
+            laporanRemoteDataSource.getAllLaporan().map { dtoList ->
+                val domainList = dtoList.map { it.toDomain() }
+                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                    laporanDao.clearAll()
+                    laporanDao.insertAll(domainList.map { it.toEntity() })
+                }
+                domainList
+            }
+        } else {
+            laporanDao.getAllLaporan().map { entityList ->
+                entityList.map { it.toDomain() }
+            }
         }
     }
 
     /**
      * Mengambil laporan milik pengguna tertentu secara realtime.
      */
-    override fun getLaporanByUser(uid: String): Flow<List<Laporan>> {
-        return laporanRemoteDataSource.getLaporanByUser(uid).map { dtoList ->
-            dtoList.map { it.toDomain() }
+    override fun getLaporanByUser(uid: String, context: android.content.Context): Flow<List<Laporan>> {
+        return if (com.uas.myapplication.data.util.NetworkHelper.isConnected(context)) {
+            laporanRemoteDataSource.getLaporanByUser(uid).map { dtoList ->
+                val domainList = dtoList.map { it.toDomain() }
+                domainList
+            }
+        } else {
+            laporanDao.getAllLaporan().map { entityList ->
+                entityList.map { it.toDomain() }.filter { it.idPelapor == uid || it.idPenemu == uid }
+            }
         }
     }
 
@@ -66,6 +91,12 @@ class LaporanRepositoryImpl(
 
             // 3. Simpan ke Firestore via DataSource
             laporanRemoteDataSource.createLaporan(laporanDenganFoto.toMap())
+            
+            // 4. Cache ke Room (tanpa nomor WA, mapping ke entity)
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                laporanDao.insertLaporan(laporanDenganFoto.toEntity())
+            }
+            
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)
@@ -85,6 +116,12 @@ class LaporanRepositoryImpl(
 
             val laporanUpdate = laporan.copy(fotoUrl = fotoUrl)
             laporanRemoteDataSource.updateLaporan(laporan.id, laporanUpdate.toMap())
+            
+            // Cache update
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                laporanDao.insertLaporan(laporanUpdate.toEntity())
+            }
+            
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)
@@ -97,6 +134,9 @@ class LaporanRepositoryImpl(
     override suspend fun hapusLaporan(id: String): Result<Unit> {
         return try {
             laporanRemoteDataSource.deleteLaporan(id)
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                laporanDao.deleteById(id)
+            }
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)

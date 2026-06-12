@@ -10,6 +10,8 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,6 +34,7 @@ import com.uas.myapplication.presentation.ui.components.getMahasiswaBottomNavIte
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import com.uas.myapplication.presentation.ui.LocalBahasa
 import com.uas.myapplication.presentation.ui.StringProvider
+import com.uas.myapplication.presentation.ui.components.OfflineBanner
 
 @Composable
 fun KatalogScreen(
@@ -40,6 +43,11 @@ fun KatalogScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val strings = StringProvider.get(LocalBahasa.current)
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.ambilSemuaLaporan(context)
+    }
 
     Scaffold(
         bottomBar = {
@@ -56,6 +64,12 @@ fun KatalogScreen(
                 .padding(paddingValues),
             contentPadding = PaddingValues(bottom = 16.dp)
         ) {
+            if (uiState.isOfflineMode) {
+                item {
+                    OfflineBanner()
+                }
+            }
+
             item {
                 Text(
                     text       = strings.catalogTitle,

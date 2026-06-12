@@ -19,7 +19,8 @@ data class DashboardAdminUiState(
     val jumlahSelesai: Int = 0,
 
     val isLoading: Boolean = true,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
+    val isOfflineMode: Boolean = false
 )
 
 class DashboardAdminViewModel(
@@ -29,13 +30,20 @@ class DashboardAdminViewModel(
     private val _uiState = MutableStateFlow(DashboardAdminUiState())
     val uiState: StateFlow<DashboardAdminUiState> = _uiState.asStateFlow()
 
-    init {
-        ambilLaporan()
-    }
+    private var networkJob: kotlinx.coroutines.Job? = null
+    private var laporanJob: kotlinx.coroutines.Job? = null
 
-    private fun ambilLaporan() {
-        viewModelScope.launch {
-            getAllLaporanUseCase().collect { daftarLaporan ->
+    fun ambilLaporan(context: android.content.Context) {
+        networkJob?.cancel()
+        networkJob = viewModelScope.launch {
+            com.uas.myapplication.data.util.NetworkMonitor(context).isConnected.collect { isConnected ->
+                _uiState.update { it.copy(isOfflineMode = !isConnected) }
+            }
+        }
+
+        laporanJob?.cancel()
+        laporanJob = viewModelScope.launch {
+            getAllLaporanUseCase(context).collect { daftarLaporan ->
 
                 _uiState.update {
                     it.copy(

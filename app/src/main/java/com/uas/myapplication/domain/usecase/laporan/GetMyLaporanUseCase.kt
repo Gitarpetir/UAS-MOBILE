@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 class GetMyLaporanUseCase(
     private val laporanRepository: LaporanRepository
 ) {
-    operator fun invoke(uid: String): Flow<List<Laporan>> {
-        return laporanRepository.getLaporanByUser(uid)
+    operator fun invoke(uid: String, context: android.content.Context): Flow<List<Laporan>> {
+        return laporanRepository.getLaporanByUser(uid, context)
     }
 }
