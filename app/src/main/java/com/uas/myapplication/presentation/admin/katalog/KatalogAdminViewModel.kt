@@ -1,4 +1,4 @@
-package com.uas.myapplication.presentation.admin
+package com.uas.myapplication.presentation.admin.katalog
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,7 +18,7 @@ enum class FilterAdmin {
     SELESAI
 }
 
-data class LaporanAdminUiState(
+data class KatalogAdminUiState(
     val semuaLaporan: List<Laporan> = emptyList(),
     val laporanFilter: List<Laporan> = emptyList(),
     val filterAktif: FilterAdmin = FilterAdmin.SEMUA,
@@ -28,12 +28,12 @@ data class LaporanAdminUiState(
     val isOfflineMode: Boolean = false
 )
 
-class LaporanAdminViewModel(
+class KatalogAdminViewModel(
     private val getAllLaporanUseCase: GetAllLaporanUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(LaporanAdminUiState())
-    val uiState: StateFlow<LaporanAdminUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(KatalogAdminUiState())
+    val uiState: StateFlow<KatalogAdminUiState> = _uiState.asStateFlow()
 
     private var networkJob: kotlinx.coroutines.Job? = null
     private var laporanJob: kotlinx.coroutines.Job? = null

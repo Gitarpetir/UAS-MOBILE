@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.uas.myapplication.presentation.admin.DashboardAdminUiState
+import com.uas.myapplication.presentation.admin.dashboard.DashboardAdminUiState
 import com.uas.myapplication.presentation.ui.components.StatistikCard
 import com.uas.myapplication.presentation.ui.theme.DangerRed
 import com.uas.myapplication.presentation.ui.theme.NeutralGrayLight
@@ -18,22 +18,18 @@ import com.uas.myapplication.presentation.ui.theme.PoppinsFontFamily
 import com.uas.myapplication.presentation.ui.theme.SuccessGreen
 
 @Composable
-fun HeaderDashboardAdmin(
+fun DashboardAdminHeader(
     uiState: DashboardAdminUiState
 ) {
     val strings = com.uas.myapplication.presentation.ui.StringProvider.get(com.uas.myapplication.presentation.ui.LocalBahasa.current)
 
+    val isDark = androidx.compose.foundation.isSystemInDarkTheme()
+    val backgroundColor = if (isDark) com.uas.myapplication.presentation.ui.theme.DarkBackground else MaterialTheme.colorScheme.primary
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        MaterialTheme.colorScheme.primary,
-                        MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                )
-            )
+            .background(color = backgroundColor)
             .padding(
                 horizontal = 16.dp,
                 vertical = 24.dp

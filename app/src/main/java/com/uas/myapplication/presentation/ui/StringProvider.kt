@@ -144,6 +144,7 @@ data class Strings(
     // Laporanku Card & Badges
     val statusBadgeLost: String,
     val statusBadgeFound: String,
+    val statusBadgeDiklaim: String,
     val statusBadgeCompleted: String,
     val yourItemFound: String,
     val btnEdit: String,
@@ -326,6 +327,7 @@ private val IndonesianStrings = Strings(
     // Laporanku Card & Badges
     statusBadgeLost = "Hilang",
     statusBadgeFound = "Ditemukan",
+    statusBadgeDiklaim = "Diklaim",
     statusBadgeCompleted = "Selesai",
     yourItemFound = "Barangmu Ditemukan",
     btnEdit = "Edit",
@@ -508,6 +510,7 @@ private val EnglishStrings = Strings(
     // Laporanku Card & Badges
     statusBadgeLost = "Lost",
     statusBadgeFound = "Found",
+    statusBadgeDiklaim = "Claimed",
     statusBadgeCompleted = "Completed",
     yourItemFound = "Your Item Found",
     btnEdit = "Edit",

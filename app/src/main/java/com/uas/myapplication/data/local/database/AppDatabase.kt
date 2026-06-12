@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.uas.myapplication.data.local.dao.LaporanDao
 import com.uas.myapplication.data.local.entity.LaporanEntity
 
-@Database(entities = [LaporanEntity::class], version = 1, exportSchema = false)
+@Database(entities = [LaporanEntity::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -24,7 +24,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "cariin_database"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }

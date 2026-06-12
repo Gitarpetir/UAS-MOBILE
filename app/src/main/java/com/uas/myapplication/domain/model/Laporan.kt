@@ -25,6 +25,10 @@ data class Laporan(
     val namaPenemu: String = "",
     val nimPenemu: String = "",
     val whatsappPenemu: String = "",
+    val idPemilik: String = "",
+    val namaPemilik: String = "",
+    val nimPemilik: String = "",
+    val whatsappPemilik: String = "",
     // Metadata
     val waktuDibuat: Long = 0L,
     val jenisLaporan: JenisLaporan = JenisLaporan.HILANG
@@ -38,5 +42,6 @@ data class Laporan(
 enum class StatusBarang {
     HILANG,     // Barang sedang dicari pemiliknya
     DITEMUKAN,  // Barang sudah ditemukan, menunggu diklaim
-    SELESAI     // Laporan sudah diselesaikan oleh admin
+    DIKLAIM,    // Barang diklaim oleh pengguna (Barang Ini Milik Saya)
+    SELESAI     // Barang sudah dikembalikan (Laporan ditutup oleh admin)
 }

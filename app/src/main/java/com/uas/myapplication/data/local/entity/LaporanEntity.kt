@@ -21,6 +21,8 @@ data class LaporanEntity(
     val jenisLaporan: JenisLaporan,
     val idPenemu: String,
     val namaPenemu: String,
+    val idPemilik: String = "",
+    val namaPemilik: String = "",
     val lastUpdated: Long = System.currentTimeMillis()
 )
 
@@ -38,7 +40,9 @@ fun LaporanEntity.toDomain(): com.uas.myapplication.domain.model.Laporan {
         waktuDibuat = this.waktuDibuat,
         jenisLaporan = this.jenisLaporan,
         idPenemu = this.idPenemu,
-        namaPenemu = this.namaPenemu
+        namaPenemu = this.namaPenemu,
+        idPemilik = this.idPemilik,
+        namaPemilik = this.namaPemilik
     )
 }
 
@@ -56,6 +60,8 @@ fun com.uas.myapplication.domain.model.Laporan.toEntity(): LaporanEntity {
         waktuDibuat = this.waktuDibuat,
         jenisLaporan = this.jenisLaporan,
         idPenemu = this.idPenemu,
-        namaPenemu = this.namaPenemu
+        namaPenemu = this.namaPenemu,
+        idPemilik = this.idPemilik,
+        namaPemilik = this.namaPemilik
     )
 }

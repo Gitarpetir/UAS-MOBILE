@@ -1,4 +1,4 @@
-package com.uas.myapplication.presentation.admin
+package com.uas.myapplication.presentation.admin.katalog
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -29,8 +29,8 @@ import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
 
 @Composable
-fun LaporanAdminScreen(
-    viewModel: LaporanAdminViewModel,
+fun KatalogAdminScreen(
+    viewModel: KatalogAdminViewModel,
     navController: NavController
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -186,11 +186,11 @@ fun LaporanAdminScreen(
 
 @Preview(
     showBackground = true,
-    name = "Laporan Admin Screen",
+    name = "Katalog Admin",
     heightDp = 900
 )
 @Composable
-fun PreviewLaporanAdminScreen() {
+fun PreviewKatalogAdminScreen() {
 
     MyApplicationTheme {
 

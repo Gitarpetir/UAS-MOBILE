@@ -39,7 +39,7 @@ fun LaporankuHeader(
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment     = Alignment.CenterVertically
 ) {
-    Text(strings.myReportsHeader, fontFamily = PoppinsFontFamily, fontWeight = FontWeight.Bold, fontSize = 22.sp, color = TextMain)
+    Text(strings.myReportsHeader, fontFamily = PoppinsFontFamily, fontWeight = FontWeight.Bold, fontSize = 22.sp, color = androidx.compose.material3.MaterialTheme.colorScheme.onBackground)
         Button(
             onClick = onTambahClick,
             shape = RoundedCornerShape(10.dp),

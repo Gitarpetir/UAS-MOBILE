@@ -1,4 +1,4 @@
-package com.uas.myapplication.presentation.admin
+package com.uas.myapplication.presentation.admin.dashboard
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,7 +25,7 @@ import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.components.BarangCard
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.components.StatistikCard
-import com.uas.myapplication.presentation.admin.components.HeaderDashboardAdmin
+import com.uas.myapplication.presentation.admin.components.DashboardAdminHeader
 import com.uas.myapplication.presentation.ui.theme.*
 
 @Composable
@@ -64,7 +64,7 @@ fun DashboardAdminScreen(
             }
 
             item {
-                HeaderDashboardAdmin(uiState)
+                DashboardAdminHeader(uiState)
             }
 
             item {
@@ -179,7 +179,7 @@ fun PreviewDashboardAdminScreen() {
                 .background(SlateWhite)
         ) {
 
-            HeaderDashboardAdmin(
+            DashboardAdminHeader(
                 uiState = dummyState
             )
 

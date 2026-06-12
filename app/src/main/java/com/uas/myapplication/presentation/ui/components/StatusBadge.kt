@@ -23,6 +23,7 @@ fun StatusBadge(status: StatusBarang) {
     val (label, bgColor, textColor) = when (status) {
         StatusBarang.HILANG    -> Triple(strings.statusBadgeLost,    DangerRedLight,    DangerRed)
         StatusBarang.DITEMUKAN -> Triple(strings.statusBadgeFound, SuccessGreenLight, SuccessGreen)
+        StatusBarang.DIKLAIM -> Triple(strings.statusBadgeDiklaim, WarningOrangeLight, WarningOrange)
         StatusBarang.SELESAI   -> Triple(strings.statusBadgeCompleted,   NeutralGrayLight,  NeutralGray)
     }
 

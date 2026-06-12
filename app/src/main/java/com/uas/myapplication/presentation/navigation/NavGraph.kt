@@ -1,5 +1,6 @@
 package com.uas.myapplication.presentation.navigation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
@@ -17,10 +18,10 @@ import androidx.navigation.navArgument
 import com.google.firebase.auth.FirebaseAuth
 import com.uas.myapplication.di.AppContainer
 import com.uas.myapplication.di.ViewModelFactory
-import com.uas.myapplication.presentation.admin.DashboardAdminScreen
-import com.uas.myapplication.presentation.admin.DashboardAdminViewModel
-import com.uas.myapplication.presentation.admin.LaporanAdminScreen
-import com.uas.myapplication.presentation.admin.LaporanAdminViewModel
+import com.uas.myapplication.presentation.admin.dashboard.DashboardAdminScreen
+import com.uas.myapplication.presentation.admin.dashboard.DashboardAdminViewModel
+import com.uas.myapplication.presentation.admin.katalog.KatalogAdminScreen
+import com.uas.myapplication.presentation.admin.katalog.KatalogAdminViewModel
 import com.uas.myapplication.presentation.auth.lengkapi_profil.LengkapiProfilScreen
 import com.uas.myapplication.presentation.auth.lengkapi_profil.LengkapiProfilViewModel
 import com.uas.myapplication.presentation.auth.login.LoginScreen
@@ -59,17 +60,50 @@ fun CariInNavGraph(
 ) {
     // Cek apakah pengguna sudah login
     val currentUser = FirebaseAuth.getInstance().currentUser
-    val startDestination = if (currentUser != null) {
-        Screen.Dashboard.route
-    } else {
-        Screen.Onboarding.route
-    }
+    val startDestination = "auth_check"
 
     NavHost(
         navController    = navController,
         startDestination = startDestination,
-        modifier         = modifier
+        modifier         = modifier,
+        enterTransition = { androidx.compose.animation.fadeIn(animationSpec = androidx.compose.animation.core.tween(300)) },
+        exitTransition = { androidx.compose.animation.fadeOut(animationSpec = androidx.compose.animation.core.tween(300)) },
+        popEnterTransition = { androidx.compose.animation.fadeIn(animationSpec = androidx.compose.animation.core.tween(300)) },
+        popExitTransition = { androidx.compose.animation.fadeOut(animationSpec = androidx.compose.animation.core.tween(300)) }
     ) {
+
+        // =============================================
+        // AUTH CHECK FLOW
+        // =============================================
+        
+        composable("auth_check") {
+            androidx.compose.runtime.LaunchedEffect(Unit) {
+                if (currentUser == null) {
+                    navController.navigate(Screen.Onboarding.route) {
+                        popUpTo(0)
+                    }
+                } else {
+                    val result = AppContainer.getUserProfileUseCase(currentUser.uid)
+                    val isAdmin = result.getOrNull()?.isAdmin() == true
+                    if (isAdmin) {
+                        navController.navigate(Screen.DashboardAdmin.route) {
+                            popUpTo(0)
+                        }
+                    } else {
+                        navController.navigate(Screen.Dashboard.route) {
+                            popUpTo(0)
+                        }
+                    }
+                }
+            }
+            
+            Box(
+                modifier = Modifier.fillMaxSize().background(androidx.compose.material3.MaterialTheme.colorScheme.background),
+                contentAlignment = Alignment.Center
+            ) {
+                androidx.compose.material3.CircularProgressIndicator(color = androidx.compose.material3.MaterialTheme.colorScheme.primary)
+            }
+        }
 
         // =============================================
         // AUTH FLOW
@@ -344,7 +378,28 @@ fun CariInNavGraph(
 
             ProfilScreen(
                 viewModel = viewModel,
-                navController = navController
+                navController = navController,
+                isAdmin = false
+            )
+        }
+
+        composable(Screen.ProfilAdmin.route) {
+
+            val viewModel: ProfilViewModel = viewModel(
+                factory = ViewModelFactory {
+                    ProfilViewModel(
+                        authRepository = AppContainer.authRepository,
+                        getUserProfileUseCase = AppContainer.getUserProfileUseCase,
+                        logOutUseCase = AppContainer.logOutUseCase,
+                        preferensiManager = AppContainer.preferensiManager
+                    )
+                }
+            )
+
+            ProfilScreen(
+                viewModel = viewModel,
+                navController = navController,
+                isAdmin = true
             )
         }
 
@@ -368,17 +423,17 @@ fun CariInNavGraph(
             )
         }
 
-        composable(Screen.LaporanAdmin.route) {
+        composable(Screen.KatalogAdmin.route) {
 
-            val viewModel: LaporanAdminViewModel = viewModel(
+            val viewModel: KatalogAdminViewModel = viewModel(
                 factory = ViewModelFactory {
-                    LaporanAdminViewModel(
+                    KatalogAdminViewModel(
                         getAllLaporanUseCase = AppContainer.getAllLaporanUseCase
                     )
                 }
             )
 
-            LaporanAdminScreen(
+            KatalogAdminScreen(
                 viewModel = viewModel,
                 navController = navController
             )

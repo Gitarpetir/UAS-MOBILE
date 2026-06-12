@@ -1,4 +1,4 @@
-package com.uas.myapplication.presentation.admin
+package com.uas.myapplication.presentation.admin.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

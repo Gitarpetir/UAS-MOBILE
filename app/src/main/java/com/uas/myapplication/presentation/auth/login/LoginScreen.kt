@@ -42,7 +42,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.uas.myapplication.R
 import com.uas.myapplication.presentation.ui.components.CariInTextField
-import com.uas.myapplication.presentation.auth.login.components.IlustrasiLoginBadge
+import com.uas.myapplication.presentation.auth.components.AuthDivider
+import com.uas.myapplication.presentation.auth.components.AuthHeader
+import com.uas.myapplication.presentation.auth.components.GoogleAuthButton
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
 
@@ -99,30 +101,9 @@ fun LoginScreen(
         ) {
             Spacer(modifier = Modifier.height(48.dp))
 
-            // Ilustrasi atas
-            IlustrasiLoginBadge()
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Judul
-            Text(
-                text       = strings.welcome,
-                fontFamily = PoppinsFontFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize   = 24.sp,
-                color      = MaterialTheme.colorScheme.onBackground
-            )
-
-            Spacer(modifier = Modifier.height(6.dp))
-
-            // Subtitle — sudah diganti dari "Lost & Found" ke "Cari.in"
-            Text(
-                text       = strings.loginSubtitle,
-                fontFamily = InterFontFamily,
-                fontWeight = FontWeight.Normal,
-                fontSize   = 14.sp,
-                color      = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign  = TextAlign.Center
+            AuthHeader(
+                title = strings.welcome,
+                subtitle = strings.loginSubtitle
             )
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -223,24 +204,13 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             // Divider "atau lanjutkan dengan"
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier          = Modifier.fillMaxWidth()
-            ) {
-                HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outline)
-                Text(
-                    text       = strings.orContinueWith,
-                    fontFamily = InterFontFamily,
-                    fontSize   = 12.sp,
-                    color      = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outline)
-            }
+            AuthDivider(label = strings.orContinueWith)
 
             Spacer(modifier = Modifier.height(20.dp))
 
             // Tombol Masuk dengan Google
-            OutlinedButton(
+            GoogleAuthButton(
+                label = strings.btnGoogleLogin,
                 onClick = {
                     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestIdToken(context.getString(R.string.default_web_client_id))
@@ -249,38 +219,8 @@ fun LoginScreen(
                     val googleSignInClient = GoogleSignIn.getClient(context, gso)
                     googleLauncher.launch(googleSignInClient.signInIntent)
                 },
-                enabled  = !uiState.isLoading,
-                modifier = Modifier.fillMaxWidth().height(52.dp),
-                shape    = RoundedCornerShape(16.dp),
-                colors   = ButtonDefaults.outlinedButtonColors(
-                    contentColor = MaterialTheme.colorScheme.onBackground
-                ),
-                border = BorderStroke(width = 1.5.dp, color = MaterialTheme.colorScheme.outline)
-            ) {
-                if (uiState.isLoading) {
-                    CircularProgressIndicator(
-                        modifier    = Modifier.size(22.dp),
-                        color       = MaterialTheme.colorScheme.primary,
-                        strokeWidth = 2.5.dp
-                    )
-                } else {
-                    Text(
-                        text       = "G",
-                        fontFamily = PoppinsFontFamily,
-                        fontWeight = FontWeight.Bold,
-                        fontSize   = 18.sp,
-                        color      = Color(0xFF4285F4)
-                    )
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Text(
-                        text       = strings.btnGoogleLogin,
-                        fontFamily = PoppinsFontFamily,
-                        fontWeight = FontWeight.Medium,
-                        fontSize   = 15.sp,
-                        color      = MaterialTheme.colorScheme.onBackground
-                    )
-                }
-            }
+                isLoading = uiState.isLoading
+            )
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -325,22 +265,9 @@ fun PreviewLoginScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(48.dp))
-            IlustrasiLoginBadge()
-            Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                "Selamat Datang",
-                fontFamily = PoppinsFontFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize   = 24.sp,
-                color      = TextMain
-            )
-            Spacer(modifier = Modifier.height(6.dp))
-            Text(
-                "Masuk untuk mengakses Cari.in",
-                fontFamily = InterFontFamily,
-                fontSize   = 14.sp,
-                color      = TextSub,
-                textAlign  = TextAlign.Center
+            AuthHeader(
+                title = "Selamat Datang",
+                subtitle = "Masuk untuk mengakses Cari.in"
             )
             Spacer(modifier = Modifier.height(32.dp))
             CariInTextField(
@@ -407,22 +334,9 @@ fun PreviewLoginScreenDark() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(48.dp))
-            IlustrasiLoginBadge()
-            Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                "Selamat Datang",
-                fontFamily = PoppinsFontFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize   = 24.sp,
-                color      = TextMainDark
-            )
-            Spacer(modifier = Modifier.height(6.dp))
-            Text(
-                "Masuk untuk mengakses Cari.in",
-                fontFamily = InterFontFamily,
-                fontSize   = 14.sp,
-                color      = TextSubDark,
-                textAlign  = TextAlign.Center
+            AuthHeader(
+                title = "Selamat Datang",
+                subtitle = "Masuk untuk mengakses Cari.in"
             )
             Spacer(modifier = Modifier.height(32.dp))
             CariInTextField(

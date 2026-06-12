@@ -66,17 +66,13 @@ fun DetailBarangScreen(
 
     if (uiState.showDialogMilik) {
         DialogKonfirmasiMilik(
-            onMengerti = viewModel::onBatalDialogMilik
+            onKonfirmasi = viewModel::onKonfirmasiMilik,
+            onBatal = viewModel::onBatalDialogMilik
         )
     }
 
     Scaffold(
-        bottomBar = {
-            CariInBottomNavBar(
-                navController = navController,
-                items = getMahasiswaBottomNavItems(strings)
-            )
-        }
+        // NavBar dihide pada DetailBarang
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -112,13 +108,19 @@ fun DetailBarangScreen(
                         )
                         Spacer(modifier = Modifier.height(12.dp))
 
+                        val pelaporTitle = if (laporan.jenisLaporan == com.uas.myapplication.domain.model.JenisLaporan.TEMUAN) {
+                            "Informasi Penemu (Pelapor)"
+                        } else {
+                            "Informasi Pelapor (Pemilik)"
+                        }
+                        
                         InformasiPenggunaCard(
-                            title = strings.reporterInfo,
+                            title = pelaporTitle,
                             nama = laporan.namaPelapor,
                             nim = laporan.nimPelapor
                         )
 
-                        if (laporan.idPenemu.isNotBlank()) {
+                        if (laporan.idPenemu.isNotBlank() && laporan.idPenemu != laporan.idPelapor) {
                             Spacer(modifier = Modifier.height(12.dp))
                             InformasiPenggunaCard(
                                 title = strings.finderInfo,
@@ -127,11 +129,21 @@ fun DetailBarangScreen(
                             )
                         }
 
+                        if (laporan.idPemilik.isNotBlank() && laporan.idPemilik != laporan.idPelapor) {
+                            Spacer(modifier = Modifier.height(12.dp))
+                            InformasiPenggunaCard(
+                                title = "Informasi Pemilik",
+                                nama = laporan.namaPemilik,
+                                nim = laporan.nimPemilik
+                            )
+                        }
+
                         Spacer(modifier = Modifier.height(20.dp))
                         
                         DetailActionSection(
                             laporan = laporan,
                             isAdmin = uiState.isAdmin,
+                            currentUserId = uiState.currentUser?.uid,
                             isLoading = uiState.isLoading,
                             onAksiClick = viewModel::onTombolAksiClick,
                             onSelesaikan = viewModel::onSelesaikanLaporan,

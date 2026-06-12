@@ -35,6 +35,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.uas.myapplication.R
+import com.uas.myapplication.presentation.auth.components.AuthDivider
+import com.uas.myapplication.presentation.auth.components.AuthHeader
+import com.uas.myapplication.presentation.auth.components.GoogleAuthButton
 import com.uas.myapplication.presentation.ui.components.CariInTextField
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
@@ -90,24 +93,11 @@ fun RegisterScreen(
         ) {
             Spacer(modifier = Modifier.height(52.dp))
 
-            Text(
-                text       = strings.registerTitle,
-                fontFamily = PoppinsFontFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize   = 28.sp,
-                color      = MaterialTheme.colorScheme.onBackground
+            AuthHeader(
+                title = strings.registerTitle,
+                subtitle = strings.registerSubtitle
             )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Text(
-                text       = strings.registerSubtitle,
-                fontFamily = InterFontFamily,
-                fontWeight = FontWeight.Normal,
-                fontSize   = 14.sp,
-                color      = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
+            
             Spacer(modifier = Modifier.height(32.dp))
 
             // 1. Nama Lengkap
@@ -285,20 +275,11 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Divider "atau"
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier          = Modifier.fillMaxWidth()
-            ) {
-                HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outline)
-                Text(strings.orText, fontFamily = InterFontFamily, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                HorizontalDivider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outline)
-            }
+            AuthDivider(label = strings.orText)
 
-            Spacer(modifier = Modifier.height(20.dp))
-
-            // Tombol Hubungkan dengan Google
-            OutlinedButton(
+            // Tombol Daftar dengan Google
+            GoogleAuthButton(
+                label = strings.btnGoogleConnect,
                 onClick = {
                     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestIdToken(context.getString(R.string.default_web_client_id))
@@ -307,38 +288,8 @@ fun RegisterScreen(
                     val googleSignInClient = GoogleSignIn.getClient(context, gso)
                     googleLauncher.launch(googleSignInClient.signInIntent)
                 },
-                enabled  = !uiState.isLoading,
-                modifier = Modifier.fillMaxWidth().height(52.dp),
-                shape    = RoundedCornerShape(16.dp),
-                colors   = ButtonDefaults.outlinedButtonColors(
-                    contentColor = MaterialTheme.colorScheme.onBackground
-                ),
-                border = BorderStroke(width = 1.5.dp, color = MaterialTheme.colorScheme.outline)
-            ) {
-                if (uiState.isLoading) {
-                    CircularProgressIndicator(
-                        modifier    = Modifier.size(22.dp),
-                        color       = MaterialTheme.colorScheme.primary,
-                        strokeWidth = 2.5.dp
-                    )
-                } else {
-                    Text(
-                        text       = "G",
-                        fontFamily = PoppinsFontFamily,
-                        fontWeight = FontWeight.Bold,
-                        fontSize   = 18.sp,
-                        color      = Color(0xFF4285F4)
-                    )
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Text(
-                        text       = strings.btnGoogleConnect,
-                        fontFamily = PoppinsFontFamily,
-                        fontWeight = FontWeight.Medium,
-                        fontSize   = 15.sp,
-                        color      = MaterialTheme.colorScheme.onBackground
-                    )
-                }
-            }
+                isLoading = uiState.isLoading
+            )
 
             Spacer(modifier = Modifier.height(24.dp))
 

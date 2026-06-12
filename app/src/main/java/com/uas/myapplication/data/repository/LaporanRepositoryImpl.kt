@@ -149,22 +149,29 @@ class LaporanRepositoryImpl(
     override suspend fun ubahStatus(
         id: String,
         status: StatusBarang,
-        idPenemu: String,
-        namaPenemu: String,
-        nimPenemu: String,
-        whatsappPenemu: String
+        idPenemu: String?,
+        namaPenemu: String?,
+        nimPenemu: String?,
+        whatsappPenemu: String?,
+        idPemilik: String?,
+        namaPemilik: String?,
+        nimPemilik: String?,
+        whatsappPemilik: String?
     ): Result<Unit> {
         return try {
-            laporanRemoteDataSource.updateLaporanFields(
-                id,
-                mapOf(
-                    "status_barang" to status.name,
-                    "id_penemu" to idPenemu,
-                    "nama_penemu" to namaPenemu,
-                    "nim_penemu" to nimPenemu,
-                    "whatsapp_penemu" to whatsappPenemu
-                )
-            )
+            val updateFields = mutableMapOf<String, Any>("status_barang" to status.name)
+            
+            if (idPenemu != null) updateFields["id_penemu"] = idPenemu
+            if (namaPenemu != null) updateFields["nama_penemu"] = namaPenemu
+            if (nimPenemu != null) updateFields["nim_penemu"] = nimPenemu
+            if (whatsappPenemu != null) updateFields["whatsapp_penemu"] = whatsappPenemu
+            
+            if (idPemilik != null) updateFields["id_pemilik"] = idPemilik
+            if (namaPemilik != null) updateFields["nama_pemilik"] = namaPemilik
+            if (nimPemilik != null) updateFields["nim_pemilik"] = nimPemilik
+            if (whatsappPemilik != null) updateFields["whatsapp_pemilik"] = whatsappPemilik
+
+            laporanRemoteDataSource.updateLaporanFields(id, updateFields)
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)

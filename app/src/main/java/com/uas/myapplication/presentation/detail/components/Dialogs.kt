@@ -93,12 +93,13 @@ fun DialogKonfirmasiTemukan(
 
 @Composable
 fun DialogKonfirmasiMilik(
-    onMengerti: () -> Unit
+    onKonfirmasi: () -> Unit,
+    onBatal     : () -> Unit
 ) {
     val strings = StringProvider.get(LocalBahasa.current)
 
     AlertDialog(
-        onDismissRequest = onMengerti,
+        onDismissRequest = onBatal,
         icon = {
             Icon(
                 imageVector        = Icons.Default.CheckCircle,
@@ -126,15 +127,29 @@ fun DialogKonfirmasiMilik(
         },
         confirmButton = {
             Button(
-                onClick = onMengerti,
+                onClick = onKonfirmasi,
                 colors  = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                 shape   = RoundedCornerShape(8.dp)
             ) {
                 Text(
-                    text       = strings.btnUnderstood,
+                    text       = strings.btnYesItsMine,
                     fontFamily = InterFontFamily,
                     fontWeight = FontWeight.SemiBold,
                     color      = MaterialTheme.colorScheme.onPrimary
+                )
+            }
+        },
+        dismissButton = {
+            OutlinedButton(
+                onClick = onBatal,
+                shape   = RoundedCornerShape(8.dp),
+                border  = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
+            ) {
+                Text(
+                    text       = strings.btnCancel,
+                    fontFamily = InterFontFamily,
+                    fontWeight = FontWeight.Medium,
+                    color      = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         },
@@ -162,10 +177,11 @@ private fun PreviewDialogTemukan() {
     name = "Dialog Konfirmasi Milik"
 )
 @Composable
-private fun PreviewDialogMilik() {
+fun PreviewDialogKonfirmasiMilik() {
     MyApplicationTheme {
         DialogKonfirmasiMilik(
-            onMengerti = {}
+            onKonfirmasi = {},
+            onBatal = {}
         )
     }
 }

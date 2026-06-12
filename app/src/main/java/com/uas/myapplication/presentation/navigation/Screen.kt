@@ -41,6 +41,7 @@
         // MAIN FLOW — ADMIN
         // =============================================
         data object DashboardAdmin  : Screen("dashboard_admin")
-        data object LaporanAdmin : Screen("laporan_admin")
+        data object KatalogAdmin    : Screen("katalog_admin")
+        data object ProfilAdmin     : Screen("profil_admin")
 
     }
