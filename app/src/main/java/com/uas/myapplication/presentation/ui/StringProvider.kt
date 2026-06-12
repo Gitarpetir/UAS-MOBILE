@@ -135,8 +135,6 @@ data class Strings(
     val btnThisIsMine: String,
     val btnFinishReport: String,
     val btnBack: String,
-    val reporterInfo: String,
-    val finderInfo: String,
     
     // Laporanku
     val tabMyItems: String,
@@ -319,8 +317,6 @@ private val IndonesianStrings = Strings(
     btnThisIsMine = "Barang Ini Milik Saya",
     btnFinishReport = "Selesaikan Laporan",
     btnBack = "Kembali",
-    reporterInfo = "Informasi Pelapor",
-    finderInfo = "Informasi Penemu",
 
     // Laporanku
     tabMyItems = "Barangku",
@@ -503,8 +499,6 @@ private val EnglishStrings = Strings(
     btnThisIsMine = "This Item Is Mine",
     btnFinishReport = "Finish Report",
     btnBack = "Back",
-    reporterInfo = "Reporter Information",
-    finderInfo = "Finder Information",
 
     // Laporanku
     tabMyItems = "My Items",

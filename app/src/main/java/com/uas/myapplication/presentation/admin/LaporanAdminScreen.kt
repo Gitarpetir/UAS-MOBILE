@@ -27,7 +27,6 @@ import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import androidx.compose.ui.tooling.preview.Preview
 import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
-import com.uas.myapplication.presentation.ui.components.adminBottomNavItems
 
 @Composable
 fun LaporanAdminScreen(

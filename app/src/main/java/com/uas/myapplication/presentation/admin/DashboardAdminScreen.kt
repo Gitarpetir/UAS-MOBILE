@@ -25,7 +25,6 @@ import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.components.BarangCard
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.components.StatistikCard
-import com.uas.myapplication.presentation.ui.components.adminBottomNavItems
 import com.uas.myapplication.presentation.admin.components.HeaderDashboardAdmin
 import com.uas.myapplication.presentation.ui.theme.*
 
