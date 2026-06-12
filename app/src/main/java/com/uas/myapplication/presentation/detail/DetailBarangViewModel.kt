@@ -6,8 +6,9 @@ import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.domain.model.User
 import com.uas.myapplication.domain.repository.AuthRepository
-import com.uas.myapplication.domain.repository.LaporanRepository
-import com.uas.myapplication.domain.repository.UserRepository
+import com.uas.myapplication.domain.usecase.laporan.GetLaporanByIdUseCase
+import com.uas.myapplication.domain.usecase.laporan.KonfirmasiTemuanUseCase
+import com.uas.myapplication.domain.usecase.user.GetUserProfileUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,9 +30,10 @@ data class DetailBarangUiState(
 )
 
 class DetailBarangViewModel(
-    private val laporanRepository: LaporanRepository,
-    private val userRepository   : UserRepository,
-    private val authRepository   : AuthRepository
+    private val getLaporanByIdUseCase: GetLaporanByIdUseCase,
+    private val getUserProfileUseCase: GetUserProfileUseCase,
+    private val konfirmasiTemuanUseCase: KonfirmasiTemuanUseCase,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DetailBarangUiState())
@@ -42,7 +44,7 @@ class DetailBarangViewModel(
             _uiState.update { it.copy(isLoading = true) }
 
             // Ambil detail laporan
-            val laporanResult = laporanRepository.getLaporanById(laporanId)
+            val laporanResult = getLaporanByIdUseCase(laporanId)
             laporanResult.fold(
                 onSuccess = { laporan ->
                     _uiState.update { it.copy(laporan = laporan) }
@@ -58,7 +60,7 @@ class DetailBarangViewModel(
             // Ambil data pengguna yang sedang login
             val uid = authRepository.getCurrentUserId()
             if (uid != null) {
-                val userResult = userRepository.getUserById(uid)
+                val userResult = getUserProfileUseCase(uid)
                 userResult.getOrNull()?.let { user ->
                     _uiState.update {
                         it.copy(
@@ -111,10 +113,10 @@ class DetailBarangViewModel(
             }
 
             val user =
-                userRepository.getUserById(currentUid)
+                getUserProfileUseCase(currentUid)
                     .getOrNull()
 
-            laporanRepository.ubahStatus(
+            konfirmasiTemuanUseCase(
                 id = laporanId,
                 status = StatusBarang.DITEMUKAN,
                 idPenemu = currentUid,
@@ -137,7 +139,7 @@ class DetailBarangViewModel(
         val laporanId = _uiState.value.laporan?.id ?: return
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            laporanRepository.ubahStatus(laporanId, StatusBarang.SELESAI)
+            konfirmasiTemuanUseCase(laporanId, StatusBarang.SELESAI)
             _uiState.update { it.copy(isLoading = false, aksiSuccess = true) }
         }
     }

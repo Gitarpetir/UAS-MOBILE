@@ -5,7 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.uas.myapplication.data.local.PreferensiManager
 import com.uas.myapplication.domain.model.User
 import com.uas.myapplication.domain.repository.AuthRepository
-import com.uas.myapplication.domain.repository.UserRepository
+import com.uas.myapplication.domain.usecase.auth.LogOutUseCase
+import com.uas.myapplication.domain.usecase.user.GetUserProfileUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,8 +24,9 @@ data class ProfilUiState(
 )
 
 class ProfilViewModel(
-    private val authRepository   : AuthRepository,
-    private val userRepository   : UserRepository,
+    private val authRepository: AuthRepository,
+    private val getUserProfileUseCase: GetUserProfileUseCase,
+    private val logOutUseCase: LogOutUseCase,
     private val preferensiManager: PreferensiManager
 ) : ViewModel() {
 
@@ -39,7 +41,7 @@ class ProfilViewModel(
     private fun muatProfil() {
         val uid = authRepository.getCurrentUserId() ?: return
         viewModelScope.launch {
-            val result = userRepository.getUserById(uid)
+            val result = getUserProfileUseCase(uid)
             result.fold(
                 onSuccess = { user ->
                     _uiState.update { it.copy(user = user, isLoading = false) }
@@ -93,7 +95,7 @@ class ProfilViewModel(
 
     fun onLogout() {
         viewModelScope.launch {
-            authRepository.logout()
+            logOutUseCase()
             _uiState.update { it.copy(logoutSuccess = true) }
         }
     }

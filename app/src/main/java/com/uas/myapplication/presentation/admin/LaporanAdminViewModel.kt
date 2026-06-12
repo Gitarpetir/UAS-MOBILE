@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
-import com.uas.myapplication.domain.repository.LaporanRepository
+import com.uas.myapplication.domain.usecase.laporan.GetAllLaporanUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,7 +28,7 @@ data class LaporanAdminUiState(
 )
 
 class LaporanAdminViewModel(
-    private val laporanRepository: LaporanRepository
+    private val getAllLaporanUseCase: GetAllLaporanUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LaporanAdminUiState())
@@ -40,7 +40,7 @@ class LaporanAdminViewModel(
 
     private fun ambilSemuaLaporan() {
         viewModelScope.launch {
-            laporanRepository.getAllLaporan().collect { daftarLaporan ->
+            getAllLaporanUseCase().collect { daftarLaporan ->
 
                 _uiState.update {
                     it.copy(

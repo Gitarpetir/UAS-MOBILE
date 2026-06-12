@@ -6,8 +6,10 @@ import com.uas.myapplication.domain.model.JenisLaporan
 import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.domain.repository.AuthRepository
-import com.uas.myapplication.domain.repository.LaporanRepository
-import com.uas.myapplication.domain.repository.UserRepository
+import com.uas.myapplication.domain.usecase.laporan.BuatLaporanUseCase
+import com.uas.myapplication.domain.usecase.laporan.EditLaporanUseCase
+import com.uas.myapplication.domain.usecase.laporan.GetLaporanByIdUseCase
+import com.uas.myapplication.domain.usecase.user.GetUserProfileUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,9 +36,11 @@ data class BuatLaporanUiState(
 )
 
 class BuatLaporanViewModel(
-    private val laporanRepository: LaporanRepository,
-    private val authRepository   : AuthRepository,
-    private val userRepository   : UserRepository
+    private val buatLaporanUseCase: BuatLaporanUseCase,
+    private val editLaporanUseCase: EditLaporanUseCase,
+    private val getLaporanByIdUseCase: GetLaporanByIdUseCase,
+    private val getUserProfileUseCase: GetUserProfileUseCase,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(BuatLaporanUiState())
@@ -45,7 +49,7 @@ class BuatLaporanViewModel(
     fun inisialisasiUntukEdit(laporanId: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            val result = laporanRepository.getLaporanById(laporanId)
+            val result = getLaporanByIdUseCase(laporanId)
             result.fold(
                 onSuccess = { laporan ->
                     _uiState.update {
@@ -121,7 +125,7 @@ class BuatLaporanViewModel(
                 return@launch
             }
 
-            val userResult = userRepository.getUserById(uid)
+            val userResult = getUserProfileUseCase(uid)
             val user = userResult.getOrNull() ?: run {
                 _uiState.update { it.copy(isLoading = false, errorMessage = "Data pengguna tidak ditemukan") }
                 return@launch
@@ -148,9 +152,9 @@ class BuatLaporanViewModel(
             )
 
             val result = if (state.isEditMode) {
-                laporanRepository.editLaporan(laporan = laporan, fotoUri = state.fotoUri.ifEmpty { null })
+                editLaporanUseCase(laporan = laporan, fotoUri = state.fotoUri.ifEmpty { null })
             } else {
-                laporanRepository.buatLaporan(laporan = laporan, fotoUri = state.fotoUri.ifEmpty { null })
+                buatLaporanUseCase(laporan = laporan, fotoUri = state.fotoUri.ifEmpty { null })
             }
 
             result.fold(

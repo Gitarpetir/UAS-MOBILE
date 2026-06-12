@@ -2,15 +2,15 @@ package com.uas.myapplication.presentation.auth.lengkapi_profil
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.uas.myapplication.domain.model.User
 import com.uas.myapplication.domain.repository.AuthRepository
-import com.uas.myapplication.domain.repository.UserRepository
+import com.uas.myapplication.domain.usecase.user.UpdateUserProfileUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import com.google.firebase.auth.FirebaseAuth
-import com.uas.myapplication.domain.model.User
 
 // =============================================
 // STATE
@@ -26,7 +26,7 @@ data class LengkapiProfilUiState(
 
 class LengkapiProfilViewModel(
     private val authRepository: AuthRepository,
-    private val userRepository: UserRepository
+    private val updateUserProfileUseCase: UpdateUserProfileUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LengkapiProfilUiState())
@@ -65,7 +65,8 @@ class LengkapiProfilViewModel(
             return
         }
 
-        viewModelScope.launch {_uiState.update { it.copy(isLoading = true, errorMessage = null) }
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
             val firebaseUser = FirebaseAuth.getInstance().currentUser
 
@@ -78,7 +79,7 @@ class LengkapiProfilViewModel(
                 peran = "mahasiswa"
             )
 
-            val result = userRepository.saveUser(user)
+            val result = updateUserProfileUseCase.saveNewUser(user)
 
             result.fold(
                 onSuccess = {
