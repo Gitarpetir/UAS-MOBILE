@@ -33,6 +33,7 @@ import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.presentation.laporanku.components.EmptyStateLaporanku
 import com.uas.myapplication.presentation.laporanku.components.JumlahLaporanText
 import com.uas.myapplication.presentation.laporanku.components.LaporankuHeader
+import com.uas.myapplication.presentation.laporanku.components.TabLaporanku
 import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.components.getMahasiswaBottomNavItems

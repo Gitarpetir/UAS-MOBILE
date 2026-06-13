@@ -21,7 +21,7 @@ import androidx.navigation.NavController
 import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.components.BarangCard
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
-import com.uas.myapplication.presentation.admin.components.FilterChipAdminRow
+import com.uas.myapplication.presentation.admin.katalog.components.FilterChipAdminRow
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import androidx.compose.ui.tooling.preview.Preview

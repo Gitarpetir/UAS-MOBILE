@@ -42,6 +42,7 @@ fun DashboardScreen(
 
     LaunchedEffect(Unit) {
         viewModel.ambilLaporan(context)
+        viewModel.ambilCuaca()
     }
 
     Scaffold(
@@ -68,6 +69,15 @@ fun DashboardScreen(
             item {
                 DashboardHeader(
                     uiState = uiState
+                )
+            }
+
+            item {
+                com.uas.myapplication.presentation.dashboard.components.WeatherWidget(
+                    weather = uiState.weather,
+                    isLoading = uiState.isWeatherLoading,
+                    errorMessage = uiState.weatherError,
+                    onRetry = { viewModel.ambilCuaca() }
                 )
             }
 

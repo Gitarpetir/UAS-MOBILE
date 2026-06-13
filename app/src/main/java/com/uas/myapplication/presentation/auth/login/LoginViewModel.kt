@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import com.uas.myapplication.presentation.util.parseFirebaseError
 
 // =============================================
 // STATE — semua kondisi UI Login
@@ -58,7 +59,7 @@ class LoginViewModel(
                     _uiState.update { it.copy(isLoading = false, loginSuccess = true, isAdmin = user.isAdmin()) }
                 },
                 onFailure = { error ->
-                    _uiState.update { it.copy(isLoading = false, errorMessage = pesanErrorFirebase(error.message)) }
+                    _uiState.update { it.copy(isLoading = false, errorMessage = parseFirebaseError(error.message)) }
                 }
             )
         }
@@ -93,7 +94,7 @@ class LoginViewModel(
                     }
                 },
                 onFailure = { error ->
-                    _uiState.update { it.copy(isLoading = false, errorMessage = pesanErrorFirebase(error.message)) }
+                    _uiState.update { it.copy(isLoading = false, errorMessage = parseFirebaseError(error.message)) }
                 }
             )
         }
@@ -106,18 +107,6 @@ class LoginViewModel(
     fun resetNeedsCompleteProfile() {
         _uiState.update {
             it.copy(needsCompleteProfile = false)
-        }
-    }
-
-    private fun pesanErrorFirebase(message: String?): String {
-        return when {
-            message == null                     -> "Terjadi kesalahan, coba lagi"
-            message.contains("password")        -> "Password salah, coba lagi"
-            message.contains("no user record")  -> "Email tidak terdaftar"
-            message.contains("badly formatted") -> "Format email tidak valid"
-            message.contains("network")         -> "Tidak ada koneksi internet"
-            message.contains("blocked")         -> "Terlalu banyak percobaan, coba lagi nanti"
-            else                                -> "Login gagal, periksa email dan password"
         }
     }
 }

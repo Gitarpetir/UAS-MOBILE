@@ -23,4 +23,8 @@ interface AuthRepository {
     suspend fun logout()
 
     fun getCurrentUserId(): String?
+
+    fun getCurrentUserEmail(): String?
+
+    fun getCurrentUserDisplayName(): String?
 }

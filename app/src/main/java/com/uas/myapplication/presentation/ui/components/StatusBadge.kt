@@ -57,6 +57,7 @@ fun PreviewStatusBadge() {
         ) {
             StatusBadge(status = StatusBarang.HILANG)
             StatusBadge(status = StatusBarang.DITEMUKAN)
+            StatusBadge(status = StatusBarang.DIKLAIM)
             StatusBadge(status = StatusBarang.SELESAI)
         }
     }

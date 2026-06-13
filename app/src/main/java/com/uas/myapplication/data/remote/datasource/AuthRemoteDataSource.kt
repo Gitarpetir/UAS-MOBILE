@@ -37,4 +37,8 @@ interface AuthRemoteDataSource {
      * @return UID atau null jika tidak ada session aktif.
      */
     fun getCurrentUserId(): String?
+
+    fun getCurrentUserEmail(): String?
+
+    fun getCurrentUserDisplayName(): String?
 }

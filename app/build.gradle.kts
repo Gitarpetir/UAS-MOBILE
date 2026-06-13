@@ -41,6 +41,11 @@ android {
             "CLOUDINARY_UPLOAD_PRESET",
             "\"${localProperties["CLOUDINARY_UPLOAD_PRESET"]}\""
         )
+        buildConfigField(
+            "String",
+            "OPENWEATHERMAP_API_KEY",
+            "\"${localProperties["OPENWEATHERMAP_API_KEY"] ?: ""}\""
+        )
     }
 
     buildTypes {

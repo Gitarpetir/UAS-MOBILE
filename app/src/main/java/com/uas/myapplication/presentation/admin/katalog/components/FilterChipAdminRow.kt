@@ -1,4 +1,4 @@
-package com.uas.myapplication.presentation.admin.components
+package com.uas.myapplication.presentation.admin.katalog.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

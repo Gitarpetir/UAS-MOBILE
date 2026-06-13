@@ -15,7 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.google.firebase.auth.FirebaseAuth
+
 import com.uas.myapplication.di.AppContainer
 import com.uas.myapplication.di.ViewModelFactory
 import com.uas.myapplication.presentation.admin.dashboard.DashboardAdminScreen
@@ -59,7 +59,7 @@ fun CariInNavGraph(
     navController: NavHostController = rememberNavController()
 ) {
     // Cek apakah pengguna sudah login
-    val currentUser = FirebaseAuth.getInstance().currentUser
+    val currentUserId = AppContainer.authRepository.getCurrentUserId()
     val startDestination = "auth_check"
 
     NavHost(
@@ -78,12 +78,12 @@ fun CariInNavGraph(
         
         composable("auth_check") {
             androidx.compose.runtime.LaunchedEffect(Unit) {
-                if (currentUser == null) {
+                if (currentUserId == null) {
                     navController.navigate(Screen.Onboarding.route) {
                         popUpTo(0)
                     }
                 } else {
-                    val result = AppContainer.getUserProfileUseCase(currentUser.uid)
+                    val result = AppContainer.getUserProfileUseCase(currentUserId)
                     val isAdmin = result.getOrNull()?.isAdmin() == true
                     if (isAdmin) {
                         navController.navigate(Screen.DashboardAdmin.route) {
@@ -106,337 +106,11 @@ fun CariInNavGraph(
         }
 
         // =============================================
-        // AUTH FLOW
+        // MODULAR NAVIGATION GRAPHS
         // =============================================
-
-        composable(Screen.Onboarding.route) {
-            OnboardingScreen(
-                onSelesai = {
-                    navController.navigate(Screen.Login.route) {
-                        popUpTo(Screen.Onboarding.route) { inclusive = true }
-                    }
-                }
-            )
-        }
-
-        composable(Screen.Login.route) {
-
-            val viewModel: LoginViewModel = viewModel(
-                factory = ViewModelFactory {
-                    LoginViewModel(
-                        loginUseCase = AppContainer.loginUseCase,
-                        loginWithGoogleUseCase = AppContainer.loginWithGoogleUseCase
-                    )
-                }
-            )
-
-            LoginScreen(
-                viewModel = viewModel,
-
-                onLoginSuccess = { isAdmin ->
-
-                    val target =
-                        if (isAdmin)
-                            Screen.DashboardAdmin.route
-                        else
-                            Screen.Dashboard.route
-
-                    navController.navigate(target) {
-                        popUpTo(Screen.Login.route) {
-                            inclusive = true
-                        }
-                    }
-                },
-
-                onDaftarClick = {
-                    navController.navigate(Screen.Register.route)
-                },
-
-                onLengkapiProfil = {
-                    navController.navigate(Screen.LengkapiProfil.route)
-                },
-            )
-        }
-
-        composable(Screen.Register.route) {
-
-            val viewModel: RegisterViewModel = viewModel(
-                factory = ViewModelFactory {
-                    RegisterViewModel(
-                        registerUseCase = AppContainer.registerUseCase,
-                        loginWithGoogleUseCase = AppContainer.loginWithGoogleUseCase
-                    )
-                }
-            )
-
-            RegisterScreen(
-                viewModel = viewModel,
-
-                onRegisterSuccess = {
-                    navController.navigate(Screen.Dashboard.route) {
-                        popUpTo(Screen.Register.route) {
-                            inclusive = true
-                        }
-                    }
-                },
-
-                onGoogleSuccess = {
-                    navController.navigate(Screen.LengkapiProfil.route)
-                },
-
-                onSudahPunyaAkun = {
-                    navController.popBackStack()
-                }
-            )
-        }
-
-        composable(Screen.LengkapiProfil.route) {
-
-            val viewModel: LengkapiProfilViewModel = viewModel(
-                factory = ViewModelFactory {
-                    LengkapiProfilViewModel(
-                        authRepository = AppContainer.authRepository,
-                        updateUserProfileUseCase = AppContainer.updateUserProfileUseCase
-                    )
-                }
-            )
-
-            LengkapiProfilScreen(
-                viewModel = viewModel,
-                onSimpanSuccess = {
-                    navController.navigate(Screen.Dashboard.route) {
-                        popUpTo(Screen.LengkapiProfil.route) {
-                            inclusive = true
-                        }
-                    }
-                }
-            )
-        }
-
-        // =============================================
-        // MAIN FLOW — MAHASISWA
-        // =============================================
-
-        composable(Screen.Dashboard.route) {
-
-            val viewModel: DashboardViewModel = viewModel(
-                factory = ViewModelFactory {
-                    DashboardViewModel(
-                        getAllLaporanUseCase = AppContainer.getAllLaporanUseCase
-                    )
-                }
-            )
-
-            DashboardScreen(
-                viewModel = viewModel,
-                navController = navController
-            )
-        }
-
-        composable(Screen.Katalog.route) {
-
-            val viewModel: KatalogViewModel = viewModel(
-                factory = ViewModelFactory {
-                    KatalogViewModel(
-                        getAllLaporanUseCase = AppContainer.getAllLaporanUseCase
-                    )
-                }
-            )
-
-            KatalogScreen(
-                viewModel = viewModel,
-                navController = navController
-            )
-        }
-
-        // Detail Barang — menerima argumen laporanId
-        composable(
-            route = Screen.DetailBarang.route,
-            arguments = listOf(
-                navArgument("laporanId") {
-                    type = NavType.StringType
-                }
-            )
-        ) { backStackEntry ->
-
-            val laporanId =
-                backStackEntry.arguments?.getString("laporanId") ?: ""
-
-            val viewModel: DetailBarangViewModel = viewModel(
-                factory = ViewModelFactory {
-                    DetailBarangViewModel(
-                        getLaporanByIdUseCase = AppContainer.getLaporanByIdUseCase,
-                        getUserProfileUseCase = AppContainer.getUserProfileUseCase,
-                        konfirmasiTemuanUseCase = AppContainer.konfirmasiTemuanUseCase,
-                        authRepository = AppContainer.authRepository
-                    )
-                }
-            )
-
-            DetailBarangScreen(
-                viewModel = viewModel,
-                laporanId = laporanId,
-                navController = navController
-            )
-        }
-
-        composable(
-            route = Screen.BuatLaporan.route,
-            arguments = listOf(
-                navArgument("status") {
-                    type = NavType.StringType
-                    defaultValue = "hilang"
-                }
-            )
-        ) { backStackEntry ->
-
-            val statusAwal =
-                backStackEntry.arguments?.getString("status")
-                    ?: "hilang"
-
-            val viewModel: BuatLaporanViewModel = viewModel(
-                factory = ViewModelFactory {
-                    BuatLaporanViewModel(
-                        buatLaporanUseCase = AppContainer.buatLaporanUseCase,
-                        editLaporanUseCase = AppContainer.editLaporanUseCase,
-                        getLaporanByIdUseCase = AppContainer.getLaporanByIdUseCase,
-                        getUserProfileUseCase = AppContainer.getUserProfileUseCase,
-                        authRepository = AppContainer.authRepository
-                    )
-                }
-            )
-
-            BuatLaporanScreen(
-                viewModel = viewModel,
-                statusAwal = statusAwal,
-                navController = navController
-            )
-        }
-
-        // Edit Laporan — menerima argumen laporanId
-        composable(
-            route = Screen.EditLaporan.route,
-            arguments = listOf(
-                navArgument("laporanId") {
-                    type = NavType.StringType
-                }
-            )
-        ) { backStackEntry ->
-
-            val laporanId =
-                backStackEntry.arguments?.getString("laporanId") ?: ""
-
-            val viewModel: BuatLaporanViewModel = viewModel(
-                factory = ViewModelFactory {
-                    BuatLaporanViewModel(
-                        buatLaporanUseCase = AppContainer.buatLaporanUseCase,
-                        editLaporanUseCase = AppContainer.editLaporanUseCase,
-                        getLaporanByIdUseCase = AppContainer.getLaporanByIdUseCase,
-                        getUserProfileUseCase = AppContainer.getUserProfileUseCase,
-                        authRepository = AppContainer.authRepository
-                    )
-                }
-            )
-
-            BuatLaporanScreen(
-                viewModel = viewModel,
-                laporanId = laporanId,
-                navController = navController
-            )
-        }
-
-        composable(Screen.Laporanku.route) {
-
-            val viewModel: LaporankuViewModel = viewModel(
-                factory = ViewModelFactory {
-                    LaporankuViewModel(
-                        getAllLaporanUseCase = AppContainer.getAllLaporanUseCase,
-                        hapusLaporanUseCase = AppContainer.hapusLaporanUseCase,
-                        authRepository = AppContainer.authRepository
-                    )
-                }
-            )
-
-            LaporankuScreen(
-                viewModel = viewModel,
-                navController = navController
-            )
-        }
-
-        composable(Screen.Profil.route) {
-
-            val viewModel: ProfilViewModel = viewModel(
-                factory = ViewModelFactory {
-                    ProfilViewModel(
-                        authRepository = AppContainer.authRepository,
-                        getUserProfileUseCase = AppContainer.getUserProfileUseCase,
-                        logOutUseCase = AppContainer.logOutUseCase,
-                        preferensiManager = AppContainer.preferensiManager
-                    )
-                }
-            )
-
-            ProfilScreen(
-                viewModel = viewModel,
-                navController = navController,
-                isAdmin = false
-            )
-        }
-
-        composable(Screen.ProfilAdmin.route) {
-
-            val viewModel: ProfilViewModel = viewModel(
-                factory = ViewModelFactory {
-                    ProfilViewModel(
-                        authRepository = AppContainer.authRepository,
-                        getUserProfileUseCase = AppContainer.getUserProfileUseCase,
-                        logOutUseCase = AppContainer.logOutUseCase,
-                        preferensiManager = AppContainer.preferensiManager
-                    )
-                }
-            )
-
-            ProfilScreen(
-                viewModel = viewModel,
-                navController = navController,
-                isAdmin = true
-            )
-        }
-
-        // =============================================
-        // MAIN FLOW — ADMIN
-        // =============================================
-
-        composable(Screen.DashboardAdmin.route) {
-
-            val viewModel: DashboardAdminViewModel = viewModel(
-                factory = ViewModelFactory {
-                    DashboardAdminViewModel(
-                        getAllLaporanUseCase = AppContainer.getAllLaporanUseCase
-                    )
-                }
-            )
-
-            DashboardAdminScreen(
-                viewModel = viewModel,
-                navController = navController
-            )
-        }
-
-        composable(Screen.KatalogAdmin.route) {
-
-            val viewModel: KatalogAdminViewModel = viewModel(
-                factory = ViewModelFactory {
-                    KatalogAdminViewModel(
-                        getAllLaporanUseCase = AppContainer.getAllLaporanUseCase
-                    )
-                }
-            )
-
-            KatalogAdminScreen(
-                viewModel = viewModel,
-                navController = navController
-            )
-        }
+        
+        authNavGraph(navController)
+        mainNavGraph(navController)
+        adminNavGraph(navController)
     }
 }

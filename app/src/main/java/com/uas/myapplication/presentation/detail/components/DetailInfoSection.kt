@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
-import com.uas.myapplication.presentation.ui.components.common.InfoItem
+import com.uas.myapplication.presentation.ui.components.InfoItem
 import com.uas.myapplication.presentation.ui.components.StatusBadge
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.LocalBahasa

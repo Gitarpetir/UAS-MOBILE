@@ -25,7 +25,7 @@ import com.uas.myapplication.presentation.navigation.Screen
 import com.uas.myapplication.presentation.ui.components.BarangCard
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.ui.components.StatistikCard
-import com.uas.myapplication.presentation.admin.components.DashboardAdminHeader
+import com.uas.myapplication.presentation.admin.dashboard.components.DashboardAdminHeader
 import com.uas.myapplication.presentation.ui.theme.*
 
 @Composable
@@ -39,6 +39,7 @@ fun DashboardAdminScreen(
 
     androidx.compose.runtime.LaunchedEffect(Unit) {
         viewModel.ambilLaporan(context)
+        viewModel.ambilCuaca()
     }
 
     Scaffold(
@@ -65,6 +66,15 @@ fun DashboardAdminScreen(
 
             item {
                 DashboardAdminHeader(uiState)
+            }
+
+            item {
+                com.uas.myapplication.presentation.dashboard.components.WeatherWidget(
+                    weather = uiState.weather,
+                    isLoading = uiState.isWeatherLoading,
+                    errorMessage = uiState.weatherError,
+                    onRetry = { viewModel.ambilCuaca() }
+                )
             }
 
             item {
