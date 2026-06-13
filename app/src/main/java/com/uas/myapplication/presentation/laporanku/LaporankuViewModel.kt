@@ -54,7 +54,7 @@ class LaporankuViewModel(
         laporanJob?.cancel()
         laporanJob = viewModelScope.launch {
 
-            getAllLaporanUseCase(context)
+            getAllLaporanUseCase()
                 .collect { daftarLaporan ->
 
                     _uiState.update {

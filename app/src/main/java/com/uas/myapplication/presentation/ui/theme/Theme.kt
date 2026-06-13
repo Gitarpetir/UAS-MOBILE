@@ -119,17 +119,6 @@ fun MyApplicationTheme(
     val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
     val cariInColors = if (darkTheme) DarkCariInColors else LightCariInColors
 
-    // Mengatur warna status bar agar sesuai dengan tema
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.background.toArgb()
-            WindowCompat.getInsetsController(window, view)
-                .isAppearanceLightStatusBars = !darkTheme
-        }
-    }
-
     CompositionLocalProvider(
         LocalCariInColors provides cariInColors
     ) {

@@ -13,13 +13,13 @@ interface LaporanRepository {
      * Mengambil semua laporan secara realtime (Flow) atau dari cache jika offline.
      * Digunakan di Halaman Katalog dan Dashboard.
      */
-    fun getAllLaporan(context: android.content.Context): Flow<List<Laporan>>
+    fun getAllLaporan(): Flow<List<Laporan>>
 
     /**
      * Mengambil laporan milik pengguna tertentu secara realtime atau dari cache.
      * Digunakan di Halaman Laporanku.
      */
-    fun getLaporanByUser(uid: String, context: android.content.Context): Flow<List<Laporan>>
+    fun getLaporanByUser(uid: String): Flow<List<Laporan>>
 
     /**
      * Mengambil detail satu laporan berdasarkan ID.

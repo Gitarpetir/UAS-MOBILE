@@ -1,3 +1,4 @@
+@file:Suppress("DEPRECATION")
 package com.uas.myapplication.data.remote.datasource
 
 import android.content.Context
@@ -21,6 +22,7 @@ class AuthRemoteDataSourceImpl(
         return authResult.user?.uid ?: throw Exception("UID tidak ditemukan")
     }
 
+    @Suppress("DEPRECATION")
     override suspend fun loginWithGoogle(idToken: String): Pair<String, Boolean> {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         val authResult = auth.signInWithCredential(credential).await()

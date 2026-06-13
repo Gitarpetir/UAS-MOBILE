@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.automirrored.filled.*
+import androidx.compose.material.icons.automirrored.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -43,8 +45,8 @@ fun getMahasiswaBottomNavItems(strings: Strings) = listOf(
     BottomNavItem(
         label       = strings.navCatalog,
         route       = Screen.Katalog.route,
-        iconAktif   = Icons.Filled.List,
-        iconNonAktif = Icons.Outlined.List
+        iconAktif   = Icons.AutoMirrored.Filled.List,
+        iconNonAktif = Icons.AutoMirrored.Outlined.List
     ),
     BottomNavItem(
         label       = strings.navReport,
@@ -55,8 +57,8 @@ fun getMahasiswaBottomNavItems(strings: Strings) = listOf(
     BottomNavItem(
         label       = strings.navMyReports,
         route       = Screen.Laporanku.route,
-        iconAktif   = Icons.Filled.Article,
-        iconNonAktif = Icons.Outlined.Article
+        iconAktif   = Icons.AutoMirrored.Filled.Article,
+        iconNonAktif = Icons.AutoMirrored.Outlined.Article
     ),
     BottomNavItem(
         label       = strings.navProfile,
@@ -77,8 +79,8 @@ fun getAdminBottomNavItems(strings: Strings) = listOf(
     BottomNavItem(
         label = strings.navCatalog,
         route = Screen.KatalogAdmin.route,
-        iconAktif = Icons.Filled.List,
-        iconNonAktif = Icons.Outlined.List
+        iconAktif = Icons.AutoMirrored.Filled.List,
+        iconNonAktif = Icons.AutoMirrored.Outlined.List
     ),
 
     BottomNavItem(

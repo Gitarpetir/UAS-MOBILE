@@ -3,6 +3,7 @@ package com.uas.myapplication.presentation.laporan.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.*
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.*
@@ -53,7 +54,7 @@ fun SubmitSection(
                     if (isEditMode)
                         Icons.Default.Save
                     else
-                        Icons.Default.Send,
+                        Icons.AutoMirrored.Filled.Send,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.size(18.dp)
