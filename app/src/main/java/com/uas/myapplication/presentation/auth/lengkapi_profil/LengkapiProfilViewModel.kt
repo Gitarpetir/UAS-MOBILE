@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import com.google.firebase.auth.FirebaseAuth
 
 // =============================================
 // STATE
@@ -34,7 +33,8 @@ class LengkapiProfilViewModel(
 
     // Dipanggil saat halaman pertama dibuka —
     // mengisi nama dari akun Google secara otomatis
-    fun inisialisasiDariGoogle(namaGoogle: String) {
+    fun inisialisasiDariGoogle() {
+        val namaGoogle = authRepository.getCurrentUserDisplayName() ?: ""
         _uiState.update { it.copy(namaLengkap = namaGoogle) }
     }
 
@@ -68,13 +68,13 @@ class LengkapiProfilViewModel(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
-            val firebaseUser = FirebaseAuth.getInstance().currentUser
+            val userEmail = authRepository.getCurrentUserEmail() ?: ""
 
             val user = User(
                 uid = uid,
                 namaLengkap = state.namaLengkap.trim(),
                 nim = state.nim.trim(),
-                email = firebaseUser?.email ?: "",
+                email = userEmail,
                 nomorWhatsapp = state.nomorWhatsapp.trim(),
                 peran = "mahasiswa"
             )

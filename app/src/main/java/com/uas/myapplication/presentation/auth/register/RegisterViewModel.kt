@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import com.uas.myapplication.presentation.util.parseFirebaseError
 
 data class RegisterUiState(
     val namaLengkap              : String  = "",
@@ -122,7 +123,7 @@ class RegisterViewModel(
                 },
                 onFailure = { error ->
                     _uiState.update {
-                        it.copy(isLoading = false, errorMessage = pesanErrorFirebase(error.message))
+                        it.copy(isLoading = false, errorMessage = parseFirebaseError(error.message))
                     }
                 }
             )
@@ -139,7 +140,7 @@ class RegisterViewModel(
                 },
                 onFailure = { error ->
                     _uiState.update {
-                        it.copy(isLoading = false, errorMessage = pesanErrorFirebase(error.message))
+                        it.copy(isLoading = false, errorMessage = parseFirebaseError(error.message))
                     }
                 }
             )
@@ -148,16 +149,5 @@ class RegisterViewModel(
 
     fun resetRegisterSuccess() {
         _uiState.update { it.copy(registerSuccess = false, googleSuccess = false) }
-    }
-
-    private fun pesanErrorFirebase(message: String?): String {
-        return when {
-            message == null                     -> "Terjadi kesalahan, coba lagi"
-            message.contains("email address")   -> "Email sudah terdaftar"
-            message.contains("badly formatted") -> "Format email tidak valid"
-            message.contains("network")         -> "Tidak ada koneksi internet"
-            message.contains("weak-password")   -> "Password terlalu lemah"
-            else                                -> "Pendaftaran gagal, coba lagi"
-        }
     }
 }

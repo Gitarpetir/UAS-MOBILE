@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.firebase.auth.FirebaseAuth
+
 import com.uas.myapplication.presentation.ui.components.CariInTextField
 import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
@@ -40,8 +40,7 @@ fun LengkapiProfilScreen(
 
     // Isi nama otomatis dari akun Google saat halaman pertama dibuka
     LaunchedEffect(Unit) {
-        val namaGoogle = FirebaseAuth.getInstance().currentUser?.displayName ?: ""
-        viewModel.inisialisasiDariGoogle(namaGoogle)
+        viewModel.inisialisasiDariGoogle()
     }
 
     // Navigasi ke Dashboard setelah profil berhasil disimpan

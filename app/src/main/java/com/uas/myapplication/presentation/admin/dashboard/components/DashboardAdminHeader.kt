@@ -1,4 +1,4 @@
-package com.uas.myapplication.presentation.admin.components
+package com.uas.myapplication.presentation.admin.dashboard.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

@@ -112,38 +112,12 @@ fun ProfilScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
             ) {
-                Text(
-                    text       = strings.userDataSection,
-                    fontFamily = PoppinsFontFamily,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize   = 16.sp,
-                    color      = MaterialTheme.colorScheme.onBackground
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                // Card Email
-                DataCard(
-                    icon  = Icons.Default.Email,
-                    label = strings.emailLabel,
-                    value = uiState.user?.email ?: "..."
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Card NIM
-                DataCard(
-                    icon  = Icons.Default.Badge,
-                    label = strings.nimLabel,
-                    value = uiState.user?.nim ?: "..."
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                DataCard(
-                    icon = Icons.Default.Phone,
-                    label = strings.waLabel,
-                    value = uiState.user?.nomorWhatsapp ?: "-"
+                com.uas.myapplication.presentation.profil.components.UserDataSection(
+                    user = uiState.user,
+                    sectionTitle = strings.userDataSection,
+                    emailLabel = strings.emailLabel,
+                    nimLabel = strings.nimLabel,
+                    waLabel = strings.waLabel
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))

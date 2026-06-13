@@ -108,98 +108,11 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Form Email
-            CariInTextField(
-                value         = uiState.email,
-                onValueChange = viewModel::onEmailChange,
-                label         = strings.emailLabel,
-                placeholder   = strings.emailPlaceholder,
-                leadingIcon   = {
-                    Icon(Icons.Default.Email, contentDescription = null, tint = CariInTheme.colors.textHint)
-                },
-                keyboardType  = KeyboardType.Email
+            // Form Email & Password
+            com.uas.myapplication.presentation.auth.login.components.LoginForm(
+                uiState = uiState,
+                viewModel = viewModel
             )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Form Password dengan toggle show/hide
-            CariInTextField(
-                value         = uiState.password,
-                onValueChange = viewModel::onPasswordChange,
-                label         = strings.passwordLabel,
-                placeholder   = strings.passwordPlaceholder,
-                leadingIcon   = {
-                    Icon(Icons.Default.Lock, contentDescription = null, tint = CariInTheme.colors.textHint)
-                },
-                trailingIcon  = {
-                    IconButton(onClick = viewModel::onTogglePasswordVisibility) {
-                        Icon(
-                            imageVector = if (uiState.passwordVisible)
-                                Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                            contentDescription = if (uiState.passwordVisible)
-                                strings.hidePassword else strings.showPassword,
-                            tint = CariInTheme.colors.textHint
-                        )
-                    }
-                },
-                visualTransformation = if (uiState.passwordVisible)
-                    VisualTransformation.None else PasswordVisualTransformation(),
-                keyboardType = KeyboardType.Password
-            )
-
-            // Pesan error
-            AnimatedVisibility(
-                visible = uiState.errorMessage != null,
-                enter   = fadeIn(),
-                exit    = fadeOut()
-            ) {
-                Text(
-                    text       = uiState.errorMessage ?: "",
-                    color      = MaterialTheme.colorScheme.error,
-                    fontFamily = InterFontFamily,
-                    fontSize   = 12.sp,
-                    modifier   = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 6.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Tombol Masuk
-            Button(
-                onClick  = viewModel::loginWithEmail,
-                enabled  = !uiState.isLoading,
-                modifier = Modifier.fillMaxWidth().height(52.dp),
-                shape    = RoundedCornerShape(16.dp),
-                colors   = ButtonDefaults.buttonColors(
-                    containerColor         = MaterialTheme.colorScheme.primary,
-                    disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
-                )
-            ) {
-                if (uiState.isLoading) {
-                    CircularProgressIndicator(
-                        modifier    = Modifier.size(22.dp),
-                        color       = MaterialTheme.colorScheme.onPrimary,
-                        strokeWidth = 2.5.dp
-                    )
-                } else {
-                    Icon(
-                        imageVector        = Icons.Default.Lock,
-                        contentDescription = null,
-                        tint               = MaterialTheme.colorScheme.onPrimary,
-                        modifier           = Modifier.size(18.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text       = strings.btnLogin,
-                        fontFamily = PoppinsFontFamily,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize   = 16.sp,
-                        color      = MaterialTheme.colorScheme.onPrimary
-                    )
-                }
-            }
 
             Spacer(modifier = Modifier.height(20.dp))
 

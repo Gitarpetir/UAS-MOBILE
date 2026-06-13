@@ -99,4 +99,12 @@ class AuthRepositoryImpl(
     override fun getCurrentUserId(): String? {
         return authRemoteDataSource.getCurrentUserId()
     }
+
+    override fun getCurrentUserEmail(): String? {
+        return authRemoteDataSource.getCurrentUserEmail()
+    }
+
+    override fun getCurrentUserDisplayName(): String? {
+        return authRemoteDataSource.getCurrentUserDisplayName()
+    }
 }

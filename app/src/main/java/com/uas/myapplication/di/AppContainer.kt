@@ -29,6 +29,12 @@ import com.uas.myapplication.domain.usecase.laporan.HapusLaporanUseCase
 import com.uas.myapplication.domain.usecase.laporan.KonfirmasiTemuanUseCase
 import com.uas.myapplication.domain.usecase.user.GetUserProfileUseCase
 import com.uas.myapplication.domain.usecase.user.UpdateUserProfileUseCase
+import com.uas.myapplication.data.remote.datasource.WeatherRemoteDataSource
+import com.uas.myapplication.data.remote.datasource.WeatherRemoteDataSourceImpl
+import com.uas.myapplication.data.repository.WeatherRepositoryImpl
+import com.uas.myapplication.domain.repository.WeatherRepository
+import com.uas.myapplication.domain.usecase.weather.GetWeatherUseCase
+import okhttp3.OkHttpClient
 
 /**
  * DI Container manual untuk aplikasi Cari.in.
@@ -58,6 +64,10 @@ object AppContainer {
         FirebaseFirestore.getInstance()
     }
 
+    private val okHttpClient: OkHttpClient by lazy {
+        OkHttpClient()
+    }
+
     // =============================================
     // DATA SOURCES
     // =============================================
@@ -82,6 +92,10 @@ object AppContainer {
         )
     }
 
+    private val weatherRemoteDataSource: WeatherRemoteDataSource by lazy {
+        WeatherRemoteDataSourceImpl(client = okHttpClient)
+    }
+
     // =============================================
     // REPOSITORIES
     // =============================================
@@ -104,6 +118,10 @@ object AppContainer {
             laporanRemoteDataSource = laporanRemoteDataSource,
             laporanDao = com.uas.myapplication.data.local.database.AppDatabase.getInstance(appContext).laporanDao()
         )
+    }
+
+    val weatherRepository: WeatherRepository by lazy {
+        WeatherRepositoryImpl(weatherRemoteDataSource)
     }
 
     // =============================================
@@ -168,6 +186,14 @@ object AppContainer {
 
     val updateUserProfileUseCase: UpdateUserProfileUseCase by lazy {
         UpdateUserProfileUseCase(userRepository)
+    }
+
+    // =============================================
+    // USE CASES — Weather
+    // =============================================
+
+    val getWeatherUseCase: GetWeatherUseCase by lazy {
+        GetWeatherUseCase(weatherRepository)
     }
 
     // =============================================

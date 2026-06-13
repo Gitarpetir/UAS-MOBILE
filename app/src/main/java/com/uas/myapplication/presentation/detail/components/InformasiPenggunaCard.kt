@@ -1,6 +1,6 @@
 package com.uas.myapplication.presentation.detail.components
 
-import com.uas.myapplication.presentation.ui.components.common.InfoItem
+import com.uas.myapplication.presentation.ui.components.InfoItem
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
