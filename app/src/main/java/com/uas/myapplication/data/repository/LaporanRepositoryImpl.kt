@@ -16,7 +16,8 @@ import com.uas.myapplication.data.local.entity.toDomain
  */
 class LaporanRepositoryImpl(
     private val laporanRemoteDataSource: LaporanRemoteDataSource,
-    private val laporanDao: com.uas.myapplication.data.local.dao.LaporanDao
+    private val laporanDao: com.uas.myapplication.data.local.dao.LaporanDao,
+    private val context: android.content.Context
 ) : LaporanRepository {
 
     /**
@@ -27,7 +28,7 @@ class LaporanRepositoryImpl(
      * Mengambil semua laporan secara realtime menggunakan Flow.
      * DataSource mengembalikan DTO, Repository memetakan ke Domain Model.
      */
-    override fun getAllLaporan(context: android.content.Context): Flow<List<Laporan>> {
+    override fun getAllLaporan(): Flow<List<Laporan>> {
         return if (com.uas.myapplication.data.util.NetworkHelper.isConnected(context)) {
             laporanRemoteDataSource.getAllLaporan().map { dtoList ->
                 val domainList = dtoList.map { it.toDomain() }
@@ -47,7 +48,7 @@ class LaporanRepositoryImpl(
     /**
      * Mengambil laporan milik pengguna tertentu secara realtime.
      */
-    override fun getLaporanByUser(uid: String, context: android.content.Context): Flow<List<Laporan>> {
+    override fun getLaporanByUser(uid: String): Flow<List<Laporan>> {
         return if (com.uas.myapplication.data.util.NetworkHelper.isConnected(context)) {
             laporanRemoteDataSource.getLaporanByUser(uid).map { dtoList ->
                 val domainList = dtoList.map { it.toDomain() }

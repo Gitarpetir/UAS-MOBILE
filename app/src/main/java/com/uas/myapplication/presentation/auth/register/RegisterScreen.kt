@@ -1,3 +1,4 @@
+@file:Suppress("DEPRECATION")
 package com.uas.myapplication.presentation.auth.register
 
 import android.app.Activity

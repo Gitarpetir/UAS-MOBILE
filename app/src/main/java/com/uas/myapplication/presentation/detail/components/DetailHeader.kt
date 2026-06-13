@@ -2,6 +2,7 @@ package com.uas.myapplication.presentation.detail.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.*
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,7 +36,7 @@ fun DetailHeader(
             onClick = onBackClick
         ) {
             Icon(
-                imageVector = Icons.Default.ArrowBack,
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Kembali",
                 tint = MaterialTheme.colorScheme.onBackground
             )

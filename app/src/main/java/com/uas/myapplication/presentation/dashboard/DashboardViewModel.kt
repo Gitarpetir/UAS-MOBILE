@@ -72,7 +72,7 @@ class DashboardViewModel(
         laporanJob?.cancel()
         laporanJob = viewModelScope.launch {
             // Flow realtime — otomatis update saat data di Firestore berubah
-            getAllLaporanUseCase(context).collect { daftarLaporan ->
+            getAllLaporanUseCase().collect { daftarLaporan ->
                 _uiState.update {
                     it.copy(
                         daftarLaporan   = daftarLaporan,

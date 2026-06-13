@@ -3,6 +3,7 @@ package com.uas.myapplication.presentation.profil.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.*
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -26,7 +27,7 @@ fun LogoutButton(
         )
     ) {
         Icon(
-            imageVector = Icons.Default.Logout,
+            imageVector = Icons.AutoMirrored.Filled.Logout,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.onError,
             modifier = Modifier.size(18.dp)

@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 class GetAllLaporanUseCase(
     private val laporanRepository: LaporanRepository
 ) {
-    operator fun invoke(context: android.content.Context): Flow<List<Laporan>> {
-        return laporanRepository.getAllLaporan(context)
+    operator fun invoke(): Flow<List<Laporan>> {
+        return laporanRepository.getAllLaporan()
     }
 }

@@ -48,7 +48,7 @@ class KatalogAdminViewModel(
 
         laporanJob?.cancel()
         laporanJob = viewModelScope.launch {
-            getAllLaporanUseCase(context).collect { daftarLaporan ->
+            getAllLaporanUseCase().collect { daftarLaporan ->
 
                 _uiState.update {
                     it.copy(
