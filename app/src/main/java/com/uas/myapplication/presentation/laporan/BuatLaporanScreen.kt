@@ -62,13 +62,7 @@ fun BuatLaporanScreen(
     LaunchedEffect(statusAwal) {
 
         if (laporanId == null) {
-
-            viewModel.onStatusBarangChange(
-                if (statusAwal == "ditemukan")
-                    StatusBarang.DITEMUKAN
-                else
-                    StatusBarang.HILANG
-            )
+            viewModel.inisialisasiBuatBaru(statusAwal)
         }
     }
 

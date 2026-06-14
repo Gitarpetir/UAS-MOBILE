@@ -137,6 +137,12 @@ fun LaporankuScreen(
                     bolehEditHapus =
                         uiState.tabAktif != TabLaporanku.KONTRIBUSI,
 
+                    onCardClick = {
+                        navController.navigate(
+                            Screen.DetailBarang.createRoute(laporan.id)
+                        )
+                    },
+
                     onEditClick = {
                         navController.navigate(
                             Screen.EditLaporan.createRoute(laporan.id)

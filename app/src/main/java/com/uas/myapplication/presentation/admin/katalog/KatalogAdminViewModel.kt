@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.domain.usecase.laporan.GetAllLaporanUseCase
+import com.uas.myapplication.domain.usecase.laporan.HapusLaporanUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,11 +26,15 @@ data class KatalogAdminUiState(
     val queryPencarian: String = "",
     val isLoading: Boolean = true,
     val errorMessage: String? = null,
-    val isOfflineMode: Boolean = false
+    val isOfflineMode: Boolean = false,
+    val showHapusDialog: Boolean = false,
+    val laporanYangDihapus: Laporan? = null,
+    val isDeleting: Boolean = false
 )
 
 class KatalogAdminViewModel(
-    private val getAllLaporanUseCase: GetAllLaporanUseCase
+    private val getAllLaporanUseCase: GetAllLaporanUseCase,
+    private val hapusLaporanUseCase: HapusLaporanUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(KatalogAdminUiState())
@@ -92,7 +97,7 @@ class KatalogAdminViewModel(
                         laporan.statusBarang == StatusBarang.HILANG
 
                     FilterAdmin.DITEMUKAN ->
-                        laporan.statusBarang == StatusBarang.DITEMUKAN
+                        laporan.statusBarang == StatusBarang.DITEMUKAN || laporan.statusBarang == StatusBarang.DIKLAIM
 
                     FilterAdmin.SELESAI ->
                         laporan.statusBarang == StatusBarang.SELESAI
@@ -113,6 +118,45 @@ class KatalogAdminViewModel(
             it.copy(
                 laporanFilter = hasilFilter
             )
+        }
+    }
+
+    fun onHapusClick(laporan: Laporan) {
+        _uiState.update {
+            it.copy(
+                showHapusDialog = true,
+                laporanYangDihapus = laporan
+            )
+        }
+    }
+
+    fun onBatalHapus() {
+        _uiState.update {
+            it.copy(
+                showHapusDialog = false,
+                laporanYangDihapus = null
+            )
+        }
+    }
+
+    fun onKonfirmasiHapus(context: android.content.Context) {
+        val laporan = _uiState.value.laporanYangDihapus ?: return
+
+        _uiState.update { it.copy(isDeleting = true, showHapusDialog = false) }
+
+        viewModelScope.launch {
+            val result = hapusLaporanUseCase(laporan.id)
+            result.onSuccess {
+                _uiState.update { it.copy(isDeleting = false, laporanYangDihapus = null) }
+                ambilSemuaLaporan(context)
+            }.onFailure { err ->
+                _uiState.update {
+                    it.copy(
+                        isDeleting = false,
+                        errorMessage = err.message ?: "Gagal menghapus laporan"
+                    )
+                }
+            }
         }
     }
 }

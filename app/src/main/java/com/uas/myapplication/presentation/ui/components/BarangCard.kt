@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -27,7 +28,8 @@ import com.uas.myapplication.presentation.ui.theme.CariInTheme
 @Composable
 fun BarangCard(
     laporan: Laporan,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onDeleteClick: (() -> Unit)? = null
 ) {
     Card(
         modifier = Modifier
@@ -115,6 +117,23 @@ fun BarangCard(
 
             // Badge status
             StatusBadge(status = laporan.statusBarang)
+
+            if (onDeleteClick != null) {
+                Spacer(modifier = Modifier.width(8.dp))
+                IconButton(
+                    onClick = onDeleteClick,
+                    modifier = Modifier
+                        .size(32.dp)
+                        .background(DangerRedLight, RoundedCornerShape(8.dp))
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Hapus Laporan",
+                        tint = DangerRed,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
+            }
         }
     }
 }

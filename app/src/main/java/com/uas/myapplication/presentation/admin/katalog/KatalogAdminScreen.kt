@@ -41,6 +41,14 @@ fun KatalogAdminScreen(
         viewModel.ambilSemuaLaporan(context)
     }
 
+    if (uiState.showHapusDialog) {
+        com.uas.myapplication.presentation.ui.components.HapusDialog(
+            namaBarang = uiState.laporanYangDihapus?.namaBarang ?: "",
+            onKonfirmasi = { viewModel.onKonfirmasiHapus(context) },
+            onBatal = viewModel::onBatalHapus
+        )
+    }
+
     Scaffold(
         bottomBar = {
             CariInBottomNavBar(
@@ -140,6 +148,9 @@ fun KatalogAdminScreen(
                         navController.navigate(
                             Screen.DetailBarang.createRoute(laporan.id)
                         )
+                    },
+                    onDeleteClick = {
+                        viewModel.onHapusClick(laporan)
                     }
                 )
             }
