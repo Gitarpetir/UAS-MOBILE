@@ -3,9 +3,6 @@ package com.uas.myapplication.domain.usecase.weather
 import com.uas.myapplication.domain.model.Weather
 import com.uas.myapplication.domain.repository.WeatherRepository
 
-/**
- * UseCase untuk mengambil data cuaca saat ini.
- */
 class GetWeatherUseCase(
     private val repository: WeatherRepository
 ) {

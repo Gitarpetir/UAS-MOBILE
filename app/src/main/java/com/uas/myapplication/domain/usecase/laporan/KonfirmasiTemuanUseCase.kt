@@ -3,11 +3,6 @@ package com.uas.myapplication.domain.usecase.laporan
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.domain.repository.LaporanRepository
 
-/**
- * Use Case: Mengubah status barang.
- * Mengubah status dari "HILANG" menjadi "DITEMUKAN" (oleh mahasiswa)
- * atau menjadi "SELESAI" (oleh admin).
- */
 class KonfirmasiTemuanUseCase(
     private val laporanRepository: LaporanRepository
 ) {

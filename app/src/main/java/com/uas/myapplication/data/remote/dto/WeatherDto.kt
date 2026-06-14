@@ -3,11 +3,6 @@ package com.uas.myapplication.data.remote.dto
 import com.uas.myapplication.domain.model.Weather
 import org.json.JSONObject
 
-/**
- * Data Transfer Object (DTO) untuk response JSON dari OpenWeatherMap.
- * Karena kita mem-parsing secara manual dengan org.json, ini lebih ke
- * data class murni yang siap dipetakan.
- */
 data class WeatherDto(
     val temp: Double,
     val description: String,
@@ -28,9 +23,6 @@ data class WeatherDto(
     }
 
     companion object {
-        /**
-         * Mem-parsing raw JSON String dari OpenWeatherMap menjadi WeatherDto.
-         */
         fun fromJson(jsonString: String): WeatherDto {
             val root = JSONObject(jsonString)
             

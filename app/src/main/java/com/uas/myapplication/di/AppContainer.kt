@@ -36,14 +36,6 @@ import com.uas.myapplication.domain.repository.WeatherRepository
 import com.uas.myapplication.domain.usecase.weather.GetWeatherUseCase
 import okhttp3.OkHttpClient
 
-/**
- * DI Container manual untuk aplikasi Cari.in.
- *
- * Hirarki dependensi (Clean Architecture):
- *   Firebase SDK → DataSource → Repository → UseCase → ViewModel
- *
- * AppContainer menginisialisasi semua layer secara lazy.
- */
 object AppContainer {
 
     private lateinit var appContext: Context

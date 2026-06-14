@@ -1,9 +1,5 @@
 package com.uas.myapplication.domain.model
 
-/**
- * Model domain murni untuk data cuaca.
- * Tidak mengandung dependency library apapun.
- */
 data class Weather(
     val suhu: Double = 0.0,
     val deskripsi: String = "",
@@ -12,9 +8,6 @@ data class Weather(
     val kelembapan: Int = 0,
     val angin: Double = 0.0
 ) {
-    /**
-     * Mengembalikan emoji cuaca berdasarkan icon code dari OpenWeatherMap.
-     */
     fun getEmoji(): String = when {
         iconCode.startsWith("01") -> "☀️"
         iconCode.startsWith("02") -> "⛅"
@@ -26,9 +19,6 @@ data class Weather(
         else -> "🌤️"
     }
 
-    /**
-     * Pesan kontekstual yang relevan dengan tema lost & found.
-     */
     fun getPesanKontekstual(bahasa: String = "id"): String {
         if (bahasa == "en") return getPesanKontekstualEn()
         return when {

@@ -8,10 +8,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.tasks.await
 
-/**
- * Implementasi AuthRemoteDataSource yang berinteraksi langsung
- * dengan Firebase Auth SDK dan Google Sign-In.
- */
 class AuthRemoteDataSourceImpl(
     private val auth: FirebaseAuth,
     private val context: Context

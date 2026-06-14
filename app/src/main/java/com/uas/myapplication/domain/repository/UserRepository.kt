@@ -8,9 +8,6 @@ interface UserRepository {
 
     suspend fun saveUser(user: User): Result<Unit>
 
-    /**
-     * Update profil — sekarang include nomorWhatsapp
-     */
     suspend fun updateUser(
         uid           : String,
         namaLengkap   : String,
