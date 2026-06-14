@@ -60,7 +60,6 @@ fun LoginScreen(
     val context  = LocalContext.current
     val strings = com.uas.myapplication.presentation.ui.StringProvider.get(com.uas.myapplication.presentation.ui.LocalBahasa.current)
 
-    // Launcher untuk Google Sign-In
     val googleLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -73,7 +72,6 @@ fun LoginScreen(
         }
     }
 
-    // Navigasi setelah login berhasil
     LaunchedEffect(uiState.loginSuccess) {
         if (uiState.loginSuccess) {
             onLoginSuccess(uiState.isAdmin)
@@ -109,7 +107,6 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Form Email & Password
             com.uas.myapplication.presentation.auth.login.components.LoginForm(
                 uiState = uiState,
                 viewModel = viewModel
@@ -117,12 +114,10 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Divider "atau lanjutkan dengan"
             AuthDivider(label = strings.orContinueWith)
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Tombol Masuk dengan Google
             GoogleAuthButton(
                 label = strings.btnGoogleLogin,
                 onClick = {
@@ -138,7 +133,6 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Teks "Tidak mempunyai akun? Buat Akun"
             TextButton(onClick = onDaftarClick) {
                 Text(
                     text = buildAnnotatedString {
@@ -164,9 +158,6 @@ fun LoginScreen(
 
 
 
-// =============================================
-// PREVIEW — heightDp ditambah agar tidak terpotong
-// =============================================
 @Preview(showBackground = true, name = "Login Screen - Light", heightDp = 900)
 @Composable
 fun PreviewLoginScreen() {

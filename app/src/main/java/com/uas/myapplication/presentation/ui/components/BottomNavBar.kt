@@ -24,9 +24,6 @@ import com.uas.myapplication.presentation.ui.Strings
 import com.uas.myapplication.presentation.ui.StringProvider
 import com.uas.myapplication.presentation.ui.LocalBahasa
 
-// =============================================
-// DATA MODEL ITEM NAVIGASI
-// =============================================
 data class BottomNavItem(
     val label      : String,
     val route      : String,
@@ -34,7 +31,6 @@ data class BottomNavItem(
     val iconNonAktif: ImageVector
 )
 
-// Daftar 5 item bottom navigation
 fun getMahasiswaBottomNavItems(strings: Strings) = listOf(
     BottomNavItem(
         label       = strings.navHome,
@@ -91,14 +87,10 @@ fun getAdminBottomNavItems(strings: Strings) = listOf(
     )
 )
 
-// ================ =============================
-// KOMPONEN BOTTOM NAVIGATION BAR
-// =============================================
 @Composable
 fun CariInBottomNavBar(
     navController: NavController,
     items: List<BottomNavItem>) {
-    // Ambil route yang sedang aktif
     val backStackEntry = navController.currentBackStackEntryAsState()
     val currentRoute   = backStackEntry.value?.destination?.route
 
@@ -146,9 +138,6 @@ fun CariInBottomNavBar(
     }
 }
 
-// =============================================
-// PREVIEW
-// =============================================
 @Preview(showBackground = true)
 @Composable
 fun PreviewBottomNavBar() {

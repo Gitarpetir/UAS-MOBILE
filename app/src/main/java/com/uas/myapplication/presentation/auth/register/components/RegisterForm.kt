@@ -34,7 +34,6 @@ fun RegisterForm(
     val strings = StringProvider.get(LocalBahasa.current)
 
     Column(modifier = modifier) {
-        // 1. Nama Lengkap
         CariInTextField(
             value         = uiState.namaLengkap,
             onValueChange = viewModel::onNamaLengkapChange,
@@ -47,7 +46,6 @@ fun RegisterForm(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 2. NIM
         CariInTextField(
             value         = uiState.nim,
             onValueChange = viewModel::onNimChange,
@@ -61,7 +59,6 @@ fun RegisterForm(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 3. Nomor WhatsApp
         CariInTextField(
             value         = uiState.nomorWhatsapp,
             onValueChange = viewModel::onNomorWhatsappChange,
@@ -75,7 +72,6 @@ fun RegisterForm(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 4. Email
         CariInTextField(
             value         = uiState.email,
             onValueChange = viewModel::onEmailChange,
@@ -89,7 +85,6 @@ fun RegisterForm(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 5. Password
         CariInTextField(
             value         = uiState.password,
             onValueChange = viewModel::onPasswordChange,
@@ -115,7 +110,6 @@ fun RegisterForm(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 6. Konfirmasi Password
         CariInTextField(
             value         = uiState.konfirmasiPassword,
             onValueChange = viewModel::onKonfirmasiPasswordChange,
@@ -140,7 +134,6 @@ fun RegisterForm(
             isError      = uiState.passwordTidakSama
         )
 
-        // Peringatan password tidak sama
         AnimatedVisibility(
             visible = uiState.passwordTidakSama,
             enter   = fadeIn(),
@@ -155,7 +148,6 @@ fun RegisterForm(
             )
         }
 
-        // Pesan error umum
         AnimatedVisibility(
             visible = uiState.errorMessage != null && !uiState.passwordTidakSama,
             enter   = fadeIn(),
@@ -172,7 +164,6 @@ fun RegisterForm(
 
         Spacer(modifier = Modifier.height(28.dp))
 
-        // Tombol Buat Akun
         Button(
             onClick  = viewModel::register,
             enabled  = !uiState.isLoading,

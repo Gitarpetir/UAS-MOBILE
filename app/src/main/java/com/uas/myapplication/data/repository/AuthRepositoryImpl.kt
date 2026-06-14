@@ -33,7 +33,6 @@ class AuthRepositoryImpl(
             val (uid, isNewUser) = authRemoteDataSource.loginWithGoogle(idToken)
 
             if (!isNewUser) {
-                // User sudah ada — ambil data dari Firestore
                 try {
                     val userDto = userRemoteDataSource.getUserById(uid)
                     Result.success(
@@ -43,8 +42,6 @@ class AuthRepositoryImpl(
                         )
                     )
                 } catch (e: Exception) {
-                    // Jika data user belum ada di Firestore meskipun bukan new user
-                    // (kasus edge: user Firebase Auth ada tapi dokumen Firestore belum dibuat)
                     Result.success(
                         GoogleAuthResult(
                             user = User(uid = uid, email = "", peran = "mahasiswa"),
@@ -53,7 +50,6 @@ class AuthRepositoryImpl(
                     )
                 }
             } else {
-                // User baru — belum ada di Firestore
                 Result.success(
                     GoogleAuthResult(
                         user = User(uid = uid, peran = "mahasiswa"),

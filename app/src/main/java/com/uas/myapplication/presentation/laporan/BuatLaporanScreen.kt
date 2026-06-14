@@ -62,13 +62,7 @@ fun BuatLaporanScreen(
     LaunchedEffect(statusAwal) {
 
         if (laporanId == null) {
-
-            viewModel.onStatusBarangChange(
-                if (statusAwal == "ditemukan")
-                    StatusBarang.DITEMUKAN
-                else
-                    StatusBarang.HILANG
-            )
+            viewModel.inisialisasiBuatBaru(statusAwal)
         }
     }
 
@@ -169,7 +163,6 @@ fun BuatLaporanScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Toggle Status Barang
             StatusBarangSelector(
                 selectedStatus = uiState.statusBarang,
                 onStatusChange = viewModel::onStatusBarangChange
@@ -177,7 +170,6 @@ fun BuatLaporanScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Upload Foto
             FotoPicker(
                 fotoUri = uiState.fotoUri,
                 fotoUrl = uiState.fotoUrl,
@@ -187,7 +179,6 @@ fun BuatLaporanScreen(
             )
 
             Spacer(modifier = Modifier.height(20.dp))
-            // Nama Barang
             LabelWajib(strings.itemNameLabel)
 
             CariInTextField(
@@ -203,7 +194,6 @@ fun BuatLaporanScreen(
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Deskripsi
             LabelWajib(strings.descriptionLabel)
             Spacer(modifier = Modifier.height(6.dp))
             OutlinedTextField(
@@ -232,7 +222,6 @@ fun BuatLaporanScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Lokasi
             LabelWajib(strings.locationLabel)
             CariInTextField(
                 value = uiState.lokasi,
@@ -246,7 +235,6 @@ fun BuatLaporanScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Tanggal — DatePicker
             TanggalField(
                 tanggal = uiState.tanggal,
                 isError = uiState.tanggalError,
@@ -271,7 +259,6 @@ fun BuatLaporanScreen(
 
             Spacer(modifier = Modifier.height(28.dp))
 
-            // Tombol Kirim / Simpan
             SubmitSection(
                 isLoading = uiState.isLoading,
                 isEditMode = uiState.isEditMode,

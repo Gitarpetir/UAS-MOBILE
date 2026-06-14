@@ -72,7 +72,6 @@ fun DetailBarangScreen(
     }
 
     Scaffold(
-        // NavBar dihide pada DetailBarang
     ) { paddingValues ->
         Column(
             modifier = Modifier

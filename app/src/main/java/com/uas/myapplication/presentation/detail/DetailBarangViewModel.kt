@@ -21,11 +21,8 @@ data class DetailBarangUiState(
     val isAdmin          : Boolean   = false,
     val isLoading        : Boolean   = true,
     val errorMessage     : String?   = null,
-    // Dialog "Aku Menemukan Barang Ini"
     val showDialogTemukan: Boolean   = false,
-    // Dialog "Barang Ini Milik Saya"
     val showDialogMilik  : Boolean   = false,
-    // Aksi berhasil — navigasi kembali
     val aksiSuccess      : Boolean   = false
 )
 
@@ -43,7 +40,6 @@ class DetailBarangViewModel(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
 
-            // Ambil detail laporan
             val laporanResult = getLaporanByIdUseCase(laporanId)
             laporanResult.fold(
                 onSuccess = { laporan ->
@@ -57,7 +53,6 @@ class DetailBarangViewModel(
                 }
             )
 
-            // Ambil data pengguna yang sedang login
             val uid = authRepository.getCurrentUserId()
             if (uid != null) {
                 val userResult = getUserProfileUseCase(uid)
@@ -76,7 +71,6 @@ class DetailBarangViewModel(
         }
     }
 
-    // Tampilkan dialog sesuai status barang
     fun onTombolAksiClick() {
         val status = _uiState.value.laporan?.statusBarang ?: return
         when (status) {
@@ -95,7 +89,6 @@ class DetailBarangViewModel(
         _uiState.update { it.copy(showDialogMilik = false) }
     }
 
-    // Konfirmasi "Barang Ini Milik Saya" — ubah status DITEMUKAN → DIKLAIM
     fun onKonfirmasiMilik() {
         val laporanId = _uiState.value.laporan?.id ?: return
         val currentUid = authRepository.getCurrentUserId() ?: return
@@ -120,7 +113,6 @@ class DetailBarangViewModel(
         }
     }
 
-    // Konfirmasi "Aku Menemukan Barang Ini" — ubah status HILANG → DITEMUKAN
     fun onKonfirmasiTemukan() {
 
         val laporanId =
@@ -160,7 +152,6 @@ class DetailBarangViewModel(
         }
     }
 
-    // Admin — selesaikan laporan → ubah status menjadi SELESAI
     fun onSelesaikanLaporan() {
         val laporanId = _uiState.value.laporan?.id ?: return
         viewModelScope.launch {

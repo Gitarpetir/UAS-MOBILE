@@ -25,7 +25,6 @@ import androidx.navigation.compose.rememberNavController
 import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
 import com.uas.myapplication.presentation.navigation.Screen
-// Import komponen dari ui/components
 import com.uas.myapplication.presentation.ui.components.BarangCard
 import com.uas.myapplication.presentation.ui.components.CariInBottomNavBar
 import com.uas.myapplication.presentation.katalog.components.FilterChipRow
@@ -115,7 +114,6 @@ fun KatalogScreen(
                 }
             }
 
-            // Pakai BarangCard dari ui/components
             items(uiState.laporanFilter) { laporan ->
                 BarangCard(
                     laporan = laporan,
@@ -142,9 +140,6 @@ fun KatalogScreen(
 
 
 
-// =============================================
-// PREVIEW
-// =============================================
 @Preview(showBackground = true, name = "Katalog Screen - Light", heightDp = 900)
 @Composable
 fun PreviewKatalogScreen() {

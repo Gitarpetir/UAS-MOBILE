@@ -40,9 +40,6 @@ import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import com.uas.myapplication.presentation.ui.LocalBahasa
 import com.uas.myapplication.presentation.ui.StringProvider
 
-// =============================================
-// PROFIL SCREEN
-// =============================================
 @Composable
 fun ProfilScreen(
     viewModel    : ProfilViewModel,
@@ -52,7 +49,6 @@ fun ProfilScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val strings = StringProvider.get(LocalBahasa.current)
 
-    // Navigasi ke Login setelah logout
     LaunchedEffect(uiState.logoutSuccess) {
         if (uiState.logoutSuccess) {
             navController.navigate(Screen.Login.route) {
@@ -62,7 +58,6 @@ fun ProfilScreen(
         }
     }
 
-    // Dialog pilihan bahasa
     if (uiState.showBahasaDialog) {
         BahasaDialog(
             bahasaAktif = uiState.bahasa,
@@ -89,9 +84,6 @@ fun ProfilScreen(
         ) {
             Spacer(modifier = Modifier.height(40.dp))
 
-            // =============================================
-            // AVATAR
-            // =============================================
             ProfilAvatar(
                 namaLengkap = uiState.user?.namaLengkap ?: "..."
             )
@@ -105,9 +97,6 @@ fun ProfilScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // =============================================
-            // SECTION DATA PENGGUNA
-            // =============================================
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -123,9 +112,6 @@ fun ProfilScreen(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // =============================================
-                // SECTION PREFERENSI
-                // =============================================
                 ProfilPreferensiSection(
                     title = strings.preferencesSection,
                     darkModeLabel = strings.darkModeLabel,
@@ -140,9 +126,6 @@ fun ProfilScreen(
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                // =============================================
-                // TOMBOL KELUAR
-                // =============================================
                 LogoutButton(
                     label = strings.btnLogout,
                     onClick = viewModel::onLogout

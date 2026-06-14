@@ -32,7 +32,8 @@ data class BuatLaporanUiState(
     val namaBarangError: Boolean      = false,
     val deskripsiError : Boolean      = false,
     val lokasiError    : Boolean      = false,
-    val tanggalError   : Boolean      = false
+    val tanggalError   : Boolean      = false,
+    val isInitialized  : Boolean      = false
 )
 
 class BuatLaporanViewModel(
@@ -46,9 +47,21 @@ class BuatLaporanViewModel(
     private val _uiState = MutableStateFlow(BuatLaporanUiState())
     val uiState: StateFlow<BuatLaporanUiState> = _uiState.asStateFlow()
 
+    fun inisialisasiBuatBaru(statusAwal: String) {
+        if (_uiState.value.isInitialized) return
+        _uiState.update { 
+            it.copy(
+                statusBarang = if (statusAwal == "ditemukan") StatusBarang.DITEMUKAN else StatusBarang.HILANG,
+                isInitialized = true
+            )
+        }
+    }
+
     fun inisialisasiUntukEdit(laporanId: String) {
+        if (_uiState.value.isInitialized && _uiState.value.laporanId == laporanId) return
+
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
+            _uiState.update { it.copy(isLoading = true, isInitialized = true) }
             val result = getLaporanByIdUseCase(laporanId)
             result.fold(
                 onSuccess = { laporan ->

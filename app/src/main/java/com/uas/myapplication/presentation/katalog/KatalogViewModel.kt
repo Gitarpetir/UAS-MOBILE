@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-// Filter yang bisa dipilih pengguna
 enum class FilterKatalog { SEMUA, HILANG, DITEMUKAN, SELESAI }
 
 data class KatalogUiState(
@@ -31,9 +30,6 @@ class KatalogViewModel(
     private val _uiState = MutableStateFlow(KatalogUiState())
     val uiState: StateFlow<KatalogUiState> = _uiState.asStateFlow()
 
-    // init {
-    //     ambilSemuaLaporan()
-    // }
 
     private var networkJob: kotlinx.coroutines.Job? = null
     private var laporanJob: kotlinx.coroutines.Job? = null
@@ -55,31 +51,26 @@ class KatalogViewModel(
                         isLoading    = false
                     )
                 }
-                // Terapkan filter setelah data masuk
                 terapkanFilter()
             }
         }
     }
 
-    // Update query pencarian dan terapkan filter
     fun onQueryPencarianChange(query: String) {
         _uiState.update { it.copy(queryPencarian = query) }
         terapkanFilter()
     }
 
-    // Ganti filter aktif
     fun onFilterChange(filter: FilterKatalog) {
         _uiState.update { it.copy(filterAktif = filter) }
         terapkanFilter()
     }
 
-    // Terapkan filter status + pencarian teks sekaligus
     private fun terapkanFilter() {
         val state  = _uiState.value
         val query  = state.queryPencarian.lowercase().trim()
 
         val hasilFilter = state.semuaLaporan
-            // Filter berdasarkan status
             .filter { laporan ->
                 when (state.filterAktif) {
                     FilterKatalog.SEMUA     -> true
@@ -88,7 +79,6 @@ class KatalogViewModel(
                     FilterKatalog.SELESAI   -> laporan.statusBarang == StatusBarang.SELESAI
                 }
             }
-            // Filter berdasarkan teks pencarian
             .filter { laporan ->
                 if (query.isEmpty()) true
                 else laporan.namaBarang.lowercase().contains(query) ||

@@ -31,7 +31,6 @@ class NetworkMonitor(context: Context) {
 
         connectivityManager.registerNetworkCallback(request, callback)
 
-        // Initial state
         trySend(NetworkHelper.isConnected(context))
 
         awaitClose {

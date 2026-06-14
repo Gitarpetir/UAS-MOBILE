@@ -27,9 +27,6 @@ import com.uas.myapplication.presentation.ui.theme.*
 import com.uas.myapplication.presentation.ui.theme.CariInTheme
 import androidx.compose.ui.text.font.FontWeight
 
-// =============================================
-// LENGKAPI PROFIL SCREEN
-// =============================================
 @Composable
 fun LengkapiProfilScreen(
     viewModel      : LengkapiProfilViewModel,
@@ -38,12 +35,10 @@ fun LengkapiProfilScreen(
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
     val strings = com.uas.myapplication.presentation.ui.StringProvider.get(com.uas.myapplication.presentation.ui.LocalBahasa.current)
 
-    // Isi nama otomatis dari akun Google saat halaman pertama dibuka
     LaunchedEffect(Unit) {
         viewModel.inisialisasiDariGoogle()
     }
 
-    // Navigasi ke Dashboard setelah profil berhasil disimpan
     LaunchedEffect(uiState.value.simpanSuccess) {
         if (uiState.value.simpanSuccess) {
             onSimpanSuccess()
@@ -65,7 +60,6 @@ fun LengkapiProfilScreen(
         ) {
             Spacer(modifier = Modifier.height(80.dp))
 
-            // Judul
             Text(
                 text       = strings.completeProfileTitle,
                 fontFamily = PoppinsFontFamily,
@@ -76,7 +70,6 @@ fun LengkapiProfilScreen(
 
             Spacer(modifier = Modifier.height(4.dp))
 
-            // Subtitle
             Text(
                 text       = strings.completeProfileSubtitle,
                 fontFamily = InterFontFamily,
@@ -87,7 +80,6 @@ fun LengkapiProfilScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // Field Nama Lengkap — terisi otomatis dari Google
             CariInTextField(
                 value         = uiState.value.namaLengkap,
                 onValueChange = viewModel::onNamaLengkapChange,
@@ -100,7 +92,6 @@ fun LengkapiProfilScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Field NIM
             CariInTextField(
                 value         = uiState.value.nim,
                 onValueChange = viewModel::onNimChange,
@@ -113,7 +104,6 @@ fun LengkapiProfilScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Field No. WhatsApp
             CariInTextField(
                 value         = uiState.value.nomorWhatsapp,
                 onValueChange = viewModel::onNomorWhatsappChange,
@@ -124,7 +114,6 @@ fun LengkapiProfilScreen(
                 }
             )
 
-            // Pesan error
             AnimatedVisibility(
                 visible = uiState.value.errorMessage != null,
                 enter   = fadeIn(),
@@ -143,7 +132,6 @@ fun LengkapiProfilScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Tombol Simpan Profil
             Button(
                 onClick  = viewModel::simpanProfil,
                 enabled  = !uiState.value.isLoading,
@@ -185,9 +173,6 @@ fun LengkapiProfilScreen(
     }
 }
 
-// =============================================
-// PREVIEW
-// =============================================
 @Preview(showBackground = true, name = "Lengkapi Profil - Light", heightDp = 700)
 @Composable
 fun PreviewLengkapiProfil() {
@@ -215,7 +200,6 @@ fun PreviewLengkapiProfil() {
                 color      = TextSub
             )
             Spacer(modifier = Modifier.height(40.dp))
-            // Nama sudah terisi otomatis dari Google
             CariInTextField(
                 value         = "Azriel Gunawan",
                 onValueChange = {},

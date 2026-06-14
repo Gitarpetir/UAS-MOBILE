@@ -40,7 +40,6 @@ fun ProfilPreferensiSection(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // Card Mode Gelap
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
@@ -85,7 +84,6 @@ fun ProfilPreferensiSection(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Card Bahasa
         Card(
             modifier = Modifier
                 .fillMaxWidth()

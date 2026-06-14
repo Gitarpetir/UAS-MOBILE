@@ -33,10 +33,6 @@ class DashboardViewModel(
     private val _uiState = MutableStateFlow(DashboardUiState())
     val uiState: StateFlow<DashboardUiState> = _uiState.asStateFlow()
 
-    // Hapus init karena butuh context dari UI
-    // init {
-    //     ambilLaporan()
-    // }
 
     private var networkJob: kotlinx.coroutines.Job? = null
     private var laporanJob: kotlinx.coroutines.Job? = null
@@ -46,7 +42,6 @@ class DashboardViewModel(
         weatherJob?.cancel()
         weatherJob = viewModelScope.launch {
             _uiState.update { it.copy(isWeatherLoading = true, weatherError = null) }
-            // Koordinat Universitas Lambung Mangkurat
             val lat = -3.2964016084518573
             val lon = 114.5870438388464
             
@@ -71,7 +66,6 @@ class DashboardViewModel(
 
         laporanJob?.cancel()
         laporanJob = viewModelScope.launch {
-            // Flow realtime — otomatis update saat data di Firestore berubah
             getAllLaporanUseCase().collect { daftarLaporan ->
                 _uiState.update {
                     it.copy(

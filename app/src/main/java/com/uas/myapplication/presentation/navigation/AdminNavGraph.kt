@@ -35,7 +35,8 @@ fun NavGraphBuilder.adminNavGraph(navController: NavHostController) {
         val viewModel: KatalogAdminViewModel = viewModel(
             factory = ViewModelFactory {
                 KatalogAdminViewModel(
-                    getAllLaporanUseCase = AppContainer.getAllLaporanUseCase
+                    getAllLaporanUseCase = AppContainer.getAllLaporanUseCase,
+                    hapusLaporanUseCase = AppContainer.hapusLaporanUseCase
                 )
             }
         )

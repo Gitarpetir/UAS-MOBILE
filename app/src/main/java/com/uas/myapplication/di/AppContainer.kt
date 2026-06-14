@@ -52,9 +52,6 @@ object AppContainer {
         appContext = context.applicationContext
     }
 
-    // =============================================
-    // FRAMEWORK / SDK INSTANCES
-    // =============================================
 
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
@@ -68,9 +65,6 @@ object AppContainer {
         OkHttpClient()
     }
 
-    // =============================================
-    // DATA SOURCES
-    // =============================================
 
     private val authRemoteDataSource: AuthRemoteDataSource by lazy {
         AuthRemoteDataSourceImpl(
@@ -96,9 +90,6 @@ object AppContainer {
         WeatherRemoteDataSourceImpl(client = okHttpClient)
     }
 
-    // =============================================
-    // REPOSITORIES
-    // =============================================
 
     val authRepository: AuthRepository by lazy {
         AuthRepositoryImpl(
@@ -125,9 +116,6 @@ object AppContainer {
         WeatherRepositoryImpl(weatherRemoteDataSource)
     }
 
-    // =============================================
-    // USE CASES — Auth
-    // =============================================
 
     val loginUseCase: LoginUseCase by lazy {
         LoginUseCase(authRepository)
@@ -145,9 +133,6 @@ object AppContainer {
         LogOutUseCase(authRepository)
     }
 
-    // =============================================
-    // USE CASES — Laporan
-    // =============================================
 
     val buatLaporanUseCase: BuatLaporanUseCase by lazy {
         BuatLaporanUseCase(laporanRepository)
@@ -177,9 +162,6 @@ object AppContainer {
         KonfirmasiTemuanUseCase(laporanRepository)
     }
 
-    // =============================================
-    // USE CASES — User
-    // =============================================
 
     val getUserProfileUseCase: GetUserProfileUseCase by lazy {
         GetUserProfileUseCase(userRepository)
@@ -189,17 +171,11 @@ object AppContainer {
         UpdateUserProfileUseCase(userRepository)
     }
 
-    // =============================================
-    // USE CASES — Weather
-    // =============================================
 
     val getWeatherUseCase: GetWeatherUseCase by lazy {
         GetWeatherUseCase(weatherRepository)
     }
 
-    // =============================================
-    // PREFERENCES
-    // =============================================
 
     val preferensiManager: PreferensiManager by lazy {
         PreferensiManager(appContext)
