@@ -115,7 +115,10 @@ fun DashboardScreen(
                 }
             }
 
-            items(uiState.daftarLaporan.take(10)) { laporan ->
+            items(
+                items = uiState.daftarLaporan.take(10),
+                key = { it.id }
+            ) { laporan ->
                 BarangCard(
                     laporan = laporan,
                     onClick = {

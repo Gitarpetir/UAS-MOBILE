@@ -166,5 +166,4 @@ fun DetailBarangScreen(
                 }
             }
         }
-    }
-}
+}}

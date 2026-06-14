@@ -114,7 +114,10 @@ fun KatalogScreen(
                 }
             }
 
-            items(uiState.laporanFilter) { laporan ->
+            items(
+                items = uiState.laporanFilter,
+                key = { it.id }
+            ) { laporan ->
                 BarangCard(
                     laporan = laporan,
                     onClick = {
