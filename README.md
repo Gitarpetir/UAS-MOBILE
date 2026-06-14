@@ -13,7 +13,7 @@ Cari.in adalah aplikasi Android *Mobile-First* yang dirancang untuk mempermudah 
    ```
 2. **Buka dengan Android Studio**
    Buka *project* menggunakan Android Studio versi terbaru yang mendukung *Jetpack Compose* dan Gradle KTS.
-3. **Konfigurasi API Keys **
+3. **Konfigurasi API Keys**
    *(Dapatkan API Key Cuaca di situs OpenWeatherMap).*
 4. **Sync Project & Run**
    Lakukan *Sync Project with Gradle Files*, pilih emulator atau *device* fisik, lalu jalankan.
@@ -71,18 +71,6 @@ app/src/main/java/com/uas/myapplication/
     ├── laporan/       # Form Buat Laporan & Detail Laporan
     └── profil/        # Pengaturan Akun, Bahasa, dan Tema
 ```
-
----
-
-## Screenshot Aplikasi
-
-| Halaman Login | Katalog Barang | Form Pelaporan |
-|:---:|:---:|:---:|
-| ![Login](link_gambar_login.png) | ![Home](link_gambar_katalog.png) | ![Form](link_gambar_form.png) |
-
-| Detail Barang | Laporanku (Local DB) | Profil & Dark Mode |
-|:---:|:---:|:---:|
-| ![Detail](link_gambar_detail.png) | ![Laporanku](link_gambar_laporanku.png) | ![Profil](link_gambar_profil.png) |
 
 ---
 *Dibuat oleh: Muhammad Azriel Akbar & Muhammad Alfi Gunawan*
