@@ -28,9 +28,6 @@ data class OnboardingPage(
 
 enum class IlustrasiType { KACAPEMBESAR, TEMUKAN, SENYUM }
 
-// =============================================
-// SCREEN UTAMA
-// =============================================
 @Composable
 fun OnboardingScreen(
     onSelesai: () -> Unit
@@ -74,7 +71,6 @@ fun OnboardingScreen(
             )
         }
 
-        // Tombol & Indikator — di bagian bawah layar
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -83,7 +79,6 @@ fun OnboardingScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Indikator titik halaman
             DotsIndicator(
                 totalDots    = onboardingPages.size,
                 selectedDot  = pagerState.currentPage
@@ -91,7 +86,6 @@ fun OnboardingScreen(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Tombol utama
             Button(
                 onClick = {
                     if (isLastPage) {
@@ -119,7 +113,6 @@ fun OnboardingScreen(
                 )
             }
 
-            // Tombol Lewati — hanya tampil jika bukan halaman terakhir
             if (!isLastPage) {
                 TextButton(onClick = onSelesai) {
                     Text(
@@ -131,16 +124,12 @@ fun OnboardingScreen(
                     )
                 }
             } else {
-                // Spacer agar layout tidak bergeser
                 Spacer(modifier = Modifier.height(36.dp))
             }
         }
     }
 }
 
-// =============================================
-// PREVIEW
-// =============================================
 @Preview(showBackground = true, name = "Onboarding Full Screen")
 @Composable
 fun PreviewOnboardingScreen() {

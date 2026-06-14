@@ -55,7 +55,6 @@ class ProfilViewModel(
         }
     }
 
-    // Observasi perubahan preferensi secara realtime dari DataStore
     private fun observePreferensi() {
         viewModelScope.launch {
             preferensiManager.isDarkMode.collect { isDark ->
@@ -69,14 +68,12 @@ class ProfilViewModel(
         }
     }
 
-    // Toggle dark mode — langsung tersimpan ke DataStore
     fun onDarkModeToggle(isDark: Boolean) {
         viewModelScope.launch {
             preferensiManager.setDarkMode(isDark)
         }
     }
 
-    // Tampilkan dialog pilihan bahasa
     fun onBahasaClick() {
         _uiState.update { it.copy(showBahasaDialog = true) }
     }
@@ -85,7 +82,6 @@ class ProfilViewModel(
         _uiState.update { it.copy(showBahasaDialog = false) }
     }
 
-    // Simpan pilihan bahasa
     fun onPilihBahasa(kodeBahasa: String) {
         viewModelScope.launch {
             preferensiManager.setBahasa(kodeBahasa)

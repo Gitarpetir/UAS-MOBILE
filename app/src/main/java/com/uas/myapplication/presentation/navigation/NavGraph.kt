@@ -58,7 +58,6 @@ fun CariInNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
-    // Cek apakah pengguna sudah login
     val currentUserId = AppContainer.authRepository.getCurrentUserId()
     val startDestination = "auth_check"
 
@@ -72,9 +71,6 @@ fun CariInNavGraph(
         popExitTransition = { androidx.compose.animation.fadeOut(animationSpec = androidx.compose.animation.core.tween(300)) }
     ) {
 
-        // =============================================
-        // AUTH CHECK FLOW
-        // =============================================
         
         composable("auth_check") {
             androidx.compose.runtime.LaunchedEffect(Unit) {
@@ -105,9 +101,6 @@ fun CariInNavGraph(
             }
         }
 
-        // =============================================
-        // MODULAR NAVIGATION GRAPHS
-        // =============================================
         
         authNavGraph(navController)
         mainNavGraph(navController)

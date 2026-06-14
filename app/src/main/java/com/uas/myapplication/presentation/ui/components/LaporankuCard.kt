@@ -53,9 +53,6 @@ import com.uas.myapplication.presentation.ui.theme.SuccessGreenLight
 import com.uas.myapplication.presentation.ui.LocalBahasa
 import com.uas.myapplication.presentation.ui.StringProvider
 
-// =============================================
-// CARD LAPORANKU — dengan badge deskriptif
-// =============================================
 @Composable
 fun LaporankuCard(
     laporan     : Laporan,
@@ -79,9 +76,7 @@ fun LaporankuCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
-            // Baris atas — foto + info
             Row(verticalAlignment = Alignment.Top) {
-                // Foto barang
                 AsyncImage(
                     model              = laporan.fotoUrl.ifEmpty { null },
                     contentDescription = "Foto ${laporan.namaBarang}",
@@ -95,7 +90,6 @@ fun LaporankuCard(
                 Spacer(modifier = Modifier.width(12.dp))
 
                 Column(modifier = Modifier.weight(1f)) {
-                    // Nama barang
                     Text(
                         text       = laporan.namaBarang,
                         fontFamily = PoppinsFontFamily,
@@ -139,7 +133,6 @@ fun LaporankuCard(
 
                     Spacer(modifier = Modifier.height(6.dp))
 
-                    // Lokasi
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Default.LocationOn, null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(12.dp))
                         Spacer(modifier = Modifier.width(2.dp))
@@ -148,7 +141,6 @@ fun LaporankuCard(
 
                     Spacer(modifier = Modifier.height(2.dp))
 
-                    // Tanggal
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Default.CalendarToday, null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(12.dp))
                         Spacer(modifier = Modifier.width(2.dp))
@@ -159,18 +151,15 @@ fun LaporankuCard(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            // Divider
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            // Baris bawah — tombol Edit & Hapus
             if (bolehEditHapus) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    // Tombol Edit
                     OutlinedButton(
                         onClick = onEditClick,
                         modifier = Modifier.weight(1f).height(38.dp),
@@ -193,7 +182,6 @@ fun LaporankuCard(
                         )
                     }
 
-                    // Tombol Hapus
                     Button(
                         onClick = onHapusClick,
                         modifier = Modifier.weight(1f).height(38.dp),

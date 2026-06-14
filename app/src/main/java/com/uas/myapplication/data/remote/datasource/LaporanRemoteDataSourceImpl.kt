@@ -102,13 +102,11 @@ class LaporanRemoteDataSourceImpl(
             val uri = uriString.toUri()
             Log.d("CLOUDINARY_URI", uri.toString())
 
-            // Baca byte dari URI lokal
             val inputStream = context.contentResolver.openInputStream(uri)
                 ?: throw Exception("Tidak bisa membuka file foto")
             val bytes = inputStream.readBytes()
             inputStream.close()
 
-            // Siapkan request multipart ke Cloudinary
             val requestBody = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart(
@@ -124,7 +122,6 @@ class LaporanRemoteDataSourceImpl(
                 .post(requestBody)
                 .build()
 
-            // Jalankan request secara sinkron (sudah di coroutine, aman)
             val response = httpClient.newCall(request).execute()
             val responseBody = response.body?.string()
                 ?: throw Exception("Response Cloudinary kosong")
@@ -132,7 +129,6 @@ class LaporanRemoteDataSourceImpl(
 
             if (!response.isSuccessful) throw Exception("Upload gagal: $responseBody")
 
-            // Ambil URL dari response JSON Cloudinary
             val json = JSONObject(responseBody)
             json.getString("secure_url")
         }

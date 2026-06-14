@@ -11,9 +11,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import com.uas.myapplication.presentation.util.parseFirebaseError
 
-// =============================================
-// STATE — semua kondisi UI Login
-// =============================================
 data class LoginUiState(
     val email               : String  = "",
     val password            : String  = "",

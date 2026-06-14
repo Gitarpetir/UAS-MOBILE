@@ -7,14 +7,12 @@ package com.uas.myapplication.domain.model
 data class Laporan(
     val id: String = "",
 
-    // Data pelapor (denormalisasi — disimpan langsung di dokumen)
     val idPelapor: String = "",
     val namaPelapor: String = "",
     val emailPelapor: String = "",
     val nimPelapor: String = "",
     val whatsappPelapor: String = "",
 
-    // Data barang
     val namaBarang: String = "",
     val deskripsi: String = "",
     val lokasi: String = "",
@@ -29,7 +27,6 @@ data class Laporan(
     val namaPemilik: String = "",
     val nimPemilik: String = "",
     val whatsappPemilik: String = "",
-    // Metadata
     val waktuDibuat: Long = 0L,
     val jenisLaporan: JenisLaporan = JenisLaporan.HILANG
 

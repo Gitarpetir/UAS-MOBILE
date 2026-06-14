@@ -97,7 +97,6 @@ fun LaporankuScreen(
                 )
             }
 
-            // Jumlah laporan
             item {
 
                 JumlahLaporanText(
@@ -109,7 +108,6 @@ fun LaporankuScreen(
                 )
             }
 
-            // Tab Barangmu / Temuanmu
             item {
                 TabLaporanku(
                     tabAktif    = uiState.tabAktif,
@@ -118,7 +116,6 @@ fun LaporankuScreen(
                 Spacer(modifier = Modifier.height(8.dp))
             }
 
-            // Loading
             if (uiState.isLoading) {
                 item {
                     Box(
@@ -128,7 +125,6 @@ fun LaporankuScreen(
                 }
             }
 
-            // List laporan
             items(laporanByTab) { laporan ->
                 LaporankuCard(
                     laporan = laporan,

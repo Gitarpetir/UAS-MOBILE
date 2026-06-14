@@ -38,7 +38,6 @@ fun UserDataSection(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // Card Email
         DataCard(
             icon  = Icons.Default.Email,
             label = emailLabel,
@@ -47,7 +46,6 @@ fun UserDataSection(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Card NIM
         DataCard(
             icon  = Icons.Default.Badge,
             label = nimLabel,
@@ -56,7 +54,6 @@ fun UserDataSection(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Card WhatsApp
         DataCard(
             icon = Icons.Default.Phone,
             label = waLabel,

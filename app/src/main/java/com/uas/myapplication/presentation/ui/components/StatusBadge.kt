@@ -44,9 +44,6 @@ fun StatusBadge(status: StatusBarang) {
 }
 
 
-// =============================================
-// PREVIEW
-// =============================================
 @Preview(showBackground = true, name = "Status Badge - Semua")
 @Composable
 fun PreviewStatusBadge() {

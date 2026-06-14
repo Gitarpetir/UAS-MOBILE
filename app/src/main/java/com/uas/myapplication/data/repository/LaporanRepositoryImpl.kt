@@ -79,21 +79,17 @@ class LaporanRepositoryImpl(
      */
     override suspend fun buatLaporan(laporan: Laporan, fotoUri: String?): Result<Unit> {
         return try {
-            // 1. Upload foto ke Cloudinary jika ada
             val fotoUrl = if (!fotoUri.isNullOrEmpty()) {
                 laporanRemoteDataSource.uploadFoto(fotoUri)
             } else ""
 
-            // 2. Buat laporan dengan foto URL dan waktu dibuat
             val laporanDenganFoto = laporan.copy(
                 fotoUrl = fotoUrl,
                 waktuDibuat = System.currentTimeMillis()
             )
 
-            // 3. Simpan ke Firestore via DataSource
             laporanRemoteDataSource.createLaporan(laporanDenganFoto.toMap())
             
-            // 4. Cache ke Room (tanpa nomor WA, mapping ke entity)
             kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
                 laporanDao.insertLaporan(laporanDenganFoto.toEntity())
             }
@@ -110,7 +106,6 @@ class LaporanRepositoryImpl(
      */
     override suspend fun editLaporan(laporan: Laporan, fotoUri: String?): Result<Unit> {
         return try {
-            // Upload foto baru jika ada, jika tidak pakai URL lama
             val fotoUrl = if (!fotoUri.isNullOrEmpty()) {
                 laporanRemoteDataSource.uploadFoto(fotoUri)
             } else laporan.fotoUrl
@@ -118,7 +113,6 @@ class LaporanRepositoryImpl(
             val laporanUpdate = laporan.copy(fotoUrl = fotoUrl)
             laporanRemoteDataSource.updateLaporan(laporan.id, laporanUpdate.toMap())
             
-            // Cache update
             kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
                 laporanDao.insertLaporan(laporanUpdate.toEntity())
             }

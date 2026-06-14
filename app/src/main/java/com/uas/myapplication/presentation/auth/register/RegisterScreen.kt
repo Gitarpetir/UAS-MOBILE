@@ -101,7 +101,6 @@ fun RegisterScreen(
             
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Form Register
             com.uas.myapplication.presentation.auth.register.components.RegisterForm(
                 uiState = uiState,
                 viewModel = viewModel
@@ -111,7 +110,6 @@ fun RegisterScreen(
 
             AuthDivider(label = strings.orText)
 
-            // Tombol Daftar dengan Google
             GoogleAuthButton(
                 label = strings.btnGoogleConnect,
                 onClick = {
@@ -127,7 +125,6 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Teks "Sudah punya akun? Masuk"
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                 TextButton(onClick = onSudahPunyaAkun) {
                     Text(
@@ -153,9 +150,6 @@ fun RegisterScreen(
     }
 }
 
-// =============================================
-// PREVIEW
-// =============================================
 @Preview(showBackground = true, name = "Register Screen - Light", heightDp = 1100)
 @Composable
 fun PreviewRegisterScreen() {

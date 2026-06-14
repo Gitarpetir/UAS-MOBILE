@@ -10,7 +10,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-// Ekstensi untuk membuat DataStore instance
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
     name = "cairin_preferensi"
 )
@@ -30,24 +29,20 @@ class PreferensiManager(private val context: Context) {
         const val BAHASA_INGGRIS   = "en"
     }
 
-    // Flow realtime untuk dark mode
     val isDarkMode: Flow<Boolean> = context.dataStore.data.map { preferences ->
         preferences[KEY_DARK_MODE] ?: false
     }
 
-    // Flow realtime untuk bahasa
     val bahasa: Flow<String> = context.dataStore.data.map { preferences ->
         preferences[KEY_BAHASA] ?: BAHASA_INDONESIA
     }
 
-    // Simpan preferensi dark mode
     suspend fun setDarkMode(isDark: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[KEY_DARK_MODE] = isDark
         }
     }
 
-    // Simpan preferensi bahasa
     suspend fun setBahasa(kodeBahasa: String) {
         context.dataStore.edit { preferences ->
             preferences[KEY_BAHASA] = kodeBahasa

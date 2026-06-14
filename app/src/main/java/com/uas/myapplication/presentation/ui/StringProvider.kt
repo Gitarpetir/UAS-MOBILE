@@ -7,7 +7,6 @@ object StringProvider {
 }
 
 data class Strings(
-    // Onboarding
     val onboardingTitle1: String,
     val onboardingDesc1: String,
     val onboardingTitle2: String,
@@ -18,7 +17,6 @@ data class Strings(
     val btnAyoMulai: String,
     val btnLewati: String,
 
-    // Auth - Login
     val welcome: String,
     val loginSubtitle: String,
     val emailLabel: String,
@@ -33,7 +31,6 @@ data class Strings(
     val hidePassword: String,
     val showPassword: String,
 
-    // Auth - Register
     val registerTitle: String,
     val registerSubtitle: String,
     val fullNameLabel: String,
@@ -51,12 +48,10 @@ data class Strings(
     val btnGoogleConnect: String,
     val alreadyHaveAccountText: String,
 
-    // Auth - Lengkapi Profil
     val completeProfileTitle: String,
     val completeProfileSubtitle: String,
     val btnSaveProfile: String,
 
-    // Bottom Navigation
     val navHome: String,
     val navCatalog: String,
     val navReport: String,
@@ -64,7 +59,6 @@ data class Strings(
     val navProfile: String,
     val navAdminReports: String,
 
-    // Dashboard Mahasiswa
     val helloGreeting: String,
     val lostReportsHeader: String,
     val foundReportsHeader: String,
@@ -76,14 +70,12 @@ data class Strings(
     val btnSeeAll: String,
     val noItemReportsYet: String,
 
-    // Dashboard Admin
     val recentReportsHeader: String,
     val manageReportsHeader: String,
     val statLostItems: String,
     val statFoundItems: String,
     val statCompletedReports: String,
 
-    // Katalog
     val catalogTitle: String,
     val searchPlaceholder: String,
     val noItemsFound: String,
@@ -93,7 +85,6 @@ data class Strings(
     val filterFound: String,
     val filterCompleted: String,
 
-    // Form Laporan
     val reportItemTitle: String,
     val statusLost: String,
     val statusFound: String,
@@ -116,14 +107,12 @@ data class Strings(
     val btnSave: String,
     val btnSubmitReport: String,
 
-    // Detail Barang
     val itemDetailsTitle: String,
     val reporterInfo: String,
     val finderInfo: String,
     val dateLabel: String,
     val statusLabel: String,
     
-    // Action Section Detail
     val claimItem: String,
     val verifyClaim: String,
     val confirmDelete: String,
@@ -136,12 +125,10 @@ data class Strings(
     val btnFinishReport: String,
     val btnBack: String,
     
-    // Laporanku
     val tabMyItems: String,
     val tabMyFinds: String,
     val tabContributions: String,
 
-    // Laporanku Card & Badges
     val statusBadgeLost: String,
     val statusBadgeFound: String,
     val statusBadgeDiklaim: String,
@@ -150,7 +137,6 @@ data class Strings(
     val btnEdit: String,
     val btnDelete: String,
 
-    // Laporanku Components
     val emptyStateLostTitle: String,
     val emptyStateFoundTitle: String,
     val emptyStateContribTitle: String,
@@ -161,7 +147,6 @@ data class Strings(
     val myReportsHeader: String,
     val btnNew: String,
 
-    // Profil
     val userDataSection: String,
     val nameLabel: String,
     val preferencesSection: String,
@@ -172,7 +157,6 @@ data class Strings(
     val btnLogout: String,
     val selectLanguageTitle: String,
 
-    // Dialogs
     val deleteReportTitle: String,
     val deleteReportMessage: String, // requires %s for item name
     val isThisYoursTitle: String,
@@ -190,7 +174,6 @@ data class Strings(
 )
 
 private val IndonesianStrings = Strings(
-    // Onboarding
     onboardingTitle1 = "Selamat Datang di Cari.in",
     onboardingDesc1 = "Aplikasi inovatif yang membantu kamu mencari barang hilang atau melaporkan barang temuan.",
     onboardingTitle2 = "Lapor Cepat & Mudah",
@@ -201,7 +184,6 @@ private val IndonesianStrings = Strings(
     btnAyoMulai = "Ayo Mulai",
     btnLewati = "Lewati",
 
-    // Auth - Login
     welcome = "Selamat Datang",
     loginSubtitle = "Masuk untuk mengakses Cari.in",
     emailLabel = "Email",
@@ -216,7 +198,6 @@ private val IndonesianStrings = Strings(
     hidePassword = "Sembunyikan password",
     showPassword = "Tampilkan password",
 
-    // Auth - Register
     registerTitle = "Buat Akun",
     registerSubtitle = "Daftar dan bergabung di Cari.in",
     fullNameLabel = "Nama Lengkap",
@@ -234,12 +215,10 @@ private val IndonesianStrings = Strings(
     btnGoogleConnect = "Hubungkan dengan Google",
     alreadyHaveAccountText = "Sudah punya akun? ",
 
-    // Auth - Lengkapi Profil
     completeProfileTitle = "Lengkapi Profil",
     completeProfileSubtitle = "Lengkapi data profilmu di Cari.in",
     btnSaveProfile = "Simpan Profil",
 
-    // Bottom Navigation
     navHome = "Beranda",
     navCatalog = "Katalog",
     navReport = "Laporan",
@@ -247,7 +226,6 @@ private val IndonesianStrings = Strings(
     navProfile = "Profil",
     navAdminReports = "Laporan",
 
-    // Dashboard Mahasiswa
     helloGreeting = "Halo,",
     lostReportsHeader = "Laporan Hilang",
     foundReportsHeader = "Laporan Ditemukan",
@@ -259,14 +237,12 @@ private val IndonesianStrings = Strings(
     btnSeeAll = "Lihat Semua",
     noItemReportsYet = "Belum ada laporan barang",
 
-    // Dashboard Admin
     recentReportsHeader = "Laporan Terbaru",
     manageReportsHeader = "Kelola Laporan",
     statLostItems = "Barang Hilang",
     statFoundItems = "Barang Ditemukan",
     statCompletedReports = "Laporan Selesai",
 
-    // Katalog
     catalogTitle = "Katalog Barang",
     searchPlaceholder = "Cari berdasarkan nama atau deskripsi...",
     noItemsFound = "Tidak ada barang ditemukan",
@@ -276,7 +252,6 @@ private val IndonesianStrings = Strings(
     filterFound = "Ditemukan",
     filterCompleted = "Selesai",
 
-    // Form Laporan
     reportItemTitle = "Laporkan Barang",
     statusLost = "hilang",
     statusFound = "ditemukan",
@@ -299,14 +274,12 @@ private val IndonesianStrings = Strings(
     btnSave = "Simpan",
     btnSubmitReport = "Kirim Laporan",
 
-    // Detail Barang
     itemDetailsTitle = "Detail Barang",
     reporterInfo = "Informasi Pelapor",
     finderInfo = "Informasi Penemu",
     dateLabel = "Tanggal",
     statusLabel = "Status",
 
-    // Action Section Detail
     claimItem = "Klaim Barang Ini",
     verifyClaim = "Verifikasi Klaim",
     confirmDelete = "Konfirmasi Penghapusan",
@@ -319,12 +292,10 @@ private val IndonesianStrings = Strings(
     btnFinishReport = "Selesaikan Laporan",
     btnBack = "Kembali",
 
-    // Laporanku
     tabMyItems = "Barangku",
     tabMyFinds = "Temuanku",
     tabContributions = "Kontribusi",
 
-    // Laporanku Card & Badges
     statusBadgeLost = "Hilang",
     statusBadgeFound = "Ditemukan",
     statusBadgeDiklaim = "Diklaim",
@@ -333,7 +304,6 @@ private val IndonesianStrings = Strings(
     btnEdit = "Edit",
     btnDelete = "Hapus",
 
-    // Laporanku Components
     emptyStateLostTitle = "Belum ada laporan kehilangan",
     emptyStateFoundTitle = "Belum ada laporan temuan",
     emptyStateContribTitle = "Belum ada kontribusi",
@@ -344,7 +314,6 @@ private val IndonesianStrings = Strings(
     myReportsHeader = "Laporanku",
     btnNew = "Baru",
 
-    // Profil
     userDataSection = "Data Pengguna",
     nameLabel = "Nama",
     preferencesSection = "Preferensi",
@@ -355,7 +324,6 @@ private val IndonesianStrings = Strings(
     btnLogout = "Keluar",
     selectLanguageTitle = "Pilih Bahasa",
 
-    // Dialogs
     deleteReportTitle = "Hapus Laporan?",
     deleteReportMessage = "Laporan \"%s\" akan dihapus secara permanen dan tidak bisa dikembalikan.",
     isThisYoursTitle = "Barang Ini Milikmu?",
@@ -373,7 +341,6 @@ private val IndonesianStrings = Strings(
 )
 
 private val EnglishStrings = Strings(
-    // Onboarding
     onboardingTitle1 = "Welcome to Cari.in",
     onboardingDesc1 = "An innovative app that helps you find lost items or report found items.",
     onboardingTitle2 = "Quick & Easy Reporting",
@@ -384,7 +351,6 @@ private val EnglishStrings = Strings(
     btnAyoMulai = "Let's Start",
     btnLewati = "Skip",
 
-    // Auth - Login
     welcome = "Welcome",
     loginSubtitle = "Log in to access Cari.in",
     emailLabel = "Email",
@@ -399,7 +365,6 @@ private val EnglishStrings = Strings(
     hidePassword = "Hide password",
     showPassword = "Show password",
 
-    // Auth - Register
     registerTitle = "Create Account",
     registerSubtitle = "Sign up and join Cari.in",
     fullNameLabel = "Full Name",
@@ -417,12 +382,10 @@ private val EnglishStrings = Strings(
     btnGoogleConnect = "Connect with Google",
     alreadyHaveAccountText = "Already have an account? ",
 
-    // Auth - Lengkapi Profil
     completeProfileTitle = "Complete Profile",
     completeProfileSubtitle = "Complete your profile data on Cari.in",
     btnSaveProfile = "Save Profile",
 
-    // Bottom Navigation
     navHome = "Home",
     navCatalog = "Catalog",
     navReport = "Report",
@@ -430,7 +393,6 @@ private val EnglishStrings = Strings(
     navProfile = "Profile",
     navAdminReports = "Reports",
 
-    // Dashboard Mahasiswa
     helloGreeting = "Hello,",
     lostReportsHeader = "Lost Reports",
     foundReportsHeader = "Found Reports",
@@ -442,14 +404,12 @@ private val EnglishStrings = Strings(
     btnSeeAll = "See All",
     noItemReportsYet = "No item reports yet",
 
-    // Dashboard Admin
     recentReportsHeader = "Recent Reports",
     manageReportsHeader = "Manage Reports",
     statLostItems = "Lost Items",
     statFoundItems = "Found Items",
     statCompletedReports = "Completed Reports",
 
-    // Katalog
     catalogTitle = "Item Catalog",
     searchPlaceholder = "Search by name or description...",
     noItemsFound = "No items found",
@@ -459,7 +419,6 @@ private val EnglishStrings = Strings(
     filterFound = "Found",
     filterCompleted = "Completed",
 
-    // Form Laporan
     reportItemTitle = "Report Item",
     statusLost = "lost",
     statusFound = "found",
@@ -482,14 +441,12 @@ private val EnglishStrings = Strings(
     btnSave = "Save",
     btnSubmitReport = "Submit Report",
 
-    // Detail Barang
     itemDetailsTitle = "Item Details",
     reporterInfo = "Reporter Information",
     finderInfo = "Finder Information",
     dateLabel = "Date",
     statusLabel = "Status",
 
-    // Action Section Detail
     claimItem = "Claim This Item",
     verifyClaim = "Verify Claim",
     confirmDelete = "Confirm Deletion",
@@ -502,12 +459,10 @@ private val EnglishStrings = Strings(
     btnFinishReport = "Finish Report",
     btnBack = "Back",
 
-    // Laporanku
     tabMyItems = "My Items",
     tabMyFinds = "My Finds",
     tabContributions = "Contributions",
 
-    // Laporanku Card & Badges
     statusBadgeLost = "Lost",
     statusBadgeFound = "Found",
     statusBadgeDiklaim = "Claimed",
@@ -516,7 +471,6 @@ private val EnglishStrings = Strings(
     btnEdit = "Edit",
     btnDelete = "Delete",
 
-    // Laporanku Components
     emptyStateLostTitle = "No lost reports yet",
     emptyStateFoundTitle = "No found reports yet",
     emptyStateContribTitle = "No contributions yet",
@@ -527,7 +481,6 @@ private val EnglishStrings = Strings(
     myReportsHeader = "My Reports",
     btnNew = "New",
 
-    // Profil
     userDataSection = "User Data",
     nameLabel = "Name",
     preferencesSection = "Preferences",
@@ -538,7 +491,6 @@ private val EnglishStrings = Strings(
     btnLogout = "Log Out",
     selectLanguageTitle = "Select Language",
 
-    // Dialogs
     deleteReportTitle = "Delete Report?",
     deleteReportMessage = "Report \"%s\" will be permanently deleted and cannot be recovered.",
     isThisYoursTitle = "Is This Yours?",

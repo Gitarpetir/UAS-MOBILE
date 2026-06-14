@@ -37,7 +37,6 @@ fun LoginForm(
     val strings = StringProvider.get(LocalBahasa.current)
 
     Column(modifier = modifier) {
-        // Form Email
         CariInTextField(
             value         = uiState.email,
             onValueChange = viewModel::onEmailChange,
@@ -51,7 +50,6 @@ fun LoginForm(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Form Password dengan toggle show/hide
         CariInTextField(
             value         = uiState.password,
             onValueChange = viewModel::onPasswordChange,
@@ -76,7 +74,6 @@ fun LoginForm(
             keyboardType = KeyboardType.Password
         )
 
-        // Pesan error
         AnimatedVisibility(
             visible = uiState.errorMessage != null,
             enter   = fadeIn(),
@@ -95,7 +92,6 @@ fun LoginForm(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Tombol Masuk
         Button(
             onClick  = viewModel::loginWithEmail,
             enabled  = !uiState.isLoading,

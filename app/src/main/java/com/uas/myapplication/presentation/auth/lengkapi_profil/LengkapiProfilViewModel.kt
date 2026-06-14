@@ -11,9 +11,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-// =============================================
-// STATE
-// =============================================
 data class LengkapiProfilUiState(
     val namaLengkap  : String  = "",
     val nim          : String  = "",
@@ -31,8 +28,6 @@ class LengkapiProfilViewModel(
     private val _uiState = MutableStateFlow(LengkapiProfilUiState())
     val uiState: StateFlow<LengkapiProfilUiState> = _uiState.asStateFlow()
 
-    // Dipanggil saat halaman pertama dibuka —
-    // mengisi nama dari akun Google secara otomatis
     fun inisialisasiDariGoogle() {
         val namaGoogle = authRepository.getCurrentUserDisplayName() ?: ""
         _uiState.update { it.copy(namaLengkap = namaGoogle) }
@@ -50,7 +45,6 @@ class LengkapiProfilViewModel(
         _uiState.update { it.copy(nomorWhatsapp = value, errorMessage = null) }
     }
 
-    // Simpan profil ke Firestore
     fun simpanProfil() {
         val state = _uiState.value
 

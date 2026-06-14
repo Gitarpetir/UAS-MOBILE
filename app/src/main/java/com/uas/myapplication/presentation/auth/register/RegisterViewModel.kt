@@ -83,7 +83,6 @@ class RegisterViewModel(
     fun register() {
         val state = _uiState.value
 
-        // Validasi semua field tidak kosong
         if (state.namaLengkap.isBlank() || state.nim.isBlank() ||
             state.nomorWhatsapp.isBlank() || state.email.isBlank() ||
             state.password.isBlank()) {
@@ -91,13 +90,11 @@ class RegisterViewModel(
             return
         }
 
-        // Validasi password minimal 6 karakter
         if (state.password.length < 6) {
             _uiState.update { it.copy(errorMessage = "Password minimal 6 karakter") }
             return
         }
 
-        // Validasi password sama
         if (state.password != state.konfirmasiPassword) {
             _uiState.update { it.copy(
                 errorMessage      = "Password dan konfirmasi password tidak sama",

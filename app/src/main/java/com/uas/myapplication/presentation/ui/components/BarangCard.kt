@@ -46,7 +46,6 @@ fun BarangCard(
             modifier          = Modifier.padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Foto barang
             AsyncImage(
                 model              = laporan.fotoUrl.ifEmpty { null },
                 contentDescription = "Foto ${laporan.namaBarang}",
@@ -59,9 +58,7 @@ fun BarangCard(
 
             Spacer(modifier = Modifier.width(12.dp))
 
-            // Info barang
             Column(modifier = Modifier.weight(1f)) {
-                // Nama barang
                 Text(
                     text       = laporan.namaBarang,
                     fontFamily = PoppinsFontFamily,
@@ -74,7 +71,6 @@ fun BarangCard(
 
                 Spacer(modifier = Modifier.height(4.dp))
 
-                // Lokasi
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector        = Icons.Default.LocationOn,
@@ -95,7 +91,6 @@ fun BarangCard(
 
                 Spacer(modifier = Modifier.height(2.dp))
 
-                // Tanggal
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector        = Icons.Default.CalendarToday,
@@ -115,7 +110,6 @@ fun BarangCard(
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            // Badge status
             StatusBadge(status = laporan.statusBarang)
 
             if (onDeleteClick != null) {

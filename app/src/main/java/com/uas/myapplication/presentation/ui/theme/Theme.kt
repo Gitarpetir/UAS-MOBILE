@@ -15,9 +15,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-// =============================================
-// COLOR SCHEME — LIGHT MODE
-// =============================================
 private val LightColorScheme = lightColorScheme(
     primary          = Blue700,
     onPrimary        = White,
@@ -38,9 +35,6 @@ private val LightColorScheme = lightColorScheme(
     onError          = White,
 )
 
-// =============================================
-// COLOR SCHEME — DARK MODE
-// =============================================
 private val DarkColorScheme = darkColorScheme(
     primary          = Blue700,
     onPrimary        = White,
@@ -61,10 +55,6 @@ private val DarkColorScheme = darkColorScheme(
     onError          = White,
 )
 
-// =============================================
-// WARNA KUSTOM CARI.IN — Yang tidak ada di Material3
-// Akses via CariInTheme.colors.xxx
-// =============================================
 @Immutable
 data class CariInColors(
     val textHint: Color,
@@ -98,21 +88,14 @@ val DarkCariInColors = CariInColors(
 
 val LocalCariInColors = staticCompositionLocalOf { LightCariInColors }
 
-// =============================================
-// AKSES TEMA KUSTOM — CariInTheme.colors.xxx
-// =============================================
 object CariInTheme {
     val colors: CariInColors
         @Composable
         get() = LocalCariInColors.current
 }
 
-// =============================================
-// TEMA UTAMA APLIKASI CARI.IN
-// =============================================
 @Composable
 fun MyApplicationTheme(
-    // Ikuti pengaturan sistem (dark/light) secara otomatis
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

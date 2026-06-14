@@ -17,13 +17,11 @@ class WeatherRemoteDataSourceImpl(
 
     override suspend fun getCurrentWeather(lat: Double, lon: Double): Result<WeatherDto> = withContext(Dispatchers.IO) {
         try {
-            // Mengambil API Key dari BuildConfig yang di-generate dari local.properties
             val apiKey = BuildConfig.OPENWEATHERMAP_API_KEY
             if (apiKey.isBlank()) {
                 return@withContext Result.failure(Exception("API Key OpenWeatherMap tidak ditemukan."))
             }
 
-            // Membangun URL OpenWeatherMap (menggunakan bahasa Indonesia dan satuan metric/Celsius)
             val url = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey&units=metric&lang=id"
 
             val request = Request.Builder()

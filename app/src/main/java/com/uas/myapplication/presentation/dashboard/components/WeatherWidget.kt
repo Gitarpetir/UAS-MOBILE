@@ -32,7 +32,6 @@ fun WeatherWidget(
     val bahasa = LocalBahasa.current
 
     if (isLoading) {
-        // Loading State
         Card(
             modifier = modifier
                 .fillMaxWidth()
@@ -46,7 +45,6 @@ fun WeatherWidget(
             }
         }
     } else if (errorMessage != null) {
-        // Error State
         Card(
             modifier = modifier
                 .fillMaxWidth()
@@ -87,7 +85,6 @@ fun WeatherWidget(
             }
         }
     } else if (weather != null) {
-        // Success State
         Card(
             modifier = modifier
                 .fillMaxWidth()

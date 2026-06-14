@@ -34,7 +34,6 @@ data class WeatherDto(
         fun fromJson(jsonString: String): WeatherDto {
             val root = JSONObject(jsonString)
             
-            // Parsing array 'weather'
             val weatherArray = root.getJSONArray("weather")
             var description = ""
             var icon = ""
@@ -44,16 +43,13 @@ data class WeatherDto(
                 icon = weatherObj.getString("icon")
             }
             
-            // Parsing object 'main'
             val mainObj = root.getJSONObject("main")
             val temp = mainObj.getDouble("temp")
             val humidity = mainObj.getInt("humidity")
             
-            // Parsing object 'wind'
             val windObj = root.getJSONObject("wind")
             val windSpeed = windObj.getDouble("speed")
             
-            // Nama kota
             val cityName = root.getString("name")
             
             return WeatherDto(
