@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.uas.myapplication.presentation.onboarding.components.IlustrasiTemukan
+
 import com.uas.myapplication.presentation.ui.theme.InterFontFamily
 import com.uas.myapplication.presentation.ui.theme.PoppinsFontFamily
 
@@ -21,7 +21,10 @@ fun AuthHeader(
     title: String,
     subtitle: String
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
+    ) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier.size(160.dp)
@@ -31,8 +34,13 @@ fun AuthHeader(
                     .size(140.dp)
                     .background(MaterialTheme.colorScheme.primaryContainer, CircleShape)
             )
-            Box(modifier = Modifier.size(70.dp)) {
-                IlustrasiTemukan()
+            Box(modifier = Modifier.size(90.dp)) { // Slightly larger for logo visibility
+                androidx.compose.foundation.Image(
+                    painter = androidx.compose.ui.res.painterResource(id = com.uas.myapplication.R.drawable.logo_cariin),
+                    contentDescription = "Logo Cari.in",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = androidx.compose.ui.layout.ContentScale.Fit
+                )
             }
         }
 
