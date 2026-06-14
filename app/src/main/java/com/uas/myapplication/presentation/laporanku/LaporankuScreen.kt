@@ -125,7 +125,10 @@ fun LaporankuScreen(
                 }
             }
 
-            items(laporanByTab) { laporan ->
+            items(
+                items = laporanByTab,
+                key = { it.id }
+            ) { laporan ->
                 LaporankuCard(
                     laporan = laporan,
                     tabAktif = uiState.tabAktif,
@@ -167,5 +170,5 @@ fun LaporankuScreen(
                 }
             }
         }
-    }
+}
 }
