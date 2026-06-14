@@ -8,9 +8,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okio.IOException
 
-/**
- * Implementasi pengambilan data cuaca menggunakan OkHttp.
- */
 class WeatherRemoteDataSourceImpl(
     private val client: OkHttpClient
 ) : WeatherRemoteDataSource {

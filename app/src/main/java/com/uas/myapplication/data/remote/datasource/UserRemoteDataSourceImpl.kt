@@ -4,10 +4,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.uas.myapplication.data.remote.dto.UserDto
 import kotlinx.coroutines.tasks.await
 
-/**
- * Implementasi UserRemoteDataSource yang berinteraksi langsung
- * dengan Firebase Firestore koleksi "users".
- */
 class UserRemoteDataSourceImpl(
     private val firestore: FirebaseFirestore
 ) : UserRemoteDataSource {

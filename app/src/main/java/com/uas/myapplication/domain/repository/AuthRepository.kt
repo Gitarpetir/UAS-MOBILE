@@ -9,9 +9,6 @@ interface AuthRepository {
 
     suspend fun loginWithGoogle(idToken: String): Result<GoogleAuthResult>
 
-    /**
-     * Daftar akun baru — sekarang include nomorWhatsapp
-     */
     suspend fun registerWithEmail(
         namaLengkap   : String,
         nim           : String,

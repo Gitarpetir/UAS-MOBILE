@@ -1,9 +1,5 @@
     package com.uas.myapplication.presentation.navigation
 
-    /**
-     * Sealed class yang mendefinisikan semua route navigasi di aplikasi Cari.in.
-     * Setiap object merepresentasikan satu halaman.
-     */
     sealed class Screen(val route: String) {
 
         data object Onboarding      : Screen("onboarding")

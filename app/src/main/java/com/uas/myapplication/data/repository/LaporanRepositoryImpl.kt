@@ -10,24 +10,12 @@ import kotlinx.coroutines.flow.map
 import com.uas.myapplication.data.local.entity.toEntity
 import com.uas.myapplication.data.local.entity.toDomain
 
-/**
- * Implementasi LaporanRepository.
- * Sekarang bergantung pada LaporanRemoteDataSource, bukan langsung ke Firestore & OkHttp SDK.
- */
 class LaporanRepositoryImpl(
     private val laporanRemoteDataSource: LaporanRemoteDataSource,
     private val laporanDao: com.uas.myapplication.data.local.dao.LaporanDao,
     private val context: android.content.Context
 ) : LaporanRepository {
 
-    /**
-     * Mengambil semua laporan secara realtime menggunakan Flow.
-     * DataSource mengembalikan DTO, Repository memetakan ke Domain Model.
-     */
-    /**
-     * Mengambil semua laporan secara realtime menggunakan Flow.
-     * DataSource mengembalikan DTO, Repository memetakan ke Domain Model.
-     */
     override fun getAllLaporan(): Flow<List<Laporan>> {
         return if (com.uas.myapplication.data.util.NetworkHelper.isConnected(context)) {
             laporanRemoteDataSource.getAllLaporan().map { dtoList ->
@@ -45,9 +33,6 @@ class LaporanRepositoryImpl(
         }
     }
 
-    /**
-     * Mengambil laporan milik pengguna tertentu secara realtime.
-     */
     override fun getLaporanByUser(uid: String): Flow<List<Laporan>> {
         return if (com.uas.myapplication.data.util.NetworkHelper.isConnected(context)) {
             laporanRemoteDataSource.getLaporanByUser(uid).map { dtoList ->
@@ -61,9 +46,6 @@ class LaporanRepositoryImpl(
         }
     }
 
-    /**
-     * Mengambil satu laporan berdasarkan ID dokumen.
-     */
     override suspend fun getLaporanById(id: String): Result<Laporan> {
         return try {
             val dto = laporanRemoteDataSource.getLaporanById(id)
@@ -73,10 +55,6 @@ class LaporanRepositoryImpl(
         }
     }
 
-    /**
-     * Membuat laporan baru.
-     * Jika ada foto, upload ke Cloudinary dulu, lalu simpan URL-nya ke Firestore.
-     */
     override suspend fun buatLaporan(laporan: Laporan, fotoUri: String?): Result<Unit> {
         return try {
             val fotoUrl = if (!fotoUri.isNullOrEmpty()) {
@@ -100,10 +78,6 @@ class LaporanRepositoryImpl(
         }
     }
 
-    /**
-     * Mengedit laporan yang sudah ada.
-     * Jika ada foto baru (fotoUri tidak kosong), upload ulang ke Cloudinary.
-     */
     override suspend fun editLaporan(laporan: Laporan, fotoUri: String?): Result<Unit> {
         return try {
             val fotoUrl = if (!fotoUri.isNullOrEmpty()) {
@@ -123,9 +97,6 @@ class LaporanRepositoryImpl(
         }
     }
 
-    /**
-     * Menghapus laporan berdasarkan ID.
-     */
     override suspend fun hapusLaporan(id: String): Result<Unit> {
         return try {
             laporanRemoteDataSource.deleteLaporan(id)
@@ -138,9 +109,6 @@ class LaporanRepositoryImpl(
         }
     }
 
-    /**
-     * Mengubah status barang (HILANG → DITEMUKAN, dll).
-     */
     override suspend fun ubahStatus(
         id: String,
         status: StatusBarang,

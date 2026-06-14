@@ -4,9 +4,6 @@ import com.uas.myapplication.data.remote.datasource.WeatherRemoteDataSource
 import com.uas.myapplication.domain.model.Weather
 import com.uas.myapplication.domain.repository.WeatherRepository
 
-/**
- * Implementasi dari WeatherRepository yang menggunakan WeatherRemoteDataSource.
- */
 class WeatherRepositoryImpl(
     private val weatherRemoteDataSource: WeatherRemoteDataSource
 ) : WeatherRepository {

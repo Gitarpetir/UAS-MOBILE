@@ -7,10 +7,6 @@ import com.uas.myapplication.domain.model.GoogleAuthResult
 import com.uas.myapplication.domain.model.User
 import com.uas.myapplication.domain.repository.AuthRepository
 
-/**
- * Implementasi AuthRepository.
- * Sekarang bergantung pada DataSource, bukan langsung ke Firebase SDK.
- */
 class AuthRepositoryImpl(
     private val authRemoteDataSource: AuthRemoteDataSource,
     private val userRemoteDataSource: UserRemoteDataSource

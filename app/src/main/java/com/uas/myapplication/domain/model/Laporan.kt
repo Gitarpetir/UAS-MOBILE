@@ -1,9 +1,5 @@
 package com.uas.myapplication.domain.model
 
-/**
- * Model murni bisnis untuk data laporan barang hilang/ditemukan.
- * Tidak boleh mengandung dependency Firebase atau library apapun.
- */
 data class Laporan(
     val id: String = "",
 
@@ -32,10 +28,6 @@ data class Laporan(
 
 )
 
-/**
- * Enum untuk status barang.
- * Menggunakan enum agar type-safe dan tidak bisa salah ketik.
- */
 enum class StatusBarang {
     HILANG,     // Barang sedang dicari pemiliknya
     DITEMUKAN,  // Barang sudah ditemukan, menunggu diklaim

@@ -4,10 +4,6 @@ import com.uas.myapplication.domain.model.JenisLaporan
 import com.uas.myapplication.domain.model.Laporan
 import com.uas.myapplication.domain.model.StatusBarang
 
-/**
- * DTO untuk koleksi `laporan` di Firestore.
- * Nama field menggunakan snake_case sesuai skema database.
- */
 data class LaporanDto(
     val id: String = "",
     val id_pelapor: String = "",
@@ -33,9 +29,6 @@ data class LaporanDto(
     val waktu_dibuat: Long = 0L
 
 ) {
-    /**
-     * Mengubah DTO menjadi Domain Model (Laporan).
-     */
     fun toDomain(): Laporan = Laporan(
         id              = id,
         idPelapor       = id_pelapor,
@@ -70,10 +63,6 @@ data class LaporanDto(
     )
 }
 
-/**
- * Extension function untuk mengubah Domain Model Laporan menjadi Map
- * agar bisa disimpan ke Firestore.
- */
 fun Laporan.toMap(): Map<String, Any> = mapOf(
     "id"               to id,
     "id_pelapor"       to idPelapor,

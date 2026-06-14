@@ -14,11 +14,6 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
     name = "cairin_preferensi"
 )
 
-/**
- * Manager untuk menyimpan dan membaca preferensi pengguna:
- * - Mode Gelap (Dark Mode)
- * - Bahasa (Indonesia / English)
- */
 class PreferensiManager(private val context: Context) {
 
     companion object {

@@ -42,17 +42,6 @@ import com.uas.myapplication.presentation.onboarding.OnboardingScreen
 import com.uas.myapplication.presentation.profil.ProfilScreen
 import com.uas.myapplication.presentation.profil.ProfilViewModel
 
-/**
- * NavGraph utama aplikasi Cari.in.
- * Semua perpindahan halaman diatur di sini.
- *
- * Logika startDestination:
- * - Jika pengguna sudah login → langsung ke Dashboard / Dashboard Admin
- * - Jika belum login → ke Onboarding
- *
- * Dependensi ViewModel sekarang menggunakan Use Cases dari AppContainer
- * alih-alih Repository langsung (sesuai prinsip Clean Architecture).
- */
 @Composable
 fun CariInNavGraph(
     modifier: Modifier = Modifier,

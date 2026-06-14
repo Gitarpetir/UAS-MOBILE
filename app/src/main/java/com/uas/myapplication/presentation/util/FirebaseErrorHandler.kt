@@ -1,9 +1,5 @@
 package com.uas.myapplication.presentation.util
 
-/**
- * Fungsi utilitas untuk mem-parsing pesan error dari Firebase 
- * menjadi bahasa Indonesia yang ramah pengguna.
- */
 fun parseFirebaseError(message: String?): String {
     if (message == null) return "Terjadi kesalahan, coba lagi"
     

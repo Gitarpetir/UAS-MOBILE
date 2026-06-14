@@ -20,10 +20,6 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 
-/**
- * Implementasi LaporanRemoteDataSource yang berinteraksi langsung
- * dengan Firebase Firestore dan Cloudinary REST API.
- */
 class LaporanRemoteDataSourceImpl(
     private val firestore: FirebaseFirestore,
     private val context: Context,
