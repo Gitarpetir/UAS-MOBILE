@@ -27,14 +27,9 @@ fun AuthHeader(
     ) {
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier.size(160.dp)
+            modifier = Modifier.size(200.dp)
         ) {
-            Box(
-                modifier = Modifier
-                    .size(140.dp)
-                    .background(MaterialTheme.colorScheme.primaryContainer, CircleShape)
-            )
-            Box(modifier = Modifier.size(90.dp)) { // Slightly larger for logo visibility
+            Box(modifier = Modifier.size(200.dp)) {
                 androidx.compose.foundation.Image(
                     painter = androidx.compose.ui.res.painterResource(id = com.uas.myapplication.R.drawable.logo_cariin),
                     contentDescription = "Logo Cari.in",
