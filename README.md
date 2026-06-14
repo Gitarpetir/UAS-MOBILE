@@ -8,7 +8,7 @@ Cari.in adalah aplikasi Android *Mobile-First* yang dirancang untuk mempermudah 
 
 1. **Clone Repository**
    ```bash
-   git clone https://github.com/username/Cari.in.git
+   git clone https://github.com/Gitarpetir/UAS-MOBILE.git
    cd Cari.in
    ```
 2. **Buka dengan Android Studio**
